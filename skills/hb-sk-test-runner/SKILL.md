@@ -72,4 +72,4 @@ Do not call live external services from the default slice. A bare test run must 
 
 This is a template skill: replace every `{{placeholder}}`, then rename the
 folder to `{{prefix}}-sk-{{technology}}` (e.g. the test runner's name).
-See `docs/CLONE.md`.
+See [[ONBOARDING]] and [[CLONE]].

@@ -2,7 +2,7 @@
 title: Interface catalog — the route authority
 type: reference
 status: active
-version: v0.1.0
+version: v0.1.1
 tags: [interfaces, contracts, ssot]
 description: "The interface catalog: every route the service serves, one six-column row each. Ships as a placeholder; The Cleric owns it."
 applies_when:
@@ -27,7 +27,7 @@ One six-column row per route the service serves:
 
 | Method | Path | Handler | Payload | Auth | Description |
 |---|---|---|---|---|---|
-| {{GET}} | {{/api/example/}} | {{handler name}} | {{payload shape or —}} | {{permission class}} | {{what it serves; link payload shapes into docs/contracts/}} |
+| {{http method}} | {{example path}} | {{handler name}} | {{payload shape}} | {{permission class}} | {{route description}} |
 
 - **Method** — the HTTP verb (or the transport's equivalent).
 - **Path** — English, trailing slash, under one of the declared prefixes: `{{api prefix}}`.

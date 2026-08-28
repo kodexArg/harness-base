@@ -3,6 +3,13 @@
 Every change landing on `main` records an entry here in the same batch
 ([[adr-05-after-versioning]]). Version format: `vA.B.C`.
 
+## v0.1.1 — 2026-08-28
+
+Incoming-agent fill-in map (`docs/ONBOARDING.md`): placeholder inventory by
+file, distinct from `AGENTS.md`. Graphify install is requested when the host
+can (`bin/ensure`). Clearer slot names on the INTERFACES example row, PRD
+paragraphs, REQUIREMENTS pins, and `.env.example`.
+
 ## v0.1.0 — 2026-08-28
 
 Initial harness-base: the stack- and infrastructure-agnostic project harness

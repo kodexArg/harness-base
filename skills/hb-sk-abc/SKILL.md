@@ -49,4 +49,4 @@ Also hold, because they fail reviews that would otherwise look green:
 ## Instantiation
 
 This is a template skill: replace every `{{placeholder}}`, then rename the
-folder to `{{prefix}}-sk-abc`. See `docs/CLONE.md`.
+folder to `{{prefix}}-sk-abc`. See [[ONBOARDING]] and [[CLONE]].

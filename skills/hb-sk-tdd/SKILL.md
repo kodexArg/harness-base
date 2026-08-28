@@ -76,4 +76,4 @@ Surface testing is not this flow ([[TDD]] scope). Components → surface tests v
 ## Instantiation
 
 This is a template skill: replace every `{{placeholder}}`, then rename the
-folder to `{{prefix}}-sk-tdd`. See `docs/CLONE.md`.
+folder to `{{prefix}}-sk-tdd`. See [[ONBOARDING]] and [[CLONE]].

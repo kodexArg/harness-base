@@ -2,7 +2,7 @@
 title: Version pins and toolchain requirements
 type: reference
 status: active
-version: v0.1.0
+version: v0.1.1
 tags: [harness, requirements, pins, ssot]
 description: "Single source of truth for dependency pins, toolchain versions, and re-pin policy. Ships as a placeholder with the harness pins filled."
 applies_when:
@@ -35,13 +35,13 @@ project by landing a row here first; the stack decision itself is
 
 | Package | Version | Checked | Notes |
 |---|---|---|---|
-| {{package}} | {{version}} | {{date}} | {{why this pin}} |
+| {{package}} | {{pin version}} | {{pin date}} | {{why this pin}} |
 
 ## Surface stack
 
 | Package | Version | Checked | Notes |
 |---|---|---|---|
-| {{package}} | {{version}} | {{date}} | {{why this pin}} |
+| {{package}} | {{pin version}} | {{pin date}} | {{why this pin}} |
 
 ## Re-pin policy
 

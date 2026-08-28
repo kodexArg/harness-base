@@ -51,4 +51,4 @@ modules), and the authorization pattern. Until then it holds placeholders:
 
 This is a template skill: replace every `{{placeholder}}`, then rename the
 folder to `{{prefix}}-sk-{{technology}}` (e.g. the domain framework's name).
-See `docs/CLONE.md`.
+See [[ONBOARDING]] and [[CLONE]].

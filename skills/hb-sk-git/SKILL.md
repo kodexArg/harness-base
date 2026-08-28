@@ -63,6 +63,5 @@ A page, a model, a catalog row, tests, infra, or ABC — not this song. Name The
 
 ## Instantiation
 
-This is a template skill: replace every `{{placeholder}}` (`{{owner}}`,
-`{{repo}}`), then rename the folder to `{{prefix}}-sk-git`. See
-`docs/CLONE.md`.
+This is a template skill: replace the live slots (`{{owner}}`, `{{repo}}`),
+then rename the folder to `{{prefix}}-sk-git`. See [[ONBOARDING]] and [[CLONE]].

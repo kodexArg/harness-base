@@ -52,4 +52,4 @@ this repo programs them are recorded here at instantiation:
 This is a template skill: replace every `{{placeholder}}`, then rename the
 folder to `{{prefix}}-sk-{{technology}}` (e.g. the component framework's
 name). A headless project deletes this skill, `hb-sk-surface-framework`,
-and `hb-ag-surface` together. See `docs/CLONE.md`.
+and `hb-ag-surface` together. See [[ONBOARDING]] and [[CLONE]].

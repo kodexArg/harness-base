@@ -21,7 +21,7 @@ related_agents:
 
 > A clean, conceptual architectural stack establishes clear system boundaries, eliminates toolchain ambiguity, and keeps technical adoption lean and predictable across the repository.
 
-This file ships as a **placeholder template**. Every project instantiated from this harness makes this decision once, in this shape, and replaces each `{{placeholder}}` with the chosen component ([[CLONE]]). The sections below are the shape of the decision every project must make.
+This file ships as a **placeholder template**. Every project instantiated from this harness makes this decision once, in this shape, and replaces each double-curly slot with the chosen component ([[ONBOARDING]], [[CLONE]]). The sections below are the shape of the decision every project must make.
 
 1. **Stack authority.** This ADR defines the conceptual technology stack. Exact package pins, versions, check dates, and re-pin policies are strictly owned by [[REQUIREMENTS]].
 

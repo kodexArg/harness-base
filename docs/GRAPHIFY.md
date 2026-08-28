@@ -2,7 +2,7 @@
 title: Graphify code graph exploration and MCP toolchain
 type: reference
 status: active
-version: v0.1.0
+version: v0.1.1
 tags: [harness, graphify, mcp, ast, graph]
 description: "Governs first-line codebase exploration using the on-device Graphify code graph via MCP."
 applies_when:
@@ -18,7 +18,18 @@ related_adrs:
 
 The on-device code graph for this repository. Force: [[adr-35-graphify]].
 
-The graph is **present** when `graphify-out/graph.json` exists. A clone carries that file. If it is missing, `scripts/graphify-update` builds a `--code-only` graph (no LLM key).
+The graph is **present** when `graphify-out/graph.json` exists. A clone should
+carry that file. **Install Graphify when the host can** — this harness is meant
+to be explored through it, not around it:
+
+```
+skills/kskill-graphify/bin/ensure
+```
+
+That installs `graphifyy[mcp]` (needs `uv`) and builds a `--code-only`
+`graph.json` if it is missing. No LLM key. A semantic docs+harness extract
+(`skills/kskill-graphify/bin/extract`) is better when an LLM key is available;
+it is not required to start. Grep is only the path after `ensure` cannot run.
 
 ## MCP Integration
 
@@ -71,6 +82,8 @@ The server exposes ten tools. First-line for this repo: `query_graph`, `get_node
 
 `graph.json` and `manifest.json` are tracked. `graphify-out/cache/` is gitignored. Never `graphify add <url>`.
 
-When present, explore through the Graphify MCP tools first. Then Glob, Grep, and Read the files returned by the graph.
+When Graphify is installed and the graph is present, explore through the MCP
+tools first. Then Glob, Grep, and Read the files returned by the graph. If it
+is not installed, run `ensure` before falling back to Grep.
 
 [[CODEMAP]] remains the generated doc→code inverse index.
