@@ -2,7 +2,7 @@
 title: Incoming-agent fill-in map for harness-base
 type: reference
 status: active
-version: v0.1.1
+version: v0.1.2
 tags: [harness, onboarding, instantiation, placeholders]
 description: "Playbook for another model entering this template: how to fill every slot without confusing AGENTS.md, plus the full placeholder inventory."
 applies_when:
@@ -13,6 +13,8 @@ related_adrs:
   - adr-02-stack
   - adr-05-after-versioning
   - adr-35-graphify
+  - adr-03-backend
+  - adr-04-frontend
 ---
 # ONBOARDING — fill this template
 
@@ -49,7 +51,7 @@ Facts and commands: [[GRAPHIFY]]. Force: [[adr-35-graphify]].
 3. Build a **value ledger** (section 3): one concrete string per shared token, reused everywhere that token appears.
 4. Global-replace shared tokens (`{{project name}}`, `{{service tree}}`, …) in **every** file they appear, including `AGENTS.md` / `CLAUDE.md`.
 5. Write **one-shot** content in place (PRD stories, INTERFACES rows, GLOSSARY project terms, ROADMAP stages, VARIABLES rows). Do not invent a second catalog.
-6. Then [[CLONE]] steps 3–8: `hb-` → `{{prefix}}`, stack decision, trees, skill-folder rename, headless deletions, first commit.
+6. Then [[CLONE]] steps 3–8: `hb-` → `{{prefix}}`, stack decision, **backend/frontend ADR families** ([[adr-03-backend]], [[adr-04-frontend]] — fill slots, delete unused subs), trees, skill-folder rename, headless deletions, first commit.
 
 Keep code and docs in English. Screen copy later uses `{{interface language}}`.
 
@@ -227,7 +229,7 @@ Harness rows stay. The empty project table uses:
 
 ## 5 · Headless products
 
-If there is no screen: delete in **one batch** The Warrior, `skills/hb-sk-surface-framework/`, `skills/hb-sk-component-framework/`, `.cursor/rules/section-articles.mdc`, and every roster row that names the surface ([[CLONE]] §7). Do not leave `{{surface tree}}` pointing at a missing tree. Surface stack tokens in [[adr-02-stack]] go away with that section.
+If there is no screen: delete in **one batch** The Warrior, `skills/hb-sk-surface-framework/`, `skills/hb-sk-component-framework/`, `.cursor/rules/section-articles.mdc`, the whole [[adr-04-frontend]] family, and every roster row that names the surface ([[CLONE]] §7). Do not leave `{{surface tree}}` pointing at a missing tree. Surface stack tokens in [[adr-02-stack]] go away with that section.
 
 ## 6 · What `AGENTS.md` still is after fill
 
@@ -320,6 +322,17 @@ Shared tokens appear in many files so the product name cannot drift. **Load** is
 | `{{REQ-DOMAIN-NN}}` / `{{requirement summary}}` / `{{open issues}}` / `{{closed issues}}` | `docs/REQ.md` | Optional REQ snapshot |
 | `{{ruleset id}}` | `scripts/apply_main_ruleset.py` | GitHub ruleset id |
 | `{{dev secret seed}}` | `.env.example` | Local secret seed (fake) |
+| `{{html fragment technology}}` | `adrs/adr-03.c-htmx.md` | HTMX, Hotwire, … — or **delete that sub** |
+| `{{boot sequence}}` | `adrs/adr-03.d-development.md` | Local service start chain |
+| `{{cache policy}}` | `adrs/adr-03.e-cache.md` | What cache exists / is refused |
+| `{{layout convention}}` | `adrs/adr-04.a-architecture.md` | Base/print (or this host's) layouts |
+| `{{interactivity ladder}}` | `adrs/adr-04.a-architecture.md` | Rungs: static / fragments / islands |
+| `{{token stylesheet}}` | `adrs/adr-04.b-design-system.md`, `adrs/adr-04.g-responsive.md` | Token CSS/path |
+| `{{theme persistence}}` | `adrs/adr-04.c-theming.md` | How theme is stored — or **delete that sub** |
+| `{{component catalog}}` | `adrs/adr-04.d-components.md` | Where existing components are listed |
+| `{{client fetch rule}}` | `adrs/adr-04.f-client-api.md` | SSR internal URL vs public host |
+
+The [[adr-03-backend]] parent and [[adr-04-frontend]] parent stay. Subs are invitations: rewrite them to the chosen stack or delete them in the same batch. Do not treat HTMX, Redis-or-not, or a three-rung ladder as locked — they are examples in those files.
 
 `{{prefix}}` is a string replace **and** a directory rename (`skills/hb-sk-contracts` → `skills/abc-sk-contracts`). Same batch as [[CLONE]] §3.
 
@@ -327,7 +340,7 @@ Shared tokens appear in many files so the product name cannot drift. **Load** is
 
 - Graphify is installed or you recorded why it could not be (`ensure` failed).
 - Shared ledger values are consistent across `AGENTS.md` / `CLAUDE.md` and the docs.
-- [[adr-02-stack]] names a real stack.
+- [[adr-02-stack]] names a real stack; [[adr-03-backend]] / [[adr-04-frontend]] are filled or their unused subs deleted.
 - The leftover `grep` in section 2 shows no live product slots.
 - `python3 -m pytest tests/ -q` is green.
 - [[CLONE]] steps 3–8 are done (prefix, trees, skills, remote).

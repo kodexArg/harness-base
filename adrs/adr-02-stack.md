@@ -2,7 +2,7 @@
 title: adr-02-stack
 type: adr
 status: active
-version: v0.1.0
+version: v0.1.2
 tags: [stack, service, surface, infrastructure, devops]
 description: "Defines the sanctioned conceptual technology stack across service, surface, infrastructure, and runtime toolchains. Ships as a placeholder: instantiation makes the decision."
 applies_when:
@@ -50,3 +50,5 @@ This file ships as a **placeholder template**. Every project instantiated from t
    - Local orchestration: `{{local runtime}}` with bind-mounted source directories ([[INFRASTRUCTURE]]).
    - Local configuration: a git-ignored `.env` mirrors the names declared in [[VARIABLES]].
    - Local testing: `{{test runner}}` on the service tree; the surface toolchain's test runner on the surface tree.
+
+Service rules in detail: the [[adr-03-backend]] family (fill, rewrite, or delete subs). Surface rules in detail: the [[adr-04-frontend]] family (delete the whole family if headless).

@@ -2,7 +2,7 @@
 title: Service Test-Driven Development instruction manual and TDD lifecycle
 type: reference
 status: active
-version: v0.1.0
+version: v0.1.2
 tags: [harness, tdd, service, testing]
 description: "Manual governing test-driven development workflows and specification authoring in docs/tdds/."
 applies_when:
@@ -10,6 +10,7 @@ applies_when:
   - When authoring TDD specifications under docs/tdds/.
 related_adrs:
   - adr-02-stack
+  - adr-03-backend
 ---
 # TDD — instruction manual for `docs/tdds/`
 

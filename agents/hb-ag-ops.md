@@ -22,6 +22,7 @@ tools:
   - Agent
 related_adrs:
   - adr-02-stack
+  - adr-03.d-development
 ---
 
 > 🧙 "The room is the spell. I do not write the play."

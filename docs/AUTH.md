@@ -2,7 +2,7 @@
 title: Authentication and authorization
 type: reference
 status: active
-version: v0.1.0
+version: v0.1.2
 tags: [auth, security, ssot]
 description: "Identity provider, session model, and the authorization pattern. Ships as a placeholder."
 applies_when:
@@ -10,6 +10,7 @@ applies_when:
   - When choosing where an authorization decision lives.
 related_adrs:
   - adr-02-stack
+  - adr-03-backend
 ---
 # AUTH
 

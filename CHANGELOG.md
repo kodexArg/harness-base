@@ -3,6 +3,12 @@
 Every change landing on `main` records an entry here in the same batch
 ([[adr-05-after-versioning]]). Version format: `vA.B.C`.
 
+## v0.1.2 — 2026-08-28
+
+Restore the backend (`adr-03` + subs) and frontend (`adr-04` + subs) ADR
+families as stack-agnostic templates: fill slots, rewrite technologies, delete
+subs this project does not use.
+
 ## v0.1.1 — 2026-08-28
 
 Incoming-agent fill-in map (`docs/ONBOARDING.md`): placeholder inventory by

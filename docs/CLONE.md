@@ -2,7 +2,7 @@
 title: Instantiation guide — a new project from harness-base
 type: reference
 status: active
-version: v0.1.1
+version: v0.1.2
 tags: [harness, clone, instantiation, template]
 description: "Operator steps to instantiate harness-base: copy, fill via ONBOARDING, prefix rename, stack decision, trees, first commit."
 applies_when:
@@ -11,6 +11,8 @@ applies_when:
 related_adrs:
   - adr-02-stack
   - adr-05-after-versioning
+  - adr-03-backend
+  - adr-04-frontend
 ---
 # CLONE — instantiating harness-base
 
@@ -67,9 +69,11 @@ stems.
 ## 4. Make the stack decision
 
 Fill `adrs/adr-02-stack.md` — it ships as the placeholder shape of the
-decision, not the decision. Choose the service stack, the surface stack (or
-delete that section), infrastructure, and the development variant. Record the
-pins in [[REQUIREMENTS]].
+decision, not the decision. Fill the [[adr-03-backend]] and [[adr-04-frontend]]
+families the same way: keep the parent, rewrite slots, **delete subs this
+project does not use**. Choose the service stack, the surface stack (or
+delete that section and the adr-04 family), infrastructure, and the
+development variant. Record the pins in [[REQUIREMENTS]].
 
 ## 5. Create the stack trees
 
@@ -95,10 +99,12 @@ skills table in the same batch.
 ## 7. Delete the surface agent if headless
 
 A headless project deletes, in one batch: `agents/hb-ag-surface.md`,
-`skills/hb-sk-surface-framework/`, `skills/hb-sk-component-framework/`, and
-every roster/dispatch row that names The Warrior ([[ADND-AGENTS]],
-[[ADND-DISPATCH]], [[HARNESS]], `AGENTS.md`, `tests/test_hb_ag_roster.py`).
-The Cleric then mediates between the caller and The Dwarf directly.
+`skills/hb-sk-surface-framework/`, `skills/hb-sk-component-framework/`,
+`.cursor/rules/section-articles.mdc`, the [[adr-04-frontend]] family (parent
+and every `adr-04.*` sub), and every roster/dispatch row that names The Warrior
+([[ADND-AGENTS]], [[ADND-DISPATCH]], [[HARNESS]], `AGENTS.md`,
+`tests/test_hb_ag_roster.py`). The Cleric then mediates between the caller and
+The Dwarf directly.
 
 ## 8. First commit and remote
 
