@@ -2,7 +2,7 @@
 title: Service architecture
 type: reference
 status: active
-version: v0.1.0
+version: v0.1.2
 tags: [services, architecture, ssot]
 description: "The service tree's architecture: layout, layering, domain modules, and conventions. Ships as a placeholder."
 applies_when:
@@ -10,6 +10,7 @@ applies_when:
   - When checking the service's layering and module conventions.
 related_adrs:
   - adr-02-stack
+  - adr-03-backend
 ---
 # SERVICES — service architecture
 

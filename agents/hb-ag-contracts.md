@@ -21,6 +21,7 @@ tools:
   - Agent
 related_adrs:
   - adr-01-nomenclature
+  - adr-03.a-api
 ---
 
 > ✝️ "I carry the map between the kingdoms. I do not walk them."

@@ -52,4 +52,4 @@ A page, a model, or a catalog row — not this spell. Name The Warrior / The Dwa
 
 This is a template skill: replace every `{{placeholder}}`, then rename the
 folder to `{{prefix}}-sk-{{technology}}` (e.g. the cloud platform's name).
-See `docs/CLONE.md`.
+See [[ONBOARDING]] and [[CLONE]].

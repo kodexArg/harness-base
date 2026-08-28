@@ -2,7 +2,7 @@
 title: GitHub repository conventions, branching, and issue workflows
 type: reference
 status: active
-version: v0.1.0
+version: v0.1.2
 tags: [harness, github, git, workflow, pr]
 description: "Establishes single-line main integration, branch naming, PR conventions, and GitHub CLI usage."
 applies_when:
@@ -203,6 +203,8 @@ Stamped by hand or by an issue-triage pass; they answer *where* and *how big*, n
 | `adr-00` | Governed by `adr-00` — a label dies with the ADR it names |
 | `adr-01` | Governed by `adr-01` — a label dies with the ADR it names |
 | `adr-02` | Governed by `adr-02` — a label dies with the ADR it names |
+| `adr-03` | Governed by `adr-03` — a label dies with the ADR it names |
+| `adr-04` | Governed by `adr-04` — a label dies with the ADR it names |
 | `adr-05` | Governed by `adr-05` — a label dies with the ADR it names |
 | `adr-07` | Governed by `adr-07` — a label dies with the ADR it names |
 | `adr-08` | Governed by `adr-08` — a label dies with the ADR it names |

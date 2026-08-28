@@ -2,7 +2,7 @@
 title: Product requirements
 type: reference
 status: active
-version: v0.1.0
+version: v0.1.1
 tags: [prd, product]
 description: "Defines the product, its users, purpose, core stories, and acceptance criteria. Ships as a fill-in template: instantiation replaces every placeholder."
 applies_when:
@@ -13,15 +13,15 @@ related_adrs:
 ---
 # PRD — {{project name}}
 
-This is the product constitution template. Every `{{placeholder}}` is filled at
-instantiation ([[CLONE]]); the section skeleton below is the shape every
-project's constitution keeps. Until it is filled, the harness treats this file
-as undecided product ground: agents read it first and find the questions, not
-the answers.
+This is the product constitution template. Every double-curly slot is filled at
+instantiation ([[ONBOARDING]], [[CLONE]]); the section skeleton below is the
+shape every project's constitution keeps. Until it is filled, the harness
+treats this file as undecided product ground: agents read it first and find the
+questions, not the answers.
 
 ## What are we building
 
-{{one paragraph naming the product: what it is, what it reads, what it serves}}
+{{product paragraph}}
 
 A {{product kind}} that:
 
@@ -38,8 +38,7 @@ A {{product kind}} that:
 
 ## What purpose it will have
 
-{{the purpose paragraph: what becomes shorter, safer, or possible; what the
-product deliberately does not replace}}
+{{purpose paragraph}}
 
 ## User stories
 

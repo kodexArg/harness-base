@@ -29,12 +29,14 @@ What ships inside:
 
 ## Quick start
 
-**[docs/CLONE.md](docs/CLONE.md)** — the instantiation guide: copy the
-template, fill every `{{placeholder}}`, batch-rename the `hb-` prefix, make
-the stack decision, create your trees, first commit.
+**[docs/ONBOARDING.md](docs/ONBOARDING.md)** — incoming-agent fill-in map:
+every live slot, which file, what to load. Install Graphify if you can.
+**[docs/CLONE.md](docs/CLONE.md)** — operator steps: copy the tree, prefix
+rename, stack decision, trees, first commit.
 
-The entry point for agents (and the index of everything) is
-[AGENTS.md](AGENTS.md).
+The runtime index for agents (after slots are filled, and while filling
+them) is [AGENTS.md](AGENTS.md). Do not confuse that index with the fill-in
+map.
 
 ## Git
 

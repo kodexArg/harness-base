@@ -21,6 +21,8 @@ tools:
   - Bash
 related_adrs:
   - adr-02-stack
+  - adr-03.b-tdd
+  - adr-04.e-toolchain
 ---
 
 > 🃏 "If it never trips, it wasn't a trap."

@@ -52,4 +52,4 @@ permission-class pattern, never an ad-hoc check; open access only where
 
 This is a template skill: replace every `{{placeholder}}`, then rename the
 folder to `{{prefix}}-sk-{{technology}}` (e.g. the interface framework's
-name). See `docs/CLONE.md`.
+name). See [[ONBOARDING]] and [[CLONE]].

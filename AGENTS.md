@@ -16,7 +16,7 @@ Read `docs/PRD.md` first. It is the product constitution. Then read `docs/INTERF
 
 Use this repository as the primary context. Read its contracts, docs, code, and tests before consulting external sources. When local sources disagree, name the conflict. Do not silently choose one.
 
-Load context narrowly. Start from this index, query the graph, and open only the files relevant to the task. Do not preload the harness.
+Load context narrowly. Start from this index, query the graph, and open only the files relevant to the task. Do not preload the harness. If double-curly slots remain in this clone, fill them from `docs/ONBOARDING.md` first — that file is the fill-in map; this file is the runtime index.
 
 Open `docs/DEVELOPMENT-LOOP.md` before changing code. Check the change against the PRD, applicable ADRs, and `docs/INTERFACES.md`.
 
@@ -62,14 +62,14 @@ Project contracts override generic external guidance. External research never ov
 
 ### 1. Repository orientation
 
-Use Graphify before filesystem exploration when `graphify-out/graph.json` exists.
+Use Graphify before filesystem exploration. Install it when the host can: `skills/kskill-graphify/bin/ensure` (needs `uv`; no LLM key for a code-only graph). Enable the project MCP server. Worktree sessions must approve Graphify in that worktree.
 
 - `query_graph` — find concepts, files, and dependency areas.
 - `get_node` — inspect one symbol or document node.
 - `get_neighbors` — find callers, parents, and dependencies.
 - `shortest_path` — trace a relationship between two known nodes.
 
-The project MCP declaration is `.mcp.json` → `mcp/mcp.json`. Graphify policy and maintenance commands are in `docs/GRAPHIFY.md` and `skills/kskill-graphify/SKILL.md`.
+The project MCP declaration is `.mcp.json` → `mcp/mcp.json`. Graphify policy: `docs/GRAPHIFY.md` and `skills/kskill-graphify/SKILL.md`.
 
 ### 2. Local files
 
@@ -131,4 +131,5 @@ Do not copy detailed procedures into this file. Update the owning SSOT and keep 
 - `docs/GRAPHIFY.md` / `docs/CODEMAP.md` — repository navigation.
 - `docs/TDD.md` — service inception and test lifecycle.
 - `docs/GITHUB.md` — repository delivery contract.
-- `docs/CLONE.md` — instantiation guide for this template.
+- `docs/CLONE.md` — operator copy, prefix rename, trees, first commit.
+- `docs/ONBOARDING.md` — incoming-agent fill-in map and placeholder inventory (not this index).

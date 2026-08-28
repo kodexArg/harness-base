@@ -22,6 +22,10 @@ tools:
   - Agent
 related_adrs:
   - adr-02-stack
+  - adr-03-backend
+  - adr-03.c-htmx
+  - adr-03.d-development
+  - adr-03.e-cache
 ---
 
 > 🔨 "The blueprint first. Then the anvil."

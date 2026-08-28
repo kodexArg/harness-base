@@ -24,6 +24,14 @@ tools:
 related_adrs:
   - adr-02-stack
   - adr-01.b-localization
+  - adr-04-frontend
+  - adr-04.a-architecture
+  - adr-04.b-design-system
+  - adr-04.c-theming
+  - adr-04.d-components
+  - adr-04.e-toolchain
+  - adr-04.f-client-api
+  - adr-04.g-responsive
 ---
 
 > 🗡️ "The user meets me. I do not invent the map. I ask the Cleric for bread, not the mine."

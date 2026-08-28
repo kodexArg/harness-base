@@ -2,7 +2,7 @@
 title: Canonical naming authority, terms, and forbidden forms
 type: reference
 status: active
-version: v0.1.0
+version: v0.1.1
 tags: [harness, glossary, ssot]
 description: "Canonical naming authority, terminology invariants, and forbidden forms across the codebase. Harness terms ship live; project terms are registered at instantiation."
 applies_when:
@@ -71,4 +71,4 @@ worked example.
 
 | Term | Canonical form | Applies to | Forbidden forms |
 |---|---|---|---|
-| {{example term}} | `{{canonical form}}` | {{scope}} | {{forbidden forms}} |
+| {{example term}} | `{{canonical form}}` | {{term applies to}} | {{forbidden forms}} |

@@ -52,4 +52,4 @@ An undeclared route in code is a defect. Do not invent routing doctrine — this
 ## Instantiation
 
 This is a template skill: replace every `{{placeholder}}`, then rename the
-folder to `{{prefix}}-sk-contracts`. See `docs/CLONE.md`.
+folder to `{{prefix}}-sk-contracts`. See [[ONBOARDING]] and [[CLONE]].

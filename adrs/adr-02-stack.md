@@ -2,7 +2,7 @@
 title: adr-02-stack
 type: adr
 status: active
-version: v0.1.0
+version: v0.1.2
 tags: [stack, service, surface, infrastructure, devops]
 description: "Defines the sanctioned conceptual technology stack across service, surface, infrastructure, and runtime toolchains. Ships as a placeholder: instantiation makes the decision."
 applies_when:
@@ -21,7 +21,7 @@ related_agents:
 
 > A clean, conceptual architectural stack establishes clear system boundaries, eliminates toolchain ambiguity, and keeps technical adoption lean and predictable across the repository.
 
-This file ships as a **placeholder template**. Every project instantiated from this harness makes this decision once, in this shape, and replaces each `{{placeholder}}` with the chosen component ([[CLONE]]). The sections below are the shape of the decision every project must make.
+This file ships as a **placeholder template**. Every project instantiated from this harness makes this decision once, in this shape, and replaces each double-curly slot with the chosen component ([[ONBOARDING]], [[CLONE]]). The sections below are the shape of the decision every project must make.
 
 1. **Stack authority.** This ADR defines the conceptual technology stack. Exact package pins, versions, check dates, and re-pin policies are strictly owned by [[REQUIREMENTS]].
 
@@ -50,3 +50,5 @@ This file ships as a **placeholder template**. Every project instantiated from t
    - Local orchestration: `{{local runtime}}` with bind-mounted source directories ([[INFRASTRUCTURE]]).
    - Local configuration: a git-ignored `.env` mirrors the names declared in [[VARIABLES]].
    - Local testing: `{{test runner}}` on the service tree; the surface toolchain's test runner on the surface tree.
+
+Service rules in detail: the [[adr-03-backend]] family (fill, rewrite, or delete subs). Surface rules in detail: the [[adr-04-frontend]] family (delete the whole family if headless).
