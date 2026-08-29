@@ -72,6 +72,10 @@ def test_scripts_are_real_and_executable() -> None:
         fail("update-graph does not fall back to ensure when the graph is missing")
     if "--code-only" not in update or "--out" not in update:
         fail("update-graph does not refresh with extract --code-only --out")
+    if "graphify_harness_docs.py" not in update:
+        fail("update-graph does not overlay harness markdown")
+    if "graphify_harness_docs.py" not in ensure:
+        fail("ensure does not overlay harness markdown after a first extract")
     if "uv tool install --upgrade" not in upgrade or "graphifyy" not in upgrade:
         fail("upgrade-cli does not upgrade graphifyy via uv")
     if "raw.githubusercontent.com/Graphify-Labs/graphify" not in fetch:

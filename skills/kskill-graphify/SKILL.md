@@ -48,11 +48,13 @@ are tracked; `cache/` is not.
    ```
    skills/kskill-graphify/bin/ensure           # CLI + code-only graph if missing
    skills/kskill-graphify/bin/extract          # semantic docs+harness (LLM key)
-   skills/kskill-graphify/bin/update-graph     # incremental AST --code-only
+   skills/kskill-graphify/bin/update-graph     # incremental AST --code-only + overlay
    skills/kskill-graphify/bin/upgrade-cli      # uv tool install --upgrade graphifyy
    skills/kskill-graphify/bin/fetch-upstream   # snapshot official SKILL.md
    ```
 
+   After `--code-only`, `scripts/graphify_harness_docs.py` overlays `docs/`,
+   `adrs/`, and `agents/` (no LLM key). Do not skip that pass.
    `GRAPHIFY_UPSTREAM_REF` (default `v8`) selects the GitHub ref
    for fetch-upstream.
 6. [[CODEMAP]] is a different graph. This skill does not write `docs/`.

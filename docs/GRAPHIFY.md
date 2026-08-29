@@ -2,7 +2,7 @@
 title: Graphify code graph exploration and MCP toolchain
 type: reference
 status: active
-version: v0.1.1
+version: v0.1.8
 tags: [harness, graphify, mcp, ast, graph]
 description: "Governs first-line codebase exploration using the on-device Graphify code graph via MCP."
 applies_when:
@@ -27,9 +27,12 @@ skills/kskill-graphify/bin/ensure
 ```
 
 That installs `graphifyy[mcp]` (needs `uv`) and builds a `--code-only`
-`graph.json` if it is missing. No LLM key. A semantic docs+harness extract
-(`skills/kskill-graphify/bin/extract`) is better when an LLM key is available;
-it is not required to start. Grep is only the path after `ensure` cannot run.
+`graph.json` if it is missing. No LLM key. After every AST extract,
+`scripts/graphify_harness_docs.py` overlays headings and stems from `docs/`,
+`adrs/`, `agents/`, and root `AGENTS.md` so `query_graph` can find the roster
+without an LLM key. A semantic extract (`skills/kskill-graphify/bin/extract`)
+is richer when a key is available; it is not required to start. Grep is only
+the path after `ensure` cannot run.
 
 ## MCP Integration
 
@@ -74,8 +77,8 @@ The server exposes ten tools. First-line for this repo: `query_graph`, `get_node
 
 | Script | Command | When |
 |---|---|---|
-| `scripts/graphify-update` | `uvx --from graphifyy graphify extract . --code-only` | Incremental AST refresh (`update-graph`). No LLM key. |
-| `scripts/graphify-extract` | `uvx --from graphifyy graphify extract .` | Semantic rebuild of docs and harness (`extract`). Needs an LLM key (`GEMINI_API_KEY` or `OPENAI_API_KEY`). Product trees stay out (`.graphifyignore`). |
+| `scripts/graphify-update` | AST `--code-only` then `scripts/graphify_harness_docs.py` | Incremental refresh (`update-graph`). No LLM key. |
+| `scripts/graphify-extract` | `uvx --from graphifyy graphify extract .` then the same overlay | Semantic rebuild (`extract`). Needs an LLM key. Product trees stay out (`.graphifyignore`). |
 | `skills/kskill-graphify/bin/ensure` | `uv tool install 'graphifyy[mcp]'` / ensure `graph.json` | Clone / session start bootstrap (`ensure`). |
 | `skills/kskill-graphify/bin/upgrade-cli` | `uv tool install --upgrade 'graphifyy[mcp]'` | Upgrade the host CLI (`upgrade-cli`). |
 | `skills/kskill-graphify/bin/fetch-upstream` | curl GitHub raw `graphify/skill.md` | Snapshot official skill for reference (`fetch-upstream`). |

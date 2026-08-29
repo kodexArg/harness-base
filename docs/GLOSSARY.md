@@ -2,7 +2,7 @@
 title: Canonical naming authority, terms, and forbidden forms
 type: reference
 status: active
-version: v0.1.4
+version: v0.1.8
 tags: [harness, glossary, ssot]
 description: "Canonical naming authority, terminology invariants, and forbidden forms across the codebase. Harness terms ship live; project terms are registered at instantiation."
 applies_when:
@@ -31,7 +31,7 @@ Canonical form and forbidden forms. Force: [[adr-01-nomenclature]].
 | defered | `defered` | ADR lifecycle status token ([[adr-00-adr-doctrine]]) | `deferred` — the token's spelling is intentional |
 | interface | `interface` | any route declared in [[INTERFACES]] | `endpoint` drift in prose; `route` (in catalog context) |
 | live-doc block | `live-doc block`, delimited `LIVE-DOC:START … LIVE-DOC:END` | the wikilinks-only region stamped at the top of every matched code file, linking it to the ADRs and docs that govern it ([[CODEMAP]], [[HARNESS]]); stamped only by the linker, never by hand | `docstring header`, `backlink header`, `doclink`, `frontmatter` (for this meaning); any block carrying prose instead of links |
-| Graphify | `Graphify` — the on-device code graph; first exploration mechanism when present ([[GRAPHIFY]], [[adr-35-graphify]]) | agent exploration of code and docs | treating [[CODEMAP]] as that graph; committing `graphify-out/cache/`; Grep-first while the graph is present |
+| Graphify | `Graphify` — the on-device graph; first exploration mechanism when present ([[GRAPHIFY]], [[adr-35-graphify]]). No-key graph is AST plus harness markdown overlay | agent exploration of code and docs | treating [[CODEMAP]] as that graph; committing `graphify-out/cache/`; Grep-first while the graph is present; requiring an LLM key to find `docs/` or `agents/` |
 | Graphify skill | `kskill-graphify` | vendored procedure for [[adr-35-graphify]]: query/path/explain, ensure (CLI + code-only graph after clone), extract, CLI upgrade, upstream skill snapshot. Scripts under `skills/kskill-graphify/bin/` | `graphify/` unprefixed; `npx skills add`; `graphify add <url>` |
 | guardian | `kbot-prd`, `kbot-adr`, `kbot-api` — SSOT-watching subagents | agent names, dispatch, docs | `watcher`, `checker`, ad-hoc renames without a row here |
 | harness kind prefix | `kskill-` / `hb-sk-` / `khook-` / `kbot-` / `hb-ag-` / `kwf-` | the mandatory first segment of every harness artifact's name, saying **what it is** before what it does: a reusable skill (`kskill-`), a **product** knowledge skill (`hb-sk-`), a hook, a lobe/guardian agent (`kbot-`), a **product** area-owner agent (`hb-ag-`), a member of the delivery party ([[HARNESS]]) | an unprefixed harness name; `kdx-` as a kind prefix (it names the author, not the kind); prefixing by stack; `hb-` with no `sk`/`ag` infix as a new artifact |

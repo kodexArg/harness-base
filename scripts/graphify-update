@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 uvx --from graphifyy graphify extract . --code-only
-echo "Graphify graph refreshed (AST code-only)"
+python3 "$ROOT/scripts/graphify_harness_docs.py"
+echo "Graphify graph refreshed (AST code-only + harness-docs overlay)"

@@ -2,7 +2,7 @@
 title: Harness inventory, vendored skills, and agent contracts
 type: reference
 status: active
-version: v0.1.6
+version: v0.1.8
 tags: [harness, skills, agents, ssot]
 description: "Complete inventory of vendored skills, kind prefixes, MCP policies, and agent definition contracts."
 applies_when:
@@ -141,7 +141,8 @@ This heading does not cover adding a rule or changing what a rule requires or fo
 
 This project vendors no MCP server. `mcp/mcp.json` (linked as `.mcp.json`) declares `graphify` (resolved by `uvx`, graph at `graphify-out/graph.json`) and `chrome-devtools` (resolved by `bunx`, pin in [[REQUIREMENTS]]).
 
-`docs/` is read with Grep, Glob and Read, like every other file in the tree.
+`docs/`, `adrs/`, and `agents/` headings are in the no-key graph via
+`scripts/graphify_harness_docs.py`. After `query_graph` names a file, Read it.
 
 ## Not vendored (intentionally)
 

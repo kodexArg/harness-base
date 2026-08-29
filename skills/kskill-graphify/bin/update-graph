@@ -9,4 +9,5 @@ if [[ ! -f "$GRAPH_JSON" ]]; then
 fi
 require_cli
 graphify extract . --out "$SKILL_DIR" --code-only
+python3 "$REPO_ROOT/scripts/graphify_harness_docs.py"
 echo "graph: $GRAPH_JSON"

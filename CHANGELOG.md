@@ -3,6 +3,12 @@
 Every change landing on `main` records an entry here in the same batch
 ([[adr-05-after-versioning]]). Version format: `vA.B.C`.
 
+## v0.1.8 — 2026-08-29
+
+Overlay `docs/`, `adrs/`, and `agents/` headings onto the no-key Graphify
+graph after every AST extract (`scripts/graphify_harness_docs.py`). Roster
+stems and titles become `query_graph` hits without an LLM key.
+
 ## v0.1.7 — 2026-08-29
 
 Sync the live GitHub label set to the catalog in `docs/GITHUB.md`
