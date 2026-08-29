@@ -3,7 +3,7 @@
 The `pr-harness` job runs each file as `python3 tests/test_<x>.py`
 (`.github/workflows/ci.yml`). A file with no `__main__` runner defines its
 tests, runs none, and exits 0 — green by not running. Three files were in that
-state when this was written (#597), one of them the guardian-availability suite
+state when this was written (#597), one of them a harness availability suite
 that #598 depends on.
 """
 

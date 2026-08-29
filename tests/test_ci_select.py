@@ -64,7 +64,7 @@ def test_tdds_force_full_service() -> None:
     if not sel.service or sel.service_args:
         fail("docs/tdds/ must force the full service suite")
     if sel.merge_gate:
-        fail("docs/tdds/ is not a guardian watchlist path")
+        fail("docs/tdds/ is not an SSOT watchlist path")
     ok("tdds force full service and skip merge-gate")
 
 
@@ -75,7 +75,7 @@ def test_ci_yml_keeps_dot_github() -> None:
     if "tests/test_every_test_file_runs.py" not in sel.harness_files:
         fail(f"ci.yml must map to the runner audit, got {sel}")
     if not sel.merge_gate:
-        fail("ci.yml is on kbot-prd and kbot-adr watchlists")
+        fail("ci.yml is on the prd and adr watchlists")
     ok("ci.yml path is not stripped and maps to its guards")
 
 
@@ -118,7 +118,7 @@ def test_agents_map_to_the_agent_guards() -> None:
         if expected not in sel.harness_files:
             fail(f"an agent change must select {expected}, got {sel.harness_files}")
     if not sel.merge_gate:
-        fail("an agent file is on the kbot-adr watchlist")
+        fail("an agent file is on the adr watchlist")
     ok("agents map to the agent guards")
 
 
@@ -154,18 +154,18 @@ def test_merge_gate_follows_watchlists() -> None:
         "service/billing/handlers.py",
     ]
     for path in watched:
-        if not check_merge_gate.guardians_for(path, watchlists):
+        if not check_merge_gate.ssots_for(path, watchlists):
             fail(f"fixture {path} must hit a watchlist")
         if not ci_select.classify([path]).merge_gate:
             fail(f"watched path {path} must run merge-gate")
     for path in unwatched:
-        if check_merge_gate.guardians_for(path, watchlists):
+        if check_merge_gate.ssots_for(path, watchlists):
             fail(f"fixture {path} must not hit a watchlist")
         if ci_select.classify([path]).merge_gate:
             fail(f"unwatched path {path} must not run merge-gate")
-    if not ci_select.classify(["scripts/guardian_watchlists.py"]).merge_gate:
+    if not ci_select.classify(["scripts/ssot_watchlists.py"]).merge_gate:
         fail("editing the watchlist module must run merge-gate")
-    ok("merge-gate job tracks guardian watchlists")
+    ok("merge-gate job tracks SSOT watchlists")
 
 
 def test_surface_test_file_selects_itself() -> None:

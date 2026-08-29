@@ -28,7 +28,7 @@ Owner: **`{{owner}}`**. Repo: **`{{repo}}`**. Repo protocol: SSH. CLI: `gh` (use
 |---|---|
 | **`main`** | The single line. Integration *and* production: every PR merges here, and every push here ships. |
 | **`feat/*`, `fix/*`, `refactor/*`, `docs/*`** | Human / workflow ephemeral branches cut from `main`, deleted upon merge. |
-| **`cursor/*`, `claude/*`, `agy/*`, `grok/*`, `kbot/*`, `kwf/*`** | Agent / IDE-generated ephemeral branches cut from `main`, subject to the same lifecycle and retention rule. |
+| **`cursor/*`, `claude/*`, `agy/*`, `grok/*`, `kwf/*`** | Agent / IDE-generated ephemeral branches cut from `main`, subject to the same lifecycle and retention rule. |
 
 **`main` is live.** There is no second branch between a merge and production — a merged PR is shipped. No `prod` branch exists, and recreating one is prohibited ([[adr-07-git]] rule 2). Forbidden branch name for default: `master` ([[GLOSSARY]]).
 
@@ -253,11 +253,11 @@ Stamped by the review routine — four agents, one label each, three states apie
 | `clean-observed` | Clean-code review: findings stand, nothing safe to commit |
 | `clean-applied` | Clean-code review: comment removals committed to this PR branch |
 
-Prefix by agent: prd- is `kbot-prd`, adr- is `kbot-adr`, api- is `kbot-api`, clean- is `kbot-cleancode`.
+Prefix by SSOT: `prd-` is the PRD pass, `adr-` the ADR pass, `api-` the interface pass, `clean-` the comment-clean pass.
 
 `clean-applied` replaces a failure state: this agent acts rather than objects, so its third state records that it committed comment removals to the PR branch. Twelve labels in total.
 
-These labels are **advisory and carry no gate force**. A `-fail` does not block a merge. An owner's merge order is not delayed by the `main` ruleset checks or by `pr-merge-gate` ([[adr-08-github]] rule 8). A verdict label is never a substitute for the `Guardian-Verdict:` line below, and the routine never writes that line: the label says an agent looked, the line says the owner process dispatched a guardian and recorded its answer.
+These labels are **advisory and carry no gate force**. A `-fail` does not block a merge. An owner's merge order is not delayed by the `main` ruleset checks or by `pr-merge-gate` ([[adr-08-github]] rule 8). A verdict label is never a substitute for the `Plan-Verdict:` line below, and the routine never writes that line: the label says a reviewer looked; the line says the owner process recorded SSOT conformance.
 
 ### Reading the signature (CI job `pr-merge-gate`)
 
@@ -271,32 +271,24 @@ Three states, and what each one means for whoever picks the change up:
 
 ## Merge-gate contract (CI job `pr-merge-gate`)
 
-> The PR body must record a conformance pass for every guardian whose watchlist a changed file hits. `scripts/check_merge_gate.py` enforces this. The job does not delay an owner merge.
+> The PR body must record a conformance pass for every SSOT whose watchlist a changed file hits. `scripts/check_merge_gate.py` enforces this. The job does not delay an owner merge.
 
-The PR body must record a conformance pass for every guardian whose watchlist a changed file hits. Enforced by `scripts/check_merge_gate.py`. `scripts/ci_select.py` turns this job on when a changed path hits those same watchlists, or when the gate scripts themselves change. This job verifies a **recorded** pass. It does not delay an owner merge ([[adr-08-github]] rule 7).
+The PR body must record a `Plan-Verdict:` line for every SSOT whose watchlist a changed file hits. Enforced by `scripts/check_merge_gate.py`. `scripts/ci_select.py` turns this job on when a changed path hits those same watchlists, or when the gate scripts themselves change. This job verifies a **recorded** pass. It does not delay an owner merge ([[adr-08-github]] rule 7).
 
 ### Exact lines (machine-parsed)
 
-One line per required guardian, unindented, outside any fence. **Two shapes satisfy a requirement**, and which one you use says who actually reviewed — that distinction is the point, not a formality:
+One line per required SSOT, unindented, outside any fence:
 
 ```
-Guardian-Verdict: <guardian>: <status>     # that guardian was dispatched and ran
-Plan-Verdict: <ssot>: <status>           # the party judged the PLAN for that SSOT
+Plan-Verdict: <ssot>: <status>
 ```
 
 | Field | Accepted values |
 |---|---|
-| `<guardian>` | `kbot-prd` · `kbot-adr` · `kbot-api` |
-| `<ssot>` | `prd` · `adr` · `api` — each records the guardian it answers to |
-| `<status>` | `pass` · `clear` · `compliant` · `valid` · `ok` · `drift` (case-insensitive), on either shape |
+| `<ssot>` | `prd` · `adr` · `api` |
+| `<status>` | `pass` · `clear` · `compliant` · `valid` · `ok` · `drift` (case-insensitive) |
 
 Examples that pass the gate:
-
-```
-Guardian-Verdict: kbot-adr: compliant
-Guardian-Verdict: kbot-api: valid
-Guardian-Verdict: kbot-prd: ok
-```
 
 ```
 Plan-Verdict: prd: ok
@@ -304,18 +296,16 @@ Plan-Verdict: adr: compliant
 Plan-Verdict: api: valid
 ```
 
-The second block is what a plan-time doctrine gate emits: familiars judge the **plan** — before a line is written — against the ADRs, [[PRD]] and this file ([[GLOSSARY]]: plan-time doctrine gate). A `Plan-Verdict:` line therefore says something narrower than a guardian's: it judged the plan, not the diff that followed. It **never** spells a guardian's agent name — no guardian ran, and claiming one did is the overstatement this file forbids; the gate rejects such a line outright. A guardian judging the diff itself remains a separate dispatch at the pull request.
-
-Prose that *mentions* a guardian without that exact line shape does **not** count. Zero watched files → the job passes trivially.
+A plan-time doctrine review emits these lines: the party judged the **plan** — before a line is written — against the ADRs, [[PRD]], and [[INTERFACES]] ([[GLOSSARY]]: plan-time doctrine gate). Prose that mentions an SSOT without that exact line shape does **not** count. Zero watched files → the job passes trivially. The review routine must never write this line ([[PR-REVIEW-ROUTINE]]).
 
 ### Frozen event payload
 
 CI reads the PR body from `GITHUB_EVENT_PATH` — a snapshot frozen at the event that **started** the run. Editing the PR body and re-running the failed job alone **replays the old body** and fails identically. Recovery:
 
-1. Put the exact `Guardian-Verdict:` lines in the PR body.
+1. Put the exact `Plan-Verdict:` lines in the PR body.
 2. Push a new commit on the PR branch (empty is fine: `git commit --allow-empty -m "chore: re-trigger merge-gate"`) so a **new** `pull_request` event re-snapshots the body.
 
-Do not rely on "Re-run failed jobs" after a body-only edit. Detail of the script: `scripts/check_merge_gate.py`; watchlist SSOT stays the guardian definitions + `scripts/guardian_watchlists.py`.
+Do not rely on "Re-run failed jobs" after a body-only edit. Detail of the script: `scripts/check_merge_gate.py`; watchlists live in `scripts/ssot_watchlists.py`.
 
 ## Git tags (releases)
 

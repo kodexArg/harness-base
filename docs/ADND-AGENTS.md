@@ -55,7 +55,7 @@ Specialist areas do not overlap. The sole execution exception is a parent-valida
 
 **The Elf is optional.** A headless project deletes `hb-ag-surface`, `hb-sk-surface-framework`, and `hb-sk-component-framework` in one batch ([[CLONE]]).
 
-These are not archived `kbot-*` lobes and not the `kwf-*` delivery party. `kwf-warrior` was the *service* builder of `triage-and-fix`; `kwf-archer` was the *surface* builder; `kwf-bard` was a publish node. Forbidden: unprefixed `warrior` / `archer` / `elf` / `cleric` / `trickster` / `bard`; restoring `The Archer` or `The Warrior` as a live title; restoring `kbot-*` builders.
+These are not the `kwf-*` delivery party. `kwf-warrior` was the *service* builder of `triage-and-fix`; `kwf-archer` was the *surface* builder; `kwf-bard` was a publish node. Forbidden: unprefixed `warrior` / `archer` / `elf` / `cleric` / `trickster` / `bard`; restoring `The Archer` or `The Warrior` as a live title.
 
 ## Each agent knows the others
 
@@ -72,7 +72,7 @@ Knows and may call:
 - **The Trickster** — TDD entry + failing tests after a new row; never product code.
 - **The Owl** — vendor documentation for a catalog or contract question.
 
-Does not write `{{service tree}}` or `{{surface tree}}`. Does not emit ABC verdicts — that is The Inquisitor (and, for *writing* `adrs/`, the guardian `kbot-adr`). Does not `git` / `gh` — that is The Bard.
+Does not write `{{service tree}}` or `{{surface tree}}`. Does not emit ABC verdicts — that is The Inquisitor. Writing `adrs/` is the parent session. Does not `git` / `gh` — that is The Bard.
 
 ### The Dwarf (`hb-ag-service`)
 
@@ -124,7 +124,7 @@ Knows: does not write `{{surface tree}}`, `{{service tree}}`, tests, or [[INTERF
 
 Quick-exit reports. If findings pile up: say remaining ~70% unexplored but this is enough. Full explore only if insisted. Prefer a lightweight high-context model at dispatch; agent `model:` stays `inherit` ([[HARNESS]]). **Not a merge gate.**
 
-**Not** the guardian `kbot-adr`. The guardian is dispatched when *writing* `adrs/` (watchlist in [[AGENTS]]). The Inquisitor is dispatched when *judging* a diff or an ADR claim. Does not spawn Dwarf / Elf / Trickster to "fix" a finding. Does not `git` / `gh`.
+Writing `adrs/` is the parent session. The Inquisitor is dispatched when *judging* a diff or an ADR claim. Does not spawn Dwarf / Elf / Trickster to "fix" a finding. Does not `git` / `gh`.
 
 ### The Trickster (`hb-ag-test`)
 
@@ -175,7 +175,7 @@ Does not know the area owners as someone to call. Does not Agent The Trickster w
 
 Knows: **no** `Agent`. Does not write product code, tests, ADRs, or touch git.
 
-## Guardians vs area owners
+## Roster vs product trees
 
 | Role | Stems | Writes product trees? |
 |---|---|---|
@@ -183,9 +183,8 @@ Knows: **no** `Agent`. Does not write product code, tests, ADRs, or touch git.
 | Small-task lane | `hb-ag-adventurer` | one eligible bounded implementation plus tests; no interfaces, ADRs, Git, secrets, or deployment |
 | Hunting party | `hb-ag-hunter`, `hb-ag-hawk`, `hb-ag-hound` | no — issues, existing-test repro, bulletin; Hound reads code, does not write it |
 | Universal web scout | `hb-ag-owl` | no — external web search and markdown findings reports |
-| Guardians | `kbot-prd`, `kbot-adr`, `kbot-api` | the watched SSOT they gate, per [[HARNESS]] |
 
-Do not dispatch a guardian to implement a screen. Do not dispatch The Cleric to emit `Guardian-Verdict:`.
+Do not dispatch The Cleric to emit `Plan-Verdict:`.
 
 ## First act (dispatched `hb-ag-*`)
 

@@ -23,7 +23,7 @@ _SCRIPTS = str(ROOT / "scripts")
 if _SCRIPTS not in sys.path:
     sys.path.insert(0, _SCRIPTS)
 
-from guardian_watchlists import matching_guardians
+from ssot_watchlists import matching_ssots
 
 HARNESS_DIR = ROOT / "tests"
 
@@ -47,7 +47,7 @@ SURFACE_CONTRACT_TESTS: tuple[str, ...] = ()
 MERGE_GATE_SELF = frozenset(
     {
         "scripts/check_merge_gate.py",
-        "scripts/guardian_watchlists.py",
+        "scripts/ssot_watchlists.py",
     }
 )
 
@@ -176,7 +176,6 @@ def _harness(files: list[str]) -> tuple[bool, list[str]]:
             relevant = True
             for t in (
                 "tests/test_agents_are_subagents.py",
-                "tests/test_guardian_identity_triangle.py",
                 "tests/test_hb_ag_roster.py",
                 "tests/test_agent_model_inherit.py",
                 "tests/test_tools_mcp_first.py",
@@ -261,7 +260,7 @@ def _harness(files: list[str]) -> tuple[bool, list[str]]:
 
 def _merge_gate(files: list[str]) -> bool:
     return any(
-        matching_guardians(p)
+        matching_ssots(p)
         or p in MERGE_GATE_SELF
         or p.startswith("scripts/check_merge_gate")
         for p in files

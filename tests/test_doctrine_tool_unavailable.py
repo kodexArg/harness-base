@@ -9,18 +9,6 @@ ROOT = Path(__file__).resolve().parents[1]
 AGENTS_DIR = ROOT / "agents"
 
 
-def test_guardians_declare_unavailable_status() -> None:
-    """A guardian whose declared tools are absent returns unavailable, never a verdict."""
-    guardians = ["kbot-prd.md", "kbot-adr.md", "kbot-api.md"]
-    for g in guardians:
-        path = AGENTS_DIR / g
-        if not path.is_file():
-            continue
-        content = path.read_text(encoding="utf-8")
-        assert "unavailable" in content, f"{g} must document status: unavailable"
-        assert "TOOL UNAVAILABLE:" in content, f"{g} must specify cause starting with TOOL UNAVAILABLE:"
-
-
 def test_familiars_declare_unavailable_status() -> None:
     """Familiars of kwf and kwf-cloud casts specify unavailable when their read tools are absent."""
     familiars = [
@@ -47,20 +35,14 @@ def test_unavailable_is_never_treated_as_a_verdict_by_gate() -> None:
     gate = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(gate)
 
-    for g in ("kbot-prd", "kbot-adr", "kbot-api"):
-        assert g not in gate.recorded_verdicts(f"Guardian-Verdict: {g}: unavailable\n")
-
     for ssot in ("prd", "adr", "api"):
-        assert gate.SSOT_GUARDIAN[ssot] not in gate.recorded_verdicts(f"Plan-Verdict: {ssot}: unavailable\n")
+        assert ssot not in gate.recorded_verdicts(f"Plan-Verdict: {ssot}: unavailable\n")
 
 
 def test_doctrine_judges_have_a_read_path_that_survives_the_mcp() -> None:
     """Every doctrine judge must hold Read: a judge that cannot open its SSOT and
     rules anyway returns a verdict shaped exactly like a real one (#598)."""
     judges = [
-        "kbot-prd.md",
-        "kbot-adr.md",
-        "kbot-api.md",
         "kwf-prd.md",
         "kwf-adr.md",
         "kwf-api.md",

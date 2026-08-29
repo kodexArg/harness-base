@@ -119,7 +119,7 @@ flowchart LR
 
 Skipping it is how two sessions find the same defect and repair it in parallel: one opens a PR and merges it, the other opens a second PR and throws both away. Neither could have known. A claim is not a lock and nothing enforces it. It is a signal, and it only works because the next session reads it before choosing what to open.
 
-The tail `Open PR → gate → merge → delete worktree` is the close of every loop that follows; each §-loop renders only its own middle, entered after the issue and exited into the PR. SSOTs: [[adr-07-git]] · [[adr-08-github]] · [[GITHUB]] · guardians (`kbot-prd`/`-adr`/`-api`).
+The tail `Open PR → gate → merge → delete worktree` is the close of every loop that follows; each §-loop renders only its own middle, entered after the issue and exited into the PR. SSOTs: [[adr-07-git]] · [[adr-08-github]] · [[GITHUB]] · [[PRD]] / ADRs / [[INTERFACES]] via `Plan-Verdict:` ([[GITHUB]]).
 
 ## 1 · Use case — a user-facing feature
 
@@ -145,12 +145,12 @@ flowchart TD
     FE --> VER["Verify — 3 layers:<br/>surface check typecheck agent<br/>surface build prod bundle agent exit 0 required<br/>browser smoke operator-only"]
     VER --> LD["Stamp live-doc + CODEMAP"]
     LD --> GRD{"Touched PRD / ADR / INTERFACES surface?"}
-    GRD -->|yes| GUARD["Engage guardian(s)"]
+    GRD -->|yes| VERDICT["Record Plan-Verdict for the hit SSOTs"]
     GRD -->|no| PR["PR tail — §0.5:<br/>open PR → gate → merge → delete worktree"]
-    GUARD --> PR
+    VERDICT --> PR
 ```
 
-SSOTs per step: the surface architecture doc · [[INTERFACES]] · [[CODEMAP]] · guardians (`kbot-prd`/`-adr`/`-api`) · [[GITHUB]].
+SSOTs per step: the surface architecture doc · [[INTERFACES]] · [[CODEMAP]] · `Plan-Verdict:` for hit SSOTs ([[GITHUB]]) · [[GITHUB]].
 
 ## 2 · Use case — a new service interface
 
@@ -160,7 +160,7 @@ SSOTs per step: the surface architecture doc · [[INTERFACES]] · [[CODEMAP]] ·
 flowchart TD
     N(["Service need"]) --> Q{"Already declared in INTERFACES?"}
     Q -->|yes| REUSE(["Reuse interface — no new row"])
-    Q -->|no| ROW["The Cleric adds the INTERFACES.md row<br/>engage kbot-api"]
+    Q -->|no| ROW["The Cleric adds the INTERFACES.md row"]
     ROW --> PLAN["The Trickster: TDD entry + failing tests<br/>hb-sk-tdd / hb-sk-test-runner"]
     PLAN --> MODELS["The Dwarf: models then handlers"]
     MODELS --> GREEN["The Trickster greens"]
@@ -169,11 +169,11 @@ flowchart TD
     VARS -->|no| CHK{"Checkpoint: INTERFACES solves the need?"}
     VDOC --> CHK
     CHK -->|no| Q
-    CHK -->|yes| GUARD["Guardians: api + adr"]
-    GUARD --> PR(["PR tail — §0.5:<br/>The Bard: open PR → merge → delete worktree"])
+    CHK -->|yes| VERDICT["Plan-Verdict: api and adr"]
+    VERDICT --> PR(["PR tail — §0.5:<br/>The Bard: open PR → merge → delete worktree"])
 ```
 
-SSOTs per step: [[INTERFACES]] · [[TDD]] · [[SERVICES]] · [[VARIABLES]] · [[CODEMAP]] · guardians (`kbot-prd`/`-adr`/`-api`).
+SSOTs per step: [[INTERFACES]] · [[TDD]] · [[SERVICES]] · [[VARIABLES]] · [[CODEMAP]] · `Plan-Verdict:` for hit SSOTs ([[GITHUB]]).
 
 ## 3 · Use case — pure Python business logic or a complex script
 
@@ -197,9 +197,9 @@ SSOTs per step: [[SERVICES]] · [[TDD]] · [[REQUIREMENTS]] · [[GLOSSARY]]. The
 
 ## 4 · Use case — a docs / doctrine change
 
-> Docs are the product here. ADR rule changes run the supersession lifecycle; the matching guardian is engaged before the batch closes.
+> Docs are the product here. ADR rule changes run the supersession lifecycle; the matching `Plan-Verdict:` is recorded before the batch closes.
 
-Here the docs *are* the product. An ADR rule change runs the supersession lifecycle ([[adr-00-adr-doctrine]]); prose is reached by path; the matching guardian is engaged before the batch closes.
+Here the docs *are* the product. An ADR rule change runs the supersession lifecycle ([[adr-00-adr-doctrine]]); prose is reached by path; the matching `Plan-Verdict:` is recorded before the batch closes.
 
 ```mermaid
 flowchart TD
@@ -207,19 +207,18 @@ flowchart TD
     W -->|ADR rule| ADR["Supersession check, adr-00<br/>semantic → new ADR, defer old"]
     W -->|docs prose / wikilinks| PROSE["Edit by path"]
     W -->|PRD / AGENTS| PRDN["Edit PRD / AGENTS"]
-    ADR --> GUARD{"Engage the matching guardian"}
-    PROSE --> GUARD
-    PRDN --> GUARD
-    GUARD -->|ADR / governed file| GA["kbot-adr"]
-    GUARD -->|PRD / goal| GP["kbot-prd"]
-    GUARD -->|INTERFACES| GI["kbot-api"]
-    GA --> NOTIFY["Honor each guardian's notify list"]
-    GP --> NOTIFY
-    GI --> NOTIFY
-    NOTIFY --> PR(["PR tail — §0.5:<br/>open PR → gate → merge → delete worktree"])
+    ADR --> GATE{"Record Plan-Verdict for the matching SSOT"}
+    PROSE --> GATE
+    PRDN --> GATE
+    GATE -->|ADR / governed file| GA["Plan-Verdict: adr"]
+    GATE -->|PRD / goal| GP["Plan-Verdict: prd"]
+    GATE -->|INTERFACES| GI["Plan-Verdict: api"]
+    GA --> PR(["PR tail — §0.5:<br/>open PR → gate → merge → delete worktree"])
+    GP --> PR
+    GI --> PR
 ```
 
-SSOTs per step: [[adr-00-adr-doctrine]] · guardians (`kbot-prd`/`-adr`/`-api`) · [[GLOSSARY]] (a new name gets its row first) · [[GITHUB]].
+SSOTs per step: [[adr-00-adr-doctrine]] · `Plan-Verdict:` ([[GITHUB]]) · [[GLOSSARY]] (a new name gets its row first) · [[GITHUB]].
 
 ## Variants
 

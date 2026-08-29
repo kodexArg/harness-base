@@ -21,7 +21,7 @@ related_agents:
 
 2. **No persistent release or production branches.** A `prod`, `release`, or `staging` branch carries no authority, holds no deploy trust, and is strictly prohibited from creation or recreation.
 
-3. **Ephemeral working branches.** All non-direct work occurs on short-lived branches cut exclusively from `main`. This includes functional prefixes (`feat/*`, `fix/*`, `refactor/*`, `docs/*`, `test/*`, `chore/*`) and agent/tooling branches (`cursor/*`, `claude/*`, `agy/*`, `grok/*`, `kbot/*`, `kwf/*`). All working branches are strictly ephemeral, governed by the retention rule ([[GITHUB]]), and must be deleted immediately upon merge.
+3. **Ephemeral working branches.** All non-direct work occurs on short-lived branches cut exclusively from `main`. This includes functional prefixes (`feat/*`, `fix/*`, `refactor/*`, `docs/*`, `test/*`, `chore/*`) and agent/tooling branches (`cursor/*`, `claude/*`, `agy/*`, `grok/*`, `kwf/*`). All working branches are strictly ephemeral, governed by the retention rule ([[GITHUB]]), and must be deleted immediately upon merge.
 
 4. **Scoped commit discipline.** Commit messages follow modern scoped conventional formatting: `type(scope): concise imperative subject [trailer]`.
    - **Types:** `feat`, `fix`, `refactor`, `docs`, `test`, `chore`, and `release`.

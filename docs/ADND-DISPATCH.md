@@ -62,7 +62,7 @@ Classify the **user's ask**, not the files you wish were in scope. First check w
 | Cloud services, load balancing, secret-store names | The Wizard | Dispatch. Not The Dwarf. Do not invent infrastructure the layout lacks |
 | "Does this PR / plan / diff comply with PRD, ADRs, or INTERFACES?" | The Inquisitor | Quick-exit report. Do not author a fix. Parent may load `hb-sk-abc`; Inquisitor does not |
 | "Does this comply with adr-NN?" / about to assert ADR compliance | The Inquisitor | Area owner must **call**. Do not self-certify |
-| Writing `adrs/` itself | guardian `kbot-adr` | Not The Inquisitor. Watchlist in [[AGENTS]] |
+| Writing `adrs/` itself | parent session | Not The Inquisitor |
 | `git`, `gh`, commit, push, PR, merge | The Bard | Quick-exit. No area owner. Bard does not patch product trees while shipping. Issue hunt is not this row |
 | Lowest-numbered issue, issue triage, issue forensics, hunter bulletin | The Hunter | Parallel Hawk + Hound (`scout`). Immediate existing-test repro (quick-exit). Bulletin. **Never** an area owner |
 | External web documentation, vendor API lookup, package changelog, error search | The Owl | Return structured markdown findings report. Universal scout for all agents. No codebase writes |
@@ -216,7 +216,7 @@ flowchart TD
 
 Area owners **call** this graph when they would otherwise write "this follows the ADRs" without an interrogation. The Inquisitor does not load `hb-sk-abc`; the **parent** may. Do not patch in that turn. Prefer a lightweight high-context model at dispatch; `model: inherit` in the agent file.
 
-`prd-fail` / `adr-fail` / `api-fail` **report**. They do not block an owner merge. A `Guardian-Verdict:` line is not a review label and is not The Inquisitor's to write ([[AGENTS]], [[PR-REVIEW-ROUTINE]]).
+`prd-fail` / `adr-fail` / `api-fail` **report**. They do not block an owner merge. A `Plan-Verdict:` line is not a review label and is not The Inquisitor's to write ([[AGENTS]], [[PR-REVIEW-ROUTINE]]).
 
 ## Graph — Bard (git / GitHub)
 

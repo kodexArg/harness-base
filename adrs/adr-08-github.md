@@ -34,6 +34,6 @@ related_agents:
 
 6. **Canonical label taxonomy.** Issue and PR labels are only the fixed set in [[GITHUB]]. Arbitrary ad-hoc label invention is prohibited. Scoring vocabulary, when used, is [[ISSUE-TRIAGE]].
 
-7. **Advisory review routine.** Automated review passes (`kbot-prd`, `kbot-adr`, `kbot-api`, `kbot-cleancode`) provide non-blocking advisory feedback and labels on open PRs.
+7. **Advisory review routine.** Automated review passes on [[PRD]], the ADRs, [[INTERFACES]], and comment cleanliness provide non-blocking advisory feedback and labels on open PRs.
 
 8. **Operator administrative bypass.** When the repository owner explicitly orders a merge, push, or deploy, the operator PAT executes `gh pr merge --admin` without waiting on pending or paused CI checks.

@@ -3,9 +3,8 @@
 
 HARNESS.md carries a standing decision (2026-07-18, upstream issue #321):
 every agent under `agents/` runs as a dispatched subagent, never an agent-team
-teammate. For guardians the reason is doctrinal — the teammate mechanism's
-direct inter-agent mailbox is a second sibling-notification conduit, which the
-guardian-dispatch rule in AGENTS.md forbids.
+teammate. The teammate mechanism's direct inter-agent mailbox is a second
+sibling-notification conduit, which the dispatch rules in AGENTS.md forbid.
 
 The decision used to be written as "and CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS
 is not set". That half was unenforceable and, when checked, false: the flag
@@ -88,9 +87,8 @@ def main() -> int:
             fail(
                 f"{rel} declares itself a teammate. Every agent under agents/ "
                 "is a dispatched subagent (HARNESS standing decision, upstream "
-                "#321); for a guardian this also breaks the guardian-dispatch "
-                "rule in AGENTS.md, since a teammate mailbox is a second "
-                "sibling-notification conduit."
+                "#321); a teammate mailbox is a second sibling-notification "
+                "conduit forbidden by AGENTS.md."
             )
 
         for key in TEAMMATE_ONLY_KEYS:

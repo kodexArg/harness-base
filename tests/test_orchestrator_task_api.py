@@ -7,7 +7,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SKILL = ROOT / "skills" / "kskill-orchestrator" / "SKILL.md"
 TEAMS = ROOT / "skills" / "kskill-orchestrator" / "references" / "agent-teams.md"
-LOW = ROOT / "agents" / "kbot-low.md"
 
 try:
     import pytest
@@ -78,25 +77,6 @@ def test_agent_teams_does_not_promise_a_shared_task_list() -> None:
     if "agentId" not in text:
         fail("agent-teams.md does not tell the lead to capture agentId")
     ok("agent-teams.md sequences on the lead side and addresses agentId")
-
-
-def test_kbot_low_has_no_shell() -> None:
-    _require_vendored()
-    skill = SKILL.read_text(encoding="utf-8")
-    if "**No Bash**" not in skill:
-        fail("SKILL.md tier table does not say kbot-low has no Bash")
-    if "kbot-medium" not in skill or "shell" not in skill.lower():
-        fail("SKILL.md does not route shell-needing reads to kbot-medium")
-    low = LOW.read_text(encoding="utf-8")
-    tools = re.search(r"^tools:\n((?:  - .+\n)+)", low, re.M)
-    if not tools:
-        fail("agents/kbot-low.md has no tools block")
-    names = {line.strip()[2:] for line in tools.group(1).splitlines() if line.strip()}
-    if "Bash" in names:
-        fail("agents/kbot-low.md lists Bash")
-    if "No Bash" not in low:
-        fail("agents/kbot-low.md body does not say No Bash")
-    ok("kbot-low has no Bash; shell-needing reads go to kbot-medium")
 
 
 def main() -> int:

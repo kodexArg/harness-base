@@ -1,8 +1,8 @@
-"""Guardian watchlists. One of two copies; the other is each guardian's Watchlist section.
+#!/usr/bin/env python3
+"""SSOT watchlists for the merge-gate job.
 
-Instantiation ([[CLONE]]): add this project's route-surface globs to
-`kbot-api` (the service's route/handler file shapes) and its manifest globs
-to `kbot-adr` (the package manifests the stack decision pins).
+Instantiation ([[CLONE]]): add this project's route-surface globs to `api`
+and its package-manifest globs to `adr`.
 """
 
 from __future__ import annotations
@@ -10,14 +10,14 @@ from __future__ import annotations
 import fnmatch
 
 WATCHLISTS = {
-    "kbot-prd": (
+    "prd": (
         "docs/PRD.md",
         "AGENTS.md",
         "CLAUDE.md",
         "README.md",
         ".github/workflows/*",
     ),
-    "kbot-adr": (
+    "adr": (
         "agents/*",
         ".claude/rules/*",
         "adrs/*",
@@ -28,22 +28,22 @@ WATCHLISTS = {
         "docs/VARIABLES.md",
         "CHANGELOG.md",
     ),
-    "kbot-api": (
+    "api": (
         "docs/INTERFACES.md",
         "docs/contracts/*",
     ),
 }
 
 
-def matching_guardians(rel: str, watchlists: dict | None = None) -> list[str]:
-    """Return guardian names whose watchlist glob hits `rel`."""
+def matching_ssots(rel: str, watchlists: dict | None = None) -> list[str]:
+    """Return SSOT keys whose watchlist glob hits `rel`."""
     lists = WATCHLISTS if watchlists is None else watchlists
     hits: list[str] = []
-    for agent, patterns in lists.items():
+    for ssot, patterns in lists.items():
         for pattern in patterns:
             if fnmatch.fnmatch(rel, pattern) or fnmatch.fnmatch(
                 rel, pattern.rstrip("*") + "*"
             ):
-                hits.append(agent)
+                hits.append(ssot)
                 break
     return hits
