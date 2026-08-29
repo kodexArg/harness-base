@@ -2,13 +2,14 @@
 title: Generic issue triage nomenclature
 type: reference
 status: active
-version: v0.1.0
+version: v0.1.4
 tags: [harness, github, issues, triage]
-description: "Generic three-axis issue scoring vocabulary — severity, collateral, effort — used when an issue is triaged; not an ADR rule."
+description: "Three-axis issue scoring vocabulary and the bounded Adventurer single-agent eligibility calculation."
 applies_when:
   - When scoring an issue as triaged versus leaving it untriaged.
   - When reading historical issues that carry mixed label glyphs.
   - When deciding autonomous versus supervised merge from issue labels.
+  - When deciding whether a small task qualifies for The Adventurer.
 related_adrs:
   - adr-08-github
 ---
@@ -36,6 +37,16 @@ Canonical label stems: `severity:N`, `collateral:N`, `effort:N`. Prefer the sing
 
 At least one of: `service`, `surface`, `infra-cicd`, `harness`. More than one is allowed.
 
+## Adventurer lane
+
+A task is a score candidate for The Adventurer (`hb-ag-adventurer`) when it has one score on every axis and:
+
+`severity + collateral + effort < 5`
+
+Because each axis has a minimum of `1`, this permits only `1/1/1` and permutations of `2/1/1`; an axis at `3` necessarily makes the total at least `5`. The explicit checks are therefore **total below 5** and **no axis above 2**.
+
+The parent dispatches this lane from a completed triage card or Hunter bulletin. The Hunter records the scores but does not call a builder. Missing scores, a total of `5+`, an axis at `3`, an unresolved decision, or an excluded governance boundary returns the task to normal [[ADND-DISPATCH]].
+
 ## Optional, only if clearly true
 
 Type and qualifier labels from the [[GITHUB]] fixed set (`bug`, `feat`, `enhancement`, `docs`, `tech-debt`, `security`, `performance`, `needs-repro`, `needs-design`, `complex`, …). ADR labels (`📜 adr` plus `adr-NN`) only when an existing ADR governs the work.
@@ -44,3 +55,4 @@ Type and qualifier labels from the [[GITHUB]] fixed set (`bug`, `feat`, `enhance
 
 - Not a requirement to score every issue. Both scored and unscored issues are valid.
 - Not merge authorization. The three-tier model (triaged / untriaged / orphan) is [[adr-08-github]] rule 3; this file only names the scores that make an issue triaged.
+- Not permission to bypass [[INTERFACES]], ADR, Git/GitHub, secret, or deployment ownership. The Adventurer's agent contract closes those boundaries.

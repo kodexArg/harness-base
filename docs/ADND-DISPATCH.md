@@ -2,12 +2,12 @@
 title: Soft dispatch graphs — prompt class to hb-ag-* handoff
 type: reference
 status: active
-version: v0.1.3
+version: v0.1.4
 tags: [harness, agents, dispatch]
 description: "Soft, host-agnostic graphs: given a user prompt class, which hb-ag-* goes first and whom they call. Included from ADND-AGENTS."
 applies_when:
   - When a user prompt could belong to more than one area owner.
-  - When deciding the next Agent call among Cleric, Dwarf, Elf, Wizard, Inquisitor, Trickster, Bard.
+  - When deciding between The Adventurer, The Paladin, or a specialist owner.
 related_adrs:
   - adr-01-nomenclature
   - adr-02-stack
@@ -21,35 +21,41 @@ related_adrs:
 
 **Soft:** a parent or subagent is expected to follow these graphs. It is not a hard `agentType` resolver. Do not hand-dispatch archived `kwf-*` nodes from here.
 
-**Host-agnostic:** the node labels are stems (`hb-ag-contracts`, `hb-ag-service`, `hb-ag-surface`, `hb-ag-ops`, `hb-ag-judge`, `hb-ag-test`, `hb-ag-git`, `hb-ag-hunter`, `hb-ag-hawk`, `hb-ag-hound`). Where the host has no native type for a stem, the parent loads `agents/<stem>.md` and still obeys the graph.
+**Host-agnostic:** the node labels are stems (`hb-ag-contracts`, `hb-ag-service`, `hb-ag-paladin`, `hb-ag-surface`, `hb-ag-ops`, `hb-ag-judge`, `hb-ag-test`, `hb-ag-adventurer`, `hb-ag-git`, `hb-ag-hunter`, `hb-ag-hawk`, `hb-ag-hound`). Where the host has no native type for a stem, the parent loads `agents/<stem>.md` and still obeys the graph.
 
-The development loop (idea → [[INTERFACES]] → TDD → screen) remains [[DEVELOPMENT-LOOP]]. These graphs name **which agent** walks each step.
+The development loop remains [[DEVELOPMENT-LOOP]]. These graphs name **which agent** walks each step, including the Paladin's implementation-first pure-Python path and the Adventurer's one-agent small-task lane.
 
 ## Recursion (always)
 
 - **The Cleric** has `Agent` (Dwarf, Elf, Trickster). After the catalog hunk: call the next owner, or return the row / adaptation instruction.
+- **The Paladin** has `Agent` (Trickster only, after implementation). Never Cleric or Elf.
+- **The Adventurer** has no `Agent`. The parent dispatches it; it finishes or returns `ADVENTURER STOP`.
 - **The Trickster** has no `Agent`. Returns the traps. Does not spawn Dwarf / Elf to "fix" a red.
 - **The Inquisitor** has no product `Write` and does not spawn builders to "fix" a finding. Returns the named rule. Not a merge gate.
 - **The Bard** has no `Agent`. Does not write app code while shipping. Does not spawn builders to "fix" a red on the way to `main`.
 - **The Hunter** has `Agent` (Hawk, Hound only). Does not Agent area owners. Does not spawn a builder to "fix" the issue.
 - **The Hawk** and **The Hound** have no `Agent`. They return a pack to The Hunter.
 - Do not nest two Inquisitor calls.
-- **Elf never Agents Dwarf. Dwarf never Agents Elf.** Only The Cleric carries messages both ways.
+- **Elf never Agents Dwarf. Dwarf never Agents Elf.** Only The Cleric carries messages both ways. The Paladin is not a third hop.
+- **Dwarf may Agent Paladin** only for framework-neutral Python business logic or a complex script core, before the Dwarf's TDD path.
 - One missing-row trip to The Cleric per need. Do not edit [[INTERFACES]] from Dwarf, Elf, or Trickster.
 - **git / PR / merge → Bard.** No area owner may `git` or `gh`. The hunting party may `gh` issues only. Their Bash is not a loophole.
 - **Issue hunt → Hunter.** Area owners do not Agent the hunting party. The hunting party does not Agent area owners.
+- **Adventurer lane → parent only.** The Hunter records triage but does not call The Adventurer. No specialist calls The Adventurer, and The Adventurer calls nobody.
 
 ## Prompt class → first agent
 
-Classify the **user's ask**, not the files you wish were in scope. Then follow the matching graph.
+Classify the **user's ask**, not the files you wish were in scope. First check whether the parent has a complete [[ISSUE-TRIAGE]] card. If all three scores total less than `5`, none exceeds `2`, the goal is bounded, and no interface/contract, ADR, Git/GitHub, secret, or deployment change is required, dispatch The Adventurer **instead of** the specialist graph. Otherwise follow the matching specialist row.
 
 | Prompt class | First agent | Then if |
 |---|---|---|
+| Eligible triage: `severity + collateral + effort < 5`, no axis `>2`, no excluded boundary | The Adventurer | One agent writes implementation + tests and verifies. Scope grows → stop and name owner; **never** Agent |
+| Framework-neutral Python business rule, calculation, policy, transformation, algorithm, or complex script core | The Paladin | Implement first → Trickster writes tests afterward. No API/frontend. Never Cleric or Elf |
 | New/changed page, component, tokens, surface UI | The Elf | Interface content needed → Cleric (not framework, not paths). Tests → Trickster. **Never** Dwarf. ABC/ADR claim → Inquisitor |
-| New/changed model, handler, permission, domain service | The Dwarf | Row missing → Cleric. Tests / `docs/tdds/` → Trickster. **Never** Elf. ABC/ADR claim → Inquisitor |
+| New/changed framework model, persistence, handler, permission, route, or adapter | The Dwarf | Pure core → Paladin before TDD. Row missing → Cleric. Tests / `docs/tdds/` → Trickster. **Never** Elf. ABC/ADR claim → Inquisitor |
 | Add/change/retire an interface **row** or `docs/contracts/` | The Cleric | Translate to a six-column row and/or request Dwarf; return the contract or "adapt" to Elf |
 | Elf asks for **interfaces** (fields, page, UI need) | The Cleric | If already computable from served data: tell Elf to adapt (no row). If new: row, then Trickster (TDD) then Dwarf |
-| `docs/tdds/`, service tests, surface tests, harness tests | The Trickster | Write the traps; return. Parent (or Cleric) sends Dwarf / Elf to implement. Trickster does not spawn them |
+| `docs/tdds/`, service tests, surface tests, harness tests | The Trickster | Write the traps; return. Paladin tests are after implementation. Adventurer writes its own eligible-task tests. Trickster does not spawn builders |
 | Local orchestration file, profiles, bind-mounts, ports | The Wizard | Dispatch. Not The Dwarf |
 | Cloud services, load balancing, secret-store names | The Wizard | Dispatch. Not The Dwarf. Do not invent infrastructure the layout lacks |
 | "Does this PR / plan / diff comply with PRD, ADRs, or INTERFACES?" | The Inquisitor | Quick-exit report. Do not author a fix. Parent may load `hb-sk-abc`; Inquisitor does not |
@@ -111,7 +117,41 @@ flowchart TD
   t -->|greens / adds more| done[green]
 ```
 
-The Dwarf never writes tests or TDD entries. Other agents are forbidden from writing tests. The Trickster cannot give face (no UI, not the product). Surface tests: after The Elf builds, The Trickster may use `hb-sk-surface-framework`.
+The Dwarf never writes tests or TDD entries. The Trickster is the dedicated test writer; a validated Adventurer lease is the sole exception. The Trickster cannot give face (no UI, not the product). Surface tests: after The Elf builds, The Trickster may use `hb-sk-surface-framework`.
+
+## Graph — Paladin (implementation, then tests)
+
+```mermaid
+flowchart TD
+  p[Prompt: pure Python business logic or complex script]
+  pal[The Paladin]
+  t[The Trickster]
+  p --> pal
+  pal -->|implement surgical pure core| done[implementation]
+  done -->|"afterward: paths + invariants + edge cases"| t
+  t -->|focused tests| green[verified]
+```
+
+The Paladin owns only framework-neutral Python logic. A framework, ORM, HTTP, UI, cloud, or deployment dependency returns the work to the parent. No TDD entry is backfilled. The Paladin may Agent The Trickster after implementation; never The Cleric or The Elf.
+
+## Graph — Adventurer (one-agent lane)
+
+```mermaid
+flowchart TD
+  card[Complete triage card]
+  gate{"sum < 5<br/>no axis > 2<br/>no excluded boundary"}
+  adv[The Adventurer<br/>broad context · default effort]
+  work[implementation + tests + verification]
+  stop[ADVENTURER STOP<br/>name owner, call nobody]
+  card --> gate
+  gate -->|yes| adv
+  gate -->|no| stop
+  adv --> work
+  work -->|"scope remains eligible"| done[return complete slice]
+  work -->|"score rises or boundary appears"| stop
+```
+
+The parent alone opens this lane, including from a Hunter bulletin. The valid score shapes are `1/1/1` and permutations of `2/1/1`. The Adventurer has no `Agent`, does not use Git/GitHub, and cannot change interfaces/contracts, ADRs, secret values, or deployment state.
 
 ## Graph — catalog only
 
@@ -131,15 +171,19 @@ The Cleric does not write routes or pages.
 ```mermaid
 flowchart TD
   p[Prompt: service change]
+  q{Framework-neutral<br/>Python core?}
+  pal[The Paladin]
   d[The Dwarf]
   c[The Cleric]
-  p --> d
+  p --> q
+  q -->|yes| pal
+  q -->|no| d
   d -->|"row missing"| c
   c -->|return row or adapt| d
   d --> forge[models then handlers plus declared paths]
 ```
 
-The service's own toolchain only. Pins in [[REQUIREMENTS]]. Tests are The Trickster's graph, not this one.
+The service's own toolchain only. Pins in [[REQUIREMENTS]]. Dwarf tests are The Trickster's red-first graph. Paladin tests follow implementation in the Paladin graph.
 
 ## Graph — Wizard (live)
 
@@ -203,11 +247,12 @@ flowchart TD
   h --> b
 ```
 
-The Hunter fires Hawk and Hound, then **immediately** runs one existing-test slice to reproduce. It strips noise from the report and pins a bulletin at **The Three Feathers** — finished `problem` plus one specific `goal` — for a later Hunter. Quick-exit on the repro is enough. It does not write tests and does not Agent The Trickster. Scout packs fold into the bulletin when they land. Hawk: Graphify first, then `gh`. Hound: Graphify first, then Grep. Neither familiar loads [[PRD]]. The party does not Agent area owners.
+The Hunter fires Hawk and Hound, then **immediately** runs one existing-test slice to reproduce. It strips noise from the report and pins a bulletin at **The Three Feathers** — finished `problem` plus one specific `goal` — for a later Hunter. Quick-exit on the repro is enough. It does not write tests and does not Agent The Trickster. Scout packs fold into the bulletin when they land. Hawk: Graphify first, then `gh`. Hound: Graphify first, then Grep. Neither familiar loads [[PRD]]. The party does not Agent area owners. The parent may use the bulletin's completed triage card to open the Adventurer lane.
 
 ## Parent session (any host)
 
 1. Read [[ADND-AGENTS]] (this file is included there).
-2. Classify the prompt with the table above.
-3. Dispatch or impersonate **one** first agent. Do not implement another agent's tree in the same breath.
-4. Follow `Then if` until the ask is done. Surface ↔ service traffic goes through The Cleric. Ship through The Bard.
+2. If a complete triage card exists, validate the Adventurer gate first. The Hunter supplies scores but never dispatches the builder.
+3. Otherwise classify the prompt with the specialist table.
+4. Dispatch or impersonate **one** first agent. Do not overlap an Adventurer lease with a specialist.
+5. Follow `Then if` until the ask is done. Paladin → Trickster happens only after implementation. Surface ↔ service traffic goes through The Cleric. Ship through The Bard.

@@ -38,7 +38,7 @@ The application deploys as {{deploy target}}. `main` is the single integration l
 
 Top-level structure:
 
-- `{{service tree}}` — the service: domain logic, interfaces, and data.
+- `{{service tree}}` — the service: framework integration, data, and Paladin-owned pure Python business logic.
 - `{{surface tree}}` — the surface: pages, components, styles, and browser behavior. Absent in a headless project.
 - `docs/` — product, contracts, architecture, operations, and workflows.
 - `adrs/` — binding project decisions and rules.
@@ -95,14 +95,16 @@ Skills encode the procedure and technical contract for a task. Read only the ski
 
 ## Agents
 
-Agents preserve ownership boundaries in a large harness. Dispatch the area owner instead of crossing into its tree or responsibility. Definitions live in `agents/`; the roster and dispatch graph live in `docs/ADND-AGENTS.md` and `docs/ADND-DISPATCH.md`.
+Agents preserve ownership boundaries in a large harness. A complete low-score triage card may open the mutually exclusive Adventurer lane; otherwise dispatch the specialist owner instead of crossing into its responsibility. Definitions live in `agents/`; the roster and dispatch graph live in `docs/ADND-AGENTS.md` and `docs/ADND-DISPATCH.md`.
 
 - `hb-ag-contracts` — The Cleric ✝️ — owns `docs/INTERFACES.md` and interface contracts.
-- `hb-ag-service` — The Dwarf 🔨 — owns the service implementation.
+- `hb-ag-service` — The Dwarf 🔨 — owns framework-bound service implementation.
+- `hb-ag-paladin` — The Paladin 🛡️ — owns framework-neutral Python business logic and complex scripts; tests follow implementation.
 - `hb-ag-surface` — The Elf 🧝 — owns the surface implementation except tests. Optional: a headless project deletes it.
-- `hb-ag-test` — The Trickster 🃏 — owns TDD records and all test writes.
+- `hb-ag-test` — The Trickster 🃏 — dedicated owner of TDD records and tests; The Adventurer is the bounded exception.
 - `hb-ag-ops` — The Wizard 🧙 — owns the local runtime, CI, cloud, and secret surfaces.
 - `hb-ag-judge` — The Inquisitor ⚖️ — reviews project fit and logic; read-only.
+- `hb-ag-adventurer` — The Adventurer 🧭 — one eligible small task end to end, with broad context, default effort, and no subagents.
 - `hb-ag-git` — The Bard 🎶 — owns git and PR shipping onto `main`.
 - `hb-ag-hunter` — The Hunter 🏹 — El Cazador. Issue gateway at The Three Feathers; pins the bulletin for a later Hunter.
 - `hb-ag-hawk` — The Hawk 🦅 — El Halcón. Hunter-only historical-issue scout.
@@ -110,11 +112,11 @@ Agents preserve ownership boundaries in a large harness. Dispatch the area owner
 
 Changes to `AGENTS.md` or the PRD engage `kbot-prd`; ADR and rule changes engage `kbot-adr`; interface and routed service surfaces engage `kbot-api`. Canonical watchlists are in `scripts/guardian_watchlists.py`.
 
-A dispatched agent does not inherit session context. Tree-party agents read `docs/PRD.md`, then `docs/INTERFACES.md`, then their agent definition and only their permitted skills. Hawk and Hound are familiars: they work from The Hunter's brief and do not load PRD or INTERFACES.
+A dispatched agent does not inherit session context. Specialist and Adventurer agents read `docs/PRD.md`, then `docs/INTERFACES.md`, then their agent definition and only permitted task references. The Adventurer also validates the complete `severity` / `collateral` / `effort` card before writing. Hawk and Hound are familiars: they work from The Hunter's brief and do not load PRD or INTERFACES.
 
 ## Change routing
 
-Route service needs through `docs/INTERFACES.md`. New service behavior follows interface declaration → TDD → implementation. Surface work reuses declared interfaces or asks the interface owner for content.
+Route framework-bound service needs through `docs/INTERFACES.md`; new routed service behavior follows interface declaration → TDD → Dwarf implementation. Framework-neutral Python business logic and complex scripts go to The Paladin: implementation first, then The Trickster's tests. Before specialist dispatch, a complete triage card whose three scores total less than 5 (none above 2) may route one bounded task to The Adventurer; interfaces/contracts, ADRs, Git, secrets, and deployment are excluded.
 
 Follow `docs/GITHUB.md` for issue, branch, PR, merge, and deployment rules. Issue hunt and the notice board are The Hunter at The Three Feathers. Ship through The Bard.
 

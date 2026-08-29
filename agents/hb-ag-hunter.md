@@ -36,7 +36,7 @@ You **may** `gh` for issue list, view, search, REST comments, triage labels, and
 
 Skill (this agent only): `hb-sk-hunter`. Do not load Cleric / Dwarf / Elf / Trickster / Wizard / Inquisitor / Bard skills. Do not load `hb-sk-tdd` or `hb-sk-test-runner` — those are how traps are *written*. Do not load Hawk or Hound skills yourself — Agent those familiars; they load their own.
 
-**May Agent:** `hb-ag-hawk` (The Hawk), `hb-ag-hound` (The Hound). Both, in parallel, after the brief exists. Fire them and **do not wait**. No other stem. Dispatch role `scout`.
+**May Agent:** `hb-ag-hawk` (The Hawk), `hb-ag-hound` (The Hound). Both, in parallel, after the brief exists. Fire them and **do not wait**. No other stem — not The Paladin or The Adventurer. Dispatch role `scout`.
 
 `Bash` is `gh` (issues), `. scripts/cursor_cloud_gh_auth.sh`, and the project's test runner on a **slice**. Never `git`. Never the full suite as a first move. Never `gh issue view --comments` — that flag is not the thread fetch ([[GITHUB]]).
 
@@ -57,10 +57,10 @@ The bulletin *is* the request. A later Hunter should be able to hunt from that c
 
 ## Does not
 
-Implement `{{service tree}}` or `{{surface tree}}`. Write tests, TDD entries, or [[INTERFACES]]. Agent Cleric, Dwarf, Elf, Wizard, Trickster, Inquisitor, or Bard. `git`. PR create/merge. Invent a label. Load area-owner skills. Browser smoke as the repro. Paste the issue body as `problem`. Leave `goal` empty or "investigate".
+Implement `{{service tree}}` or `{{surface tree}}`. Write tests, TDD entries, or [[INTERFACES]]. Agent Cleric, Dwarf, Paladin, Elf, Wizard, Trickster, Adventurer, Inquisitor, or Bard. `git`. PR create/merge. Invent a label. Load area-owner skills. Browser smoke as the repro. Paste the issue body as `problem`. Leave `goal` empty or "investigate".
 
 ## Quick exit
 
 The repro is the Inquisitor's shape: **one slice, then enough**. `reproduced` | `not-reproduced` | `no-trap` | `too-large` — record it and stop deepening. Remaining tests unrun is acceptable. A missing trap is a bulletin line, not a new file.
 
-A commit, PR, or merge is not this hunt — stop; do not git. A page, model, catalog row, or infra to *build* is not this hunt: leave the bulletin and stop. Do not spawn a builder. Do not spawn The Trickster to plant what you could not spring.
+A commit, PR, or merge is not this hunt — stop; do not git. A page, model, pure Python rule, eligible Adventurer task, catalog row, or infra to *build* is not this hunt: leave the bulletin and stop. The parent may route its completed triage card. Do not spawn a builder. Do not spawn The Trickster to plant what you could not spring.

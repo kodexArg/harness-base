@@ -2,7 +2,7 @@
 title: Harness inventory, vendored skills, and agent contracts
 type: reference
 status: active
-version: v0.1.3
+version: v0.1.4
 tags: [harness, skills, agents, ssot]
 description: "Complete inventory of vendored skills, kind prefixes, MCP policies, and agent definition contracts."
 applies_when:
@@ -39,7 +39,7 @@ Every harness artifact name starts with its kind:
 | agent (this product) | `hb-ag-` |
 | delivery-party node | `kwf-` |
 
-The stem after the prefix names the role. Product knowledge skills use `hb-sk-` + contract (`hb-sk-contracts`). Product area-owner agents use `hb-ag-` + area (`hb-ag-service`, title **The Dwarf**). Reusable harness skills keep `kskill-`. A stem that *is* the role may name a technology (`kskill-cowsay`). Canonical and forbidden forms: [[GLOSSARY]] (`harness kind prefix`, `harness name stem`).
+The stem after the prefix names the role. Product knowledge skills use `hb-sk-` + contract (`hb-sk-contracts`). Product agents use `hb-ag-` + area or role (`hb-ag-service`, title **The Dwarf**; `hb-ag-adventurer`, title **The Adventurer**). Reusable harness skills keep `kskill-`. A stem that *is* the role may name a technology (`kskill-cowsay`). Canonical and forbidden forms: [[GLOSSARY]] (`harness kind prefix`, `harness name stem`).
 
 `hb-` is this template's own product prefix. Instantiation batch-renames it to the new project's prefix ([[CLONE]]).
 
@@ -114,7 +114,7 @@ This heading does not cover adding a rule or changing what a rule requires or fo
 | `hb-sk-component-framework` | `{{component framework}}` contract for the components the surface host renders. | The Elf (`hb-ag-surface`) |
 | `hb-sk-surface-framework` | `{{surface framework}}` host contract: rendering mode, hydration, pages. The surface toolchain only. | The Elf (`hb-ag-surface`); The Trickster (`hb-ag-test`) may load for surface tests |
 | `hb-sk-interface-framework` | `{{interface framework}}`: explicit handlers + declared paths, split payload shapes, permission classes. | The Dwarf (`hb-ag-service`) |
-| `hb-sk-domain-framework` | `{{domain framework}}`: models, settings, pure-compute boundary, the service toolchain. | The Dwarf (`hb-ag-service`) |
+| `hb-sk-domain-framework` | `{{domain framework}}`: models, settings, adapters, the Paladin pure-compute boundary, and service toolchain. | The Dwarf (`hb-ag-service`) |
 | `hb-sk-contracts` | Six-column [[INTERFACES]] catalog + `docs/contracts/`. | The Cleric (`hb-ag-contracts`) only |
 | `hb-sk-tdd` | `docs/tdds/` specification lifecycle (red → green). | The Trickster (`hb-ag-test`) |
 | `hb-sk-test-runner` | Service/harness test contract (`{{test runner}}` shape). | The Trickster (`hb-ag-test`) |
@@ -174,11 +174,11 @@ The harness was written for the owner's workstation and adapts to a cloud sandbo
 
 > Agents are the other half of the harness. Guardians gate [[PRD]], the ADRs, and [[INTERFACES]]; `kbot-*` agents are the orchestrator fan-out and project-resident lobes; `kwf-*` are workflow nodes resolved by script.
 
-Agents are the other half of the harness. Their SSOT is `agents/`, reached as `.claude/agents/` and `.agents/agents/`. Product **area owners** are the `hb-ag-*` family. Roster and graphs: [[ADND-AGENTS]], [[ADND-DISPATCH]]. Where a host runtime exposes a native subagent type for a stem, the definition file is the same; otherwise the **parent** loads `agents/<stem>.md` and still obeys the roster. The playbook is the markdown, not the host.
+Agents are the other half of the harness. Their SSOT is `agents/`, reached as `.claude/agents/` and `.agents/agents/`. Product specialists, the Adventurer lane, and the hunting party are the `hb-ag-*` family. Roster and graphs: [[ADND-AGENTS]], [[ADND-DISPATCH]]. Where a host runtime exposes a native subagent type for a stem, the definition file is the same; otherwise the **parent** loads `agents/<stem>.md` and still obeys the roster. The playbook is the markdown, not the host.
 
 ### The agent definition contract — the fields
 
-Every file under `agents/` declares the same closed set of frontmatter keys, in one shape. This section is the record of the fields, and states what the contract requires and forbids directly.
+Every file under `agents/` declares the same closed set of frontmatter keys, in one shape. This section is the record of those fields ([[adr-00.a-adr-frontmatter]] rule 2a). Docs and ADRs use a different closed set; do not mix the two.
 
 | Key | What it declares |
 |---|---|
@@ -196,44 +196,48 @@ Every file under `agents/` declares the same closed set of frontmatter keys, in 
 | Role slug | Meaning | Typical cast |
 |---|---|---|
 | `thinker` | planner/thinker — judgment, planning, doctrine gates | guardians, the Inquisitor, plan-time judges |
-| `builder` | builder — implementation, worktree diffs, publish | Dwarf, Elf, Bard (`kwf-warrior` / `kwf-archer` / `kwf-bard` were the archived delivery-party builders) |
+| `builder` | builder — implementation, worktree diffs, publish | Paladin, Dwarf, Elf, Adventurer, Bard (`kwf-warrior` / `kwf-archer` / `kwf-bard` were the archived delivery-party builders) |
 | `scout` | fast/scout — cheap parallel reads, familiars, pattern scans | The Hawk, The Hound, read-only familiars and sweep nodes |
 
 Admitting or retiring a role slug is an edit to this table, not to an ADR.
 
 **The ADR-to-agent edge is a pair.** An ADR lists the agents that carry it in `related_agents` ([[adr-00.a-adr-frontmatter]]); each of those agents lists that ADR in `related_adrs`. Both ends move in the same batch, and a one-sided edge is a defect in both files.
 
-### The product `hb-ag-*` family — area owners
+### The product `hb-ag-*` family
 
-An `hb-ag-*` agent **owns one area**. Areas do not overlap. The filename stem is the harness name; the fantasy title is personality (opening quote + voice). `hb-ag-contracts` is the **writer** of the catalog, not a merge-verdict bot. Do not restore archived `kbot-*` builders.
+Specialists own non-overlapping areas. The one exception is a parent-validated Adventurer lease: one eligible low-score task temporarily gives The Adventurer its bounded implementation and tests while specialists stay out. Interfaces/contracts, ADRs, Git/GitHub, secret values, and deployment never enter that lease. The filename stem is the harness name; the fantasy title is personality (opening quote + voice). `hb-ag-contracts` is the **writer** of the catalog, not a merge-verdict bot. Do not restore archived `kbot-*` builders.
 
 `hb-sk-*` consumers are named in the inventory; most skills have one owner. `hb-sk-surface-framework` is Elf-owned (Trickster may load for surface tests). `hb-sk-abc` is a parent fallback (Inquisitor loads none). `hb-sk-git` is Bard-only. `hb-sk-hunter` / `hb-sk-hawk` / `hb-sk-hound` are the hunting party at The Three Feathers.
 
 | Stem | Title | Owns (may write) | Must not write | `Agent` tool |
 |---|---|---|---|---|
 | `hb-ag-contracts` | The Cleric ✝️ | `docs/INTERFACES.md`, `docs/contracts/` only | `{{surface tree}}`, `{{service tree}}`, tests, infra, git | **yes** → Dwarf, Elf, Trickster |
-| `hb-ag-service` | The Dwarf 🔨 | `{{service tree}}` only | `INTERFACES.md`, `contracts/`, `{{surface tree}}`, `docs/tdds/`, tests, infra, git | **yes** → Cleric (Trickster for tests; Wizard for infra; **never** Elf) |
+| `hb-ag-service` | The Dwarf 🔨 | framework-bound `{{service tree}}` work | `INTERFACES.md`, pure Paladin logic, `{{surface tree}}`, `docs/tdds/`, tests, infra, git | **yes** → Cleric, Paladin, Trickster, Wizard; **never** Elf |
+| `hb-ag-paladin` | The Paladin 🛡️ | framework-neutral Python business logic and complex scripts | frameworks, interfaces, frontend, infra, tests, git | **yes** → Trickster after implementation only; never Cleric or Elf |
 | `hb-ag-surface` | The Elf 🧝 | `{{surface tree}}` except tests | `INTERFACES.md`, `contracts/`, `{{service tree}}`, tests, infra, git | **yes** → Cleric (Trickster for tests; Wizard for infra; **never** Dwarf) |
 | `hb-ag-ops` | The Wizard 🧙 | local runtime, cloud/CI/secrets named in [[INFRASTRUCTURE]] / [[VARIABLES]] | app trees, `INTERFACES.md`, tests, git | infra only (prefer parent) |
 | `hb-ag-judge` | The Inquisitor ⚖️ | **nothing**. Read-only. Reports only. | product trees, tests, git | **no** |
-| `hb-ag-test` | The Trickster 🃏 | `docs/tdds/`, service/surface/harness tests | product code, screen, `INTERFACES.md`, git | **no** — returns the traps |
+| `hb-ag-test` | The Trickster 🃏 | dedicated `docs/tdds/`, service/surface/harness tests | product code, screen, `INTERFACES.md`, git | **no** — returns traps; Adventurer is the bounded write exception |
+| `hb-ag-adventurer` | The Adventurer 🧭 | one eligible low-score task plus its tests | interfaces/contracts, ADRs, Git/GitHub, secrets, deployment | **no** — complete or stop |
 | `hb-ag-git` | The Bard 🎶 | git + PR shipping via Bash (`git`, `gh`) | product trees, app code "while shipping", issue-hunt bulletin | **no** |
 | `hb-ag-hunter` | The Hunter 🏹 | issue bulletin comment at The Three Feathers | product trees, tests, git, PR | **yes** → Hawk, Hound only |
 | `hb-ag-hawk` | The Hawk 🦅 | **nothing**. Historical-issue scout | product trees, tests, git, the bulletin | **no** |
 | `hb-ag-hound` | The Hound 🐕 | **nothing**. Keyword codebase scout | product trees, tests, `gh` | **no** |
 
-Tool allowlists cannot path-filter `Write`. The **body** is the bound: service/surface hold `Write`/`Edit` for their tree and treat `INTERFACES.md` as read-only. Need a new row → dispatch `hb-ag-contracts`. Do not edit the catalog. Need a commit or PR → dispatch `hb-ag-git`. Issue hunt and the notice board → `hb-ag-hunter`. Area owners do not `git` or `gh`. The hunting party may `gh` issues only.
+Tool allowlists cannot path-filter `Write`. The **body** is the bound: specialists hold `Write`/`Edit` for their area, while The Adventurer holds it only for a validated task lease. Need a new row → dispatch `hb-ag-contracts`. Do not edit the catalog. Need a commit or PR → dispatch `hb-ag-git`. Issue hunt and the notice board → `hb-ag-hunter`. Product implementers do not `git` or `gh`. The hunting party may `gh` issues only.
 
 Titles live in a different family from the archived `kwf-*` cast: `kwf-warrior` was the *service* builder; `kwf-archer` was the *surface* builder; `kwf-bard` was a publish node. Forbidden: dispatching `kwf-warrior` when you mean The Dwarf; dispatching `kwf-archer` when you mean The Elf; using `warrior` / `archer` / `elf` / `cleric` / `trickster` / `bard` unprefixed; restoring `The Archer` or `The Warrior` as a live title ([[GLOSSARY]]).
 
 Each live definition opens with a one-line quote, then "You are **The X** (`hb-ag-…`)". Voice stays short.
 
 - **The Cleric** ✝️ — one rite, one row. Holds the scroll ([[INTERFACES]]). Agents Dwarf, Elf, Trickster. Never walks into the melee.
-- **The Dwarf** 🔨 — forges `{{service tree}}` only. Fulfills the Cleric's row; does not write it. Never writes tests. Never Agents The Elf. The service's own toolchain, never a substitute.
+- **The Dwarf** 🔨 — forges framework-bound `{{service tree}}` work. Fulfills the Cleric's row; does not write it. Pure Python rules go to The Paladin. Never writes tests or Agents The Elf.
+- **The Paladin** 🛡️ — El Paladín. Surgical framework-neutral Python business logic and complex scripts. Implements first, then Agents The Trickster for tests. Never Cleric or Elf.
 - **The Elf** 🧝 — the face the user meets (the screen in `{{interface language}}`). Works only on `{{surface tree}}` (not tests). Calls the Cleric for interfaces. Never Agents The Dwarf. Optional: a headless project deletes it.
 - **The Wizard** 🧙 — environment is the spell: the local runtime, [[INFRASTRUCTURE]], [[VARIABLES]], CI. Live; the parent may dispatch it. Does not write app code or `INTERFACES.md`.
 - **The Inquisitor** ⚖️ — interrogates this harness and logic already in code. Read-only; quick-exit. Loads **no** skill. Not a merge gate.
-- **The Trickster** 🃏 — owns every test write. Returns the traps. Cannot give face.
+- **The Trickster** 🃏 — dedicated test owner. Dwarf red-first; Paladin tests afterward. The Adventurer lane is the sole bounded exception. Returns the traps.
+- **The Adventurer** 🧭 — El Aventurero. One eligible task, implementation plus tests, broad context, default effort, no `Agent`; no governed-boundary bypass.
 - **The Bard** 🎶 — the only voice Git hears for shipping. `git` / PR / merge. Does not fix the song while singing it. Issue hunt is The Hunter.
 - **The Hunter** 🏹 — El Cazador. Issue gateway at The Three Feathers. Pins a noise-stripped bulletin (`problem` + one `goal`) for a later Hunter.
 - **The Hawk** 🦅 — El Halcón. Cheap `scout`. Old issues, Graphify then `gh`. Hunter only.
@@ -243,7 +247,8 @@ Each live definition opens with a one-line quote, then "You are **The X** (`hb-a
 
 **Standing decision: every agent under `agents/` is written to run as a dispatched subagent; no definition declares itself a teammate.**
 
-- **product `hb-ag-*` area owners** — The Cleric holds `Agent` (Dwarf, Elf, Trickster) and is the sole surface↔service hop. The Dwarf and The Elf hold `Agent` to The Cleric, The Trickster (tests), and The Wizard (infra) — never each other. Trickster, Inquisitor, and Bard do not spawn builders. Wizard Agent is infra-only; prefer the parent.
+- **product specialists** — The Cleric holds `Agent` (Dwarf, Elf, Trickster) and is the sole surface↔service hop. The Dwarf may call The Paladin for a pure Python core, plus The Cleric, The Trickster, and The Wizard — never The Elf. The Paladin may call The Trickster after implementation only, never The Cleric or The Elf. The Elf retains its existing sealed path. Trickster, Inquisitor, and Bard do not spawn builders. Wizard Agent is infra-only; prefer the parent.
+- **single-agent lane** — The Adventurer has no `Agent`. The parent dispatches it only for a complete [[ISSUE-TRIAGE]] card totaling less than 5 with no axis above 2 and no excluded boundary.
 - **hunting party** — The Hunter holds `Agent` (Hawk, Hound only). Hawk and Hound do not spawn. The party does not Agent area owners. Dispatch Hawk/Hound as `scout`.
 
 What is enforceable, and is enforced by `tests/test_agents_are_subagents.py`: no definition under `agents/` declares itself a teammate or carries teammate-only frontmatter. If a host runtime still hands a definition to a teammate mechanism, the decision above constrains how the agents are *written*, not how a given machine chooses to run them.
