@@ -41,8 +41,11 @@ Host-agnostic: the stems below are the names. Where a host runtime exposes a nat
 | `hb-ag-hunter` | The Hunter 🏹 | `agents/hb-ag-hunter.md` | **nothing** in product trees. Issue pick, triage, bulletin comment | `hb-sk-hunter` | **yes** → Hawk, Hound only |
 | `hb-ag-hawk` | The Hawk 🦅 | `agents/hb-ag-hawk.md` | **nothing**. Historical-issue scout for The Hunter | `hb-sk-hawk` | **no** |
 | `hb-ag-hound` | The Hound 🐕 | `agents/hb-ag-hound.md` | **nothing**. Keyword codebase scout for The Hunter | `hb-sk-hound` | **no** |
+| `hb-ag-owl` | The Owl 🦉 | `agents/hb-ag-owl.md` | **nothing**. Web research scout for all agents | `hb-sk-owl` | **no** — universally callable scout |
 
 Specialist areas do not overlap. The sole execution exception is a parent-validated [[ISSUE-TRIAGE|Adventurer lane]]: for one eligible bounded task, The Adventurer temporarily owns implementation and tests while the specialist owners stay out. Interfaces/contracts, ADRs, Git/GitHub, secret values, and deployment remain outside that lease. Tool allowlists cannot path-filter `Write`; the **body** of each agent file is the bound.
+
+**Universal web scout.** The Owl is the only agent with external web access. Any agent needing vendor documentation, package specs, or error catalogs may invoke The Owl to receive a markdown findings report. The Owl does not call other agents.
 
 **Sealed pair.** The Dwarf and The Elf do not Agent each other. The Cleric is the only writer of [[INTERFACES]] and the only `Agent` that may call both. A parent that implements a hop between them is out of area.
 
@@ -121,7 +124,7 @@ Quick-exit reports. If findings pile up: say remaining ~70% unexplored but this 
 
 ### The Trickster (`hb-ag-test`)
 
-🃏 Dedicated owner of `docs/tdds/`, service tests, surface tests, and harness tests. No product code, no screen, no [[INTERFACES]]. Cannot "give face." The Adventurer's validated single-agent lease is the only test-write exception.
+🃏 El Pícaro. Dedicated owner of `docs/tdds/`, service tests, surface tests, and harness tests. No product code, no screen, no [[INTERFACES]]. Cannot "give face." The Adventurer's validated single-agent lease is the only test-write exception.
 
 Knows: **no** `Agent` — returns the traps. Does not spawn builders to fix a red. After The Cleric's row: write the TDD entry + failing unit tests; The Dwarf implements; then green / add more. After The Paladin implements: write focused tests afterward, with no TDD entry for the genuinely pure core. After The Elf builds: may load `hb-sk-surface-framework` for surface tests. Outside the Adventurer lane, other agents are forbidden from writing tests (no shadow tests). Does not `git` / `gh` — that is The Bard.
 
@@ -135,7 +138,7 @@ Interfaces/contracts, ADRs, Git/GitHub, secret values, and deployment remain wit
 
 ### The Bard (`hb-ag-git`)
 
-🎶 The only `hb-ag-*` that may `git` or open/merge a PR. Writes **nothing** in product trees. Bash is `git` and `gh` (shipping). Issue hunt is The Hunter.
+🎶 El Bardo. Plays his violin and sings onto `main`. The only `hb-ag-*` that may `git` or open/merge a PR. Writes **nothing** in product trees. Bash is `git` and `gh` (shipping). Issue hunt is The Hunter.
 
 Knows: **no** `Agent`. Does not write app code to "fix while shipping." `main` is the single line; only `{{owner}}`; a PR is required; `--admin` when an owner merge would wait on checks ([[adr-08-github]]). Skill `hb-sk-git`. Issue pick, triage, and the bulletin handoff are The Hunter — not this song.
 
@@ -160,6 +163,14 @@ Does not know the area owners as someone to call. Does not Agent The Trickster w
 
 🐕 El Sabueso. Hunter-only familiar. Cheap `scout`. Graphify then Grep. Returns full paths and short excerpts. No `Agent`. No `gh`.
 
+## The universal scout
+
+### The Owl (`hb-ag-owl`)
+
+🦉 El Búho. Universal web research scout. The only agent in the harness with external web access. Receives a search inquiry or topic from any agent or parent, queries official vendor documentation, API specs, or package changelogs, and returns a structured markdown findings report. Cheap, simple, and direct (`role: scout`).
+
+Knows: **no** `Agent`. Does not write product code, tests, ADRs, or touch git.
+
 ## Guardians vs area owners
 
 | Role | Stems | Writes product trees? |
@@ -167,6 +178,7 @@ Does not know the area owners as someone to call. Does not Agent The Trickster w
 | Specialist owners | Cleric, Dwarf, Paladin, Elf, Wizard, Inquisitor, Trickster, Bard | yes, each bounded area (Inquisitor: no; Trickster: tests only; Bard: git/PR only) |
 | Small-task lane | `hb-ag-adventurer` | one eligible bounded implementation plus tests; no interfaces, ADRs, Git, secrets, or deployment |
 | Hunting party | `hb-ag-hunter`, `hb-ag-hawk`, `hb-ag-hound` | no — issues, existing-test repro, bulletin; Hound reads code, does not write it |
+| Universal web scout | `hb-ag-owl` | no — external web search and markdown findings reports |
 | Guardians | `kbot-prd`, `kbot-adr`, `kbot-api` | the watched SSOT they gate, per [[HARNESS]] |
 
 Do not dispatch a guardian to implement a screen. Do not dispatch The Cleric to emit `Guardian-Verdict:`.

@@ -109,6 +109,7 @@ Agents preserve ownership boundaries in a large harness. A complete low-score tr
 - `hb-ag-hunter` — The Hunter 🏹 — El Cazador. Issue gateway at The Three Feathers; pins the bulletin for a later Hunter.
 - `hb-ag-hawk` — The Hawk 🦅 — El Halcón. Hunter-only historical-issue scout.
 - `hb-ag-hound` — The Hound 🐕 — El Sabueso. Hunter-only keyword codebase scout.
+- `hb-ag-owl` — The Owl 🦉 — El Búho. Universal web research scout; only agent with external web access.
 
 Changes to `AGENTS.md` or the PRD engage `kbot-prd`; ADR and rule changes engage `kbot-adr`; interface and routed service surfaces engage `kbot-api`. Canonical watchlists are in `scripts/guardian_watchlists.py`.
 
