@@ -38,7 +38,7 @@ The checkpoint is what defines the loop: the service zone is exited only when [[
 
 **New user-facing feature:**
 
-`The Warrior (surface) → interfaces content via The Cleric → The Trickster (tests)`
+`The Elf (surface) → interfaces content via The Cleric → The Trickster (tests)`
 `         → needs the service? → The Trickster then The Dwarf → …`
 
 Both are active: every gate binds now, wherever its subject exists. The sections below render each one step by step.

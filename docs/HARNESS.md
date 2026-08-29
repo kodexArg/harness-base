@@ -2,7 +2,7 @@
 title: Harness inventory, vendored skills, and agent contracts
 type: reference
 status: active
-version: v0.1.0
+version: v0.1.1
 tags: [harness, skills, agents, ssot]
 description: "Complete inventory of vendored skills, kind prefixes, MCP policies, and agent definition contracts."
 applies_when:
@@ -111,8 +111,8 @@ This heading does not cover adding a rule or changing what a rule requires or fo
 
 | Skill | Why this project requires it | Primary consumers |
 |---|---|---|
-| `hb-sk-component-framework` | `{{component framework}}` contract for the components the surface host renders. | The Warrior (`hb-ag-surface`) |
-| `hb-sk-surface-framework` | `{{surface framework}}` host contract: rendering mode, hydration, pages. The surface toolchain only. | The Warrior (`hb-ag-surface`); The Trickster (`hb-ag-test`) may load for surface tests |
+| `hb-sk-component-framework` | `{{component framework}}` contract for the components the surface host renders. | The Elf (`hb-ag-surface`) |
+| `hb-sk-surface-framework` | `{{surface framework}}` host contract: rendering mode, hydration, pages. The surface toolchain only. | The Elf (`hb-ag-surface`); The Trickster (`hb-ag-test`) may load for surface tests |
 | `hb-sk-interface-framework` | `{{interface framework}}`: explicit handlers + declared paths, split payload shapes, permission classes. | The Dwarf (`hb-ag-service`) |
 | `hb-sk-domain-framework` | `{{domain framework}}`: models, settings, pure-compute boundary, the service toolchain. | The Dwarf (`hb-ag-service`) |
 | `hb-sk-contracts` | Six-column [[INTERFACES]] catalog + `docs/contracts/`. | The Cleric (`hb-ag-contracts`) only |
@@ -193,7 +193,7 @@ Every file under `agents/` declares the same closed set of frontmatter keys, in 
 | Role slug | Meaning | Typical cast |
 |---|---|---|
 | `thinker` | planner/thinker — judgment, planning, doctrine gates | guardians, the Inquisitor, plan-time judges |
-| `builder` | builder — implementation, worktree diffs, publish | Dwarf, Warrior, Bard (`kwf-warrior` / `kwf-archer` / `kwf-bard` were the archived delivery-party builders) |
+| `builder` | builder — implementation, worktree diffs, publish | Dwarf, Elf, Bard (`kwf-warrior` / `kwf-archer` / `kwf-bard` were the archived delivery-party builders) |
 | `scout` | fast/scout — cheap parallel reads, familiars, pattern scans | read-only familiars and sweep nodes |
 
 Admitting or retiring a role slug is an edit to this table, not to an ADR.
@@ -204,13 +204,13 @@ Admitting or retiring a role slug is an edit to this table, not to an ADR.
 
 An `hb-ag-*` agent **owns one area**. Areas do not overlap. The filename stem is the harness name; the fantasy title is personality (opening quote + voice). `hb-ag-contracts` is the **writer** of the catalog, not a merge-verdict bot. Do not restore archived `kbot-*` builders.
 
-`hb-sk-*` consumers are named in the inventory; most skills have one owner. `hb-sk-surface-framework` is Warrior-owned (Trickster may load for surface tests). `hb-sk-abc` is a parent fallback (Inquisitor loads none). `hb-sk-git` is Bard-only.
+`hb-sk-*` consumers are named in the inventory; most skills have one owner. `hb-sk-surface-framework` is Elf-owned (Trickster may load for surface tests). `hb-sk-abc` is a parent fallback (Inquisitor loads none). `hb-sk-git` is Bard-only.
 
 | Stem | Title | Owns (may write) | Must not write | `Agent` tool |
 |---|---|---|---|---|
-| `hb-ag-contracts` | The Cleric ✝️ | `docs/INTERFACES.md`, `docs/contracts/` only | `{{surface tree}}`, `{{service tree}}`, tests, infra, git | **yes** → Dwarf, Warrior, Trickster |
-| `hb-ag-service` | The Dwarf 🔨 | `{{service tree}}` only | `INTERFACES.md`, `contracts/`, `{{surface tree}}`, `docs/tdds/`, tests, infra, git | **yes** → Cleric (Trickster for tests; Wizard for infra; **never** Warrior) |
-| `hb-ag-surface` | The Warrior 🗡️ | `{{surface tree}}` except tests | `INTERFACES.md`, `contracts/`, `{{service tree}}`, tests, infra, git | **yes** → Cleric (Trickster for tests; Wizard for infra; **never** Dwarf) |
+| `hb-ag-contracts` | The Cleric ✝️ | `docs/INTERFACES.md`, `docs/contracts/` only | `{{surface tree}}`, `{{service tree}}`, tests, infra, git | **yes** → Dwarf, Elf, Trickster |
+| `hb-ag-service` | The Dwarf 🔨 | `{{service tree}}` only | `INTERFACES.md`, `contracts/`, `{{surface tree}}`, `docs/tdds/`, tests, infra, git | **yes** → Cleric (Trickster for tests; Wizard for infra; **never** Elf) |
+| `hb-ag-surface` | The Elf 🧝 | `{{surface tree}}` except tests | `INTERFACES.md`, `contracts/`, `{{service tree}}`, tests, infra, git | **yes** → Cleric (Trickster for tests; Wizard for infra; **never** Dwarf) |
 | `hb-ag-ops` | The Wizard 🧙 | local runtime, cloud/CI/secrets named in [[INFRASTRUCTURE]] / [[VARIABLES]] | app trees, `INTERFACES.md`, tests, git | infra only (prefer parent) |
 | `hb-ag-judge` | The Inquisitor ⚖️ | **nothing**. Read-only. Reports only. | product trees, tests, git | **no** |
 | `hb-ag-test` | The Trickster 🃏 | `docs/tdds/`, service/surface/harness tests | product code, screen, `INTERFACES.md`, git | **no** — returns the traps |
@@ -218,13 +218,13 @@ An `hb-ag-*` agent **owns one area**. Areas do not overlap. The filename stem is
 
 Tool allowlists cannot path-filter `Write`. The **body** is the bound: service/surface hold `Write`/`Edit` for their tree and treat `INTERFACES.md` as read-only. Need a new row → dispatch `hb-ag-contracts`. Do not edit the catalog. Need a commit or PR → dispatch `hb-ag-git`. No other `hb-ag-*` may `git` or `gh`.
 
-Titles collide with the archived `kwf-*` cast on purpose and live in a different family: `kwf-warrior` was the *service* builder; `kwf-archer` was the *surface* builder; `kwf-bard` was a publish node. Forbidden: dispatching `kwf-warrior` when you mean The Warrior; calling The Cleric `kwf-archer`; using `warrior` / `archer` / `cleric` / `trickster` / `bard` unprefixed; restoring `The Archer` as a live title ([[GLOSSARY]]).
+Titles live in a different family from the archived `kwf-*` cast: `kwf-warrior` was the *service* builder; `kwf-archer` was the *surface* builder; `kwf-bard` was a publish node. Forbidden: dispatching `kwf-warrior` when you mean The Dwarf; dispatching `kwf-archer` when you mean The Elf; using `warrior` / `archer` / `elf` / `cleric` / `trickster` / `bard` unprefixed; restoring `The Archer` or `The Warrior` as a live title ([[GLOSSARY]]).
 
 Each live definition opens with a one-line quote, then "You are **The X** (`hb-ag-…`)". Voice stays short.
 
-- **The Cleric** ✝️ — one rite, one row. Translates interfaces-as-content into the catalog. Agents Dwarf, Warrior, Trickster. Never walks into the melee.
-- **The Dwarf** 🔨 — forges `{{service tree}}` only. Will not strike without the Cleric's row. Never writes tests. Never Agents The Warrior. The service's own toolchain, never a substitute.
-- **The Warrior** 🗡️ — the face the user meets (the screen in `{{interface language}}`). Fights only on `{{surface tree}}` (not tests). Calls the Cleric for interfaces. Never Agents The Dwarf. Optional: a headless project deletes it.
+- **The Cleric** ✝️ — one rite, one row. Holds the scroll ([[INTERFACES]]). Agents Dwarf, Elf, Trickster. Never walks into the melee.
+- **The Dwarf** 🔨 — forges `{{service tree}}` only. Fulfills the Cleric's row; does not write it. Never writes tests. Never Agents The Elf. The service's own toolchain, never a substitute.
+- **The Elf** 🧝 — the face the user meets (the screen in `{{interface language}}`). Works only on `{{surface tree}}` (not tests). Calls the Cleric for interfaces. Never Agents The Dwarf. Optional: a headless project deletes it.
 - **The Wizard** 🧙 — environment is the spell: the local runtime, [[INFRASTRUCTURE]], [[VARIABLES]], CI. Live; the parent may dispatch it. Does not write app code or `INTERFACES.md`.
 - **The Inquisitor** ⚖️ — interrogates this harness and logic already in code. Read-only; quick-exit. Loads **no** skill. Not a merge gate.
 - **The Trickster** 🃏 — owns every test write. Returns the traps. Cannot give face.
@@ -234,6 +234,6 @@ Each live definition opens with a one-line quote, then "You are **The X** (`hb-a
 
 **Standing decision: every agent under `agents/` is written to run as a dispatched subagent; no definition declares itself a teammate.**
 
-- **product `hb-ag-*` area owners** — The Cleric holds `Agent` (Dwarf, Warrior, Trickster) and is the sole surface↔service hop. The Dwarf and The Warrior hold `Agent` to The Cleric, The Trickster (tests), and The Wizard (infra) — never each other. Trickster, Inquisitor, and Bard do not spawn builders. Wizard Agent is infra-only; prefer the parent.
+- **product `hb-ag-*` area owners** — The Cleric holds `Agent` (Dwarf, Elf, Trickster) and is the sole surface↔service hop. The Dwarf and The Elf hold `Agent` to The Cleric, The Trickster (tests), and The Wizard (infra) — never each other. Trickster, Inquisitor, and Bard do not spawn builders. Wizard Agent is infra-only; prefer the parent.
 
 What is enforceable, and is enforced by `tests/test_agents_are_subagents.py`: no definition under `agents/` declares itself a teammate or carries teammate-only frontmatter. If a host runtime still hands a definition to a teammate mechanism, the decision above constrains how the agents are *written*, not how a given machine chooses to run them.

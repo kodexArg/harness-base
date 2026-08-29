@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard: relationship docs list the live hb-ag-* party, no Archer title."""
+"""Guard: relationship docs list the live hb-ag-* party, no Archer or Warrior title."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ROSTER = (
     ("hb-ag-contracts", "The Cleric"),
     ("hb-ag-service", "The Dwarf"),
-    ("hb-ag-surface", "The Warrior"),
+    ("hb-ag-surface", "The Elf"),
     ("hb-ag-ops", "The Wizard"),
     ("hb-ag-judge", "The Inquisitor"),
     ("hb-ag-test", "The Trickster"),
@@ -29,6 +29,10 @@ DOC_PATHS = (
 LIVE_ARCHER = re.compile(
     r"(\| The Archer \||title \*\*The Archer\*\*|You are \*\*The Archer\*\*|"
     r"`hb-ag-contracts` \(The Archer\)|Knows: Archer)"
+)
+LIVE_WARRIOR = re.compile(
+    r"(\| The Warrior \||title \*\*The Warrior\*\*|You are \*\*The Warrior\*\*|"
+    r"`hb-ag-surface` \(The Warrior\)|The Warrior 🗡️)"
 )
 
 REQUIRED_HEADINGS = (
@@ -72,6 +76,8 @@ def main() -> int:
         rel = path.relative_to(ROOT).as_posix()
         if LIVE_ARCHER.search(text):
             fail(f"{rel} still treats The Archer as a live title")
+        if LIVE_WARRIOR.search(text):
+            fail(f"{rel} still treats The Warrior as a live title")
         for stem, title in ROSTER:
             if stem not in text:
                 fail(f"{rel} is missing stem {stem}")
@@ -95,6 +101,8 @@ def main() -> int:
             fail(f"{rel} does not open as You are **{title}** (`{stem}`)")
         if LIVE_ARCHER.search(text):
             fail(f"{rel} still treats The Archer as a live title")
+        if LIVE_WARRIOR.search(text):
+            fail(f"{rel} still treats The Warrior as a live title")
         for heading in REQUIRED_HEADINGS:
             if heading not in text:
                 fail(f"{rel} is missing {heading}")
@@ -108,7 +116,7 @@ def main() -> int:
             fail(f"{rel} tools: must list Graphify four first, got {tools[:4]!r}")
 
     if not failures:
-        ok("roster docs list seven stems and titles; no live Archer")
+        ok("roster docs list seven stems and titles; no live Archer or Warrior")
         ok("seven agent files: inherit, You are The X, church headings, Graphify first")
         print("\nall 2 test(s) passed")
         return 0

@@ -99,7 +99,7 @@ Agents preserve ownership boundaries in a large harness. Dispatch the area owner
 
 - `hb-ag-contracts` — The Cleric ✝️ — owns `docs/INTERFACES.md` and interface contracts.
 - `hb-ag-service` — The Dwarf 🔨 — owns the service implementation.
-- `hb-ag-surface` — The Warrior 🗡️ — owns the surface implementation except tests. Optional: a headless project deletes it.
+- `hb-ag-surface` — The Elf 🧝 — owns the surface implementation except tests. Optional: a headless project deletes it.
 - `hb-ag-test` — The Trickster 🃏 — owns TDD records and all test writes.
 - `hb-ag-ops` — The Wizard 🧙 — owns the local runtime, CI, cloud, and secret surfaces.
 - `hb-ag-judge` — The Inquisitor ⚖️ — reviews project fit and logic; read-only.

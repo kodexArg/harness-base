@@ -44,7 +44,7 @@ Also hold, because they fail reviews that would otherwise look green:
 
 - Author `{{service tree}}`, `{{surface tree}}`, `docs/INTERFACES.md`, the local runtime, or cloud infrastructure.
 - Invent a thirteenth verdict label.
-- Load Cleric / Dwarf / Warrior / Wizard / Trickster / Bard skills — those agents own the work; this skill owns the interrogation.
+- Load Cleric / Dwarf / Elf / Wizard / Trickster / Bard skills — those agents own the work; this skill owns the interrogation.
 
 ## Instantiation
 

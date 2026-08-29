@@ -12,7 +12,7 @@ description: >
   or fragment row — even if the skill is not named. Owner: The
   Cleric (hb-ag-contracts) only. The Cleric also mediates surface↔service;
   this skill stays the catalog-writing contract. The Dwarf and The
-  Warrior read INTERFACES.md; they do not load this skill and they do
+  Elf read INTERFACES.md; they do not load this skill and they do
   not write the catalog.
 applies_when:
   - When declaring, changing, or removing an interface or fragment row in INTERFACES.md
@@ -23,7 +23,7 @@ related_adrs:
 
 # hb-sk-contracts
 
-Knowledge contract for **The Cleric**. Teach the catalog row, then stop. The Cleric also mediates surface↔service — the row is the prayer; Dwarf and Warrior walk the kingdoms. Not a lookup of one existing path for implementers — that remains reading [[INTERFACES]]. This skill is how the row is *written*.
+Knowledge contract for **The Cleric**. Teach the catalog row, then stop. The Cleric also mediates surface↔service — the row is the prayer; Dwarf and Elf walk their own trees. Not a lookup of one existing path for implementers — that remains reading [[INTERFACES]]. This skill is how the row is *written*.
 
 ## Load
 
@@ -46,7 +46,7 @@ An undeclared route in code is a defect. Do not invent routing doctrine — this
 
 ## Do not
 
-- Write `{{service tree}}` or `{{surface tree}}` or `docs/tdds/`. After the row lands, return it — the Cleric may Agent Dwarf/Warrior/Trickster; this skill does not.
+- Write `{{service tree}}` or `{{surface tree}}` or `docs/tdds/`. After the row lands, return it — the Cleric may Agent Dwarf/Elf/Trickster; this skill does not.
 - Carry the surface / component / interface-framework / domain-framework / local-runtime / cloud / abc skills.
 
 ## Instantiation

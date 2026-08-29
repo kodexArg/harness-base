@@ -24,7 +24,7 @@ related_agents:
 
 > The surface is one host: reuse components, tokens for paint, and a declared interactivity ladder so the screen stays coherent.
 
-This family is a **template**. It is the frontend/surface rulebook. Instantiation fills slots from [[ONBOARDING]] to match [[adr-02-stack]] and **deletes any sub this project does not use**. A **headless** project deletes this whole family in the same batch as The Warrior ([[CLONE]]). Keep the parent if a screen exists.
+This family is a **template**. It is the frontend/surface rulebook. Instantiation fills slots from [[ONBOARDING]] to match [[adr-02-stack]] and **deletes any sub this project does not use**. A **headless** project deletes this whole family in the same batch as The Elf ([[CLONE]]). Keep the parent if a screen exists.
 
 1. **Host.** `{{surface framework}}` in `{{surface rendering mode}}` is the surface under `{{surface tree}}`. Client JavaScript is opt-in (`{{hydration default}}`).
 

@@ -45,7 +45,7 @@ modules), and the authorization pattern. Until then it holds placeholders:
 - Write `docs/tdds/` or tests — The Trickster (`hb-ag-test`, `hb-sk-tdd`).
 - Write the local runtime (The Wizard) or `docs/INTERFACES.md` (The Cleric).
 - Substitute the toolchain, add an unsanctioned dependency, or invent routing doctrine.
-- Load Warrior / Cleric / Trickster / Wizard / Inquisitor skills.
+- Load Elf / Cleric / Trickster / Wizard / Inquisitor skills.
 
 ## Instantiation
 
