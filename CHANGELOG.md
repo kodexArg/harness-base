@@ -3,6 +3,13 @@
 Every change landing on `main` records an entry here in the same batch
 ([[adr-05-after-versioning]]). Version format: `vA.B.C`.
 
+## v0.1.7 — 2026-08-29
+
+Sync the live GitHub label set to the catalog in `docs/GITHUB.md`
+(`scripts/sync_gh_labels.py`). Dry-run reports drift; `--apply` creates
+missing labels, updates descriptions, and deletes GitHub defaults that
+are not in the catalog. Clone runs `--apply` after the first push.
+
 ## v0.1.6 — 2026-08-29
 
 Align `pr-merge-gate` selection with guardian watchlists so AGENTS.md,

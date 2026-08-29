@@ -2,7 +2,7 @@
 title: Instantiation guide — a new project from harness-base
 type: reference
 status: active
-version: v0.1.6
+version: v0.1.7
 tags: [harness, clone, instantiation, template]
 description: "Operator steps to instantiate harness-base: copy, fill via ONBOARDING, prefix rename, stack decision, trees, first commit."
 applies_when:
@@ -115,7 +115,8 @@ gh repo create {{owner}}/{{repo}} --private --source . --push
 ```
 
 Then apply the branch ruleset (`scripts/apply_main_ruleset.py`, after filling
-its `{{owner}}`/`{{repo}}` and ruleset id), fill [[PRD]] and [[CLAUDE-TEAM]],
+its `{{owner}}`/`{{repo}}` and ruleset id), apply the label catalog
+(`python3 scripts/sync_gh_labels.py --apply`), fill [[PRD]] and [[CLAUDE-TEAM]],
 and open the first issue. The development loop ([[DEVELOPMENT-LOOP]]) takes
 over from there.
 
