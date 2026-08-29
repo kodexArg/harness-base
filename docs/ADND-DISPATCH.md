@@ -36,7 +36,7 @@ The development loop (idea → [[INTERFACES]] → TDD → screen) remains [[DEVE
 - Do not nest two Inquisitor calls.
 - **Elf never Agents Dwarf. Dwarf never Agents Elf.** Only The Cleric carries messages both ways.
 - One missing-row trip to The Cleric per need. Do not edit [[INTERFACES]] from Dwarf, Elf, or Trickster.
-- **git / PR / merge → Bard.** No area owner may `git` or `gh`. The hunting party may `gh` issues only.
+- **git / PR / merge → Bard.** No area owner may `git` or `gh`. The hunting party may `gh` issues only. Their Bash is not a loophole.
 - **Issue hunt → Hunter.** Area owners do not Agent the hunting party. The hunting party does not Agent area owners.
 
 ## Prompt class → first agent
@@ -55,7 +55,7 @@ Classify the **user's ask**, not the files you wish were in scope. Then follow t
 | "Does this PR / plan / diff comply with PRD, ADRs, or INTERFACES?" | The Inquisitor | Quick-exit report. Do not author a fix. Parent may load `hb-sk-abc`; Inquisitor does not |
 | "Does this comply with adr-NN?" / about to assert ADR compliance | The Inquisitor | Area owner must **call**. Do not self-certify |
 | Writing `adrs/` itself | guardian `kbot-adr` | Not The Inquisitor. Watchlist in [[AGENTS]] |
-| `git`, commit, push, PR, merge | The Bard | Quick-exit. No area owner. Bard does not patch product trees while shipping. Issue hunt is not this row |
+| `git`, `gh`, commit, push, PR, merge | The Bard | Quick-exit. No area owner. Bard does not patch product trees while shipping. Issue hunt is not this row |
 | Lowest-numbered issue, issue triage, issue forensics, hunter bulletin | The Hunter | Parallel Hawk + Hound (`scout`). Immediate existing-test repro (quick-exit). Bulletin. **Never** an area owner |
 | Ambiguous (screen + new interface + infra) | Parent splits | Catalog first (Cleric), tests (Trickster), then Dwarf, then Elf; infra last (Wizard). Surface↔service only through Cleric. Ship via Bard. Inquisitor after the product hunk if ABC is in question |
 
