@@ -2,7 +2,7 @@
 title: Product agents — roster and who they know
 type: reference
 status: active
-version: v0.1.4
+version: v0.1.6
 tags: [harness, agents, hb-ag]
 description: "SSOT for the hb-ag-* roster: specialist owners, the Adventurer lane, hunting party, skills, and allowed calls."
 applies_when:
@@ -29,11 +29,11 @@ Host-agnostic: the stems below are the names. Where a host runtime exposes a nat
 
 | Stem | Title | File | Owns (write) | Skills | `Agent` |
 |---|---|---|---|---|---|
-| `hb-ag-contracts` | The Cleric ✝️ | `agents/hb-ag-contracts.md` | `docs/INTERFACES.md`, `docs/contracts/` **only** | `hb-sk-contracts` only | **yes** → Dwarf, Elf, Trickster |
-| `hb-ag-service` | The Dwarf 🔨 | `agents/hb-ag-service.md` | framework-bound `{{service tree}}` work (not `docs/tdds/`, tests, or Paladin logic) | `hb-sk-domain-framework`, `hb-sk-interface-framework` | **yes** → Cleric, Paladin, Trickster, Wizard; **never** Elf |
-| `hb-ag-paladin` | The Paladin 🛡️ | `agents/hb-ag-paladin.md` | framework-neutral Python business logic and complex scripts | **none** — definition carries its surgical craft | **yes** → Trickster after implementation only; never Cleric or Elf |
-| `hb-ag-surface` | The Elf 🧝 | `agents/hb-ag-surface.md` | `{{surface tree}}` except tests | `hb-sk-component-framework`, `hb-sk-surface-framework` | **yes** → Cleric (Trickster for tests; Wizard for infra; **never** Dwarf) |
-| `hb-ag-ops` | The Wizard 🧙 | `agents/hb-ag-ops.md` | the local runtime, cloud/CI/secrets surfaces named in [[INFRASTRUCTURE]], [[VARIABLES]] — not app trees, not [[INTERFACES]] | `hb-sk-local-runtime`, `hb-sk-cloud` | infra only (prefer parent) |
+| `hb-ag-contracts` | The Cleric ✝️ | `agents/hb-ag-contracts.md` | `docs/INTERFACES.md`, `docs/contracts/` **only** | `hb-sk-contracts` only | **yes** → Dwarf, Elf, Trickster, Owl |
+| `hb-ag-service` | The Dwarf 🔨 | `agents/hb-ag-service.md` | framework-bound `{{service tree}}` work (not `docs/tdds/`, tests, or Paladin logic) | `hb-sk-domain-framework`, `hb-sk-interface-framework` | **yes** → Cleric, Paladin, Trickster, Wizard, Owl; **never** Elf |
+| `hb-ag-paladin` | The Paladin 🛡️ | `agents/hb-ag-paladin.md` | framework-neutral Python business logic and complex scripts | **none** — definition carries its surgical craft | **yes** → Trickster after implementation; Owl for vendor docs; never Cleric or Elf |
+| `hb-ag-surface` | The Elf 🧝 | `agents/hb-ag-surface.md` | `{{surface tree}}` except tests | `hb-sk-component-framework`, `hb-sk-surface-framework` | **yes** → Cleric, Trickster, Wizard, Owl; **never** Dwarf |
+| `hb-ag-ops` | The Wizard 🧙 | `agents/hb-ag-ops.md` | the local runtime, cloud/CI/secrets surfaces named in [[INFRASTRUCTURE]], [[VARIABLES]] — not app trees, not [[INTERFACES]] | `hb-sk-local-runtime`, `hb-sk-cloud` | Owl for vendor docs; otherwise infra only (prefer parent) |
 | `hb-ag-judge` | The Inquisitor ⚖️ | `agents/hb-ag-judge.md` | **nothing**. Read-only. Reports only. | **none** — does not load skills | **no** |
 | `hb-ag-test` | The Trickster 🃏 | `agents/hb-ag-test.md` | dedicated `docs/tdds/`, service, surface, and harness test owner; Adventurer is the single bounded exception | `hb-sk-tdd`, `hb-sk-test-runner`; may load `hb-sk-surface-framework` for surface tests | **no** — returns the traps |
 | `hb-ag-adventurer` | The Adventurer 🧭 | `agents/hb-ag-adventurer.md` | one eligible small task plus its tests; excludes interfaces, ADRs, Git, secrets, deployment | **none** — reads applicable SSOTs directly | **no** — the one-agent lane |
@@ -59,7 +59,7 @@ These are not archived `kbot-*` lobes and not the `kwf-*` delivery party. `kwf-w
 
 ## Each agent knows the others
 
-Every live `hb-ag-*` definition must name the stems it may call. A parent that implements instead of dispatching is out of area.
+Every live `hb-ag-*` definition that holds `Agent` must name those stems. The Owl is listed on every Agent-bearing specialist except The Hunter (Hawk and Hound only). A parent that implements instead of dispatching is out of area.
 
 ### The Cleric (`hb-ag-contracts`)
 
@@ -70,6 +70,7 @@ Knows and may call:
 - **The Dwarf** — forge only after the row lands, and only if the need has logic, lives in domain+model, and is **not** already computable from data already served. If already computable: tell The Elf to adapt — no new row.
 - **The Elf** — deliver the contract (row) or the adaptation instruction.
 - **The Trickster** — TDD entry + failing tests after a new row; never product code.
+- **The Owl** — vendor documentation for a catalog or contract question.
 
 Does not write `{{service tree}}` or `{{surface tree}}`. Does not emit ABC verdicts — that is The Inquisitor (and, for *writing* `adrs/`, the guardian `kbot-adr`). Does not `git` / `gh` — that is The Bard.
 
@@ -83,6 +84,7 @@ Knows and may call:
 - **The Cleric** — catalog row missing or wrong; never edit [[INTERFACES]] yourself. Accept a Cleric request only if (1) it has logic, (2) it lives in domain+model, (3) it is **not** already computable from data already served. If already computable: reply to The Cleric "tell the Elf to adapt" — no new row. If new: wait for the row, then forge.
 - **The Trickster** — via the Cleric, or a direct request-for-tests. The Dwarf does not write the tests.
 - **The Wizard** — local runtime, cloud, secrets, CI. Dispatch; do not eat infra.
+- **The Owl** — vendor documentation and external research. Dispatch; do not browse yourself.
 
 Does not know The Elf or The Adventurer as someone to call. Does not `git` / `gh` — that is The Bard.
 
@@ -93,18 +95,20 @@ Does not know The Elf or The Adventurer as someone to call. Does not `git` / `gh
 Implements first. Then may call:
 
 - **The Trickster** — after implementation only, with changed paths, invariants, edge cases, and focused commands. The Paladin never writes tests or `docs/tdds/`.
+- **The Owl** — vendor documentation for the rule under the knife.
 
 Does not write Django or other framework-bound models, migrations, persistence, handlers, permissions, routes, payloads, interfaces, frontend, infra, or tests. Does not call The Cleric or The Elf. An API or frontend need proves the task is not Paladin work. Does not `git` / `gh`.
 
 ### The Elf (`hb-ag-surface`)
 
-🧝 The screen in `{{interface language}}`. Writes `{{surface tree}}` except tests. Never Agents The Dwarf. Optional — a headless project deletes it. Host and component craft follow [[adr-02-stack]] (Astro and Belt when that ADR names them).
+🧝 The screen in `{{interface language}}`. Writes `{{surface tree}}` except tests. Never Agents The Dwarf. Optional — a headless project deletes it. Host and component craft follow [[adr-02-stack]].
 
 Knows and may call:
 
 - **The Cleric** — request interfaces as **content needed** (fields, page, UI need). Not framework, not paths, not payload shapes.
 - **The Trickster** — after the screen is built, for surface tests (`hb-sk-surface-framework` is allowed there; not the Trickster's specialty).
 - **The Wizard** — local runtime / cloud / secrets. Dispatch; do not eat infra.
+- **The Owl** — vendor documentation for the host or component stack.
 
 Does not carry the contracts ADR. The service owns fragment markup; the surface host loads the client. Does not `git` / `gh` — that is The Bard.
 
@@ -112,7 +116,7 @@ Does not carry the contracts ADR. The service owns fragment markup; the surface 
 
 🧙 Devops for **this** repo only: the local runtime, the cloud layout, secrets names in [[INFRASTRUCTURE]] / [[VARIABLES]]. The agent file exists; the parent may dispatch it. Stop-and-name is over.
 
-Knows: does not write `{{surface tree}}`, `{{service tree}}`, tests, or [[INTERFACES]]. Skills `hb-sk-local-runtime`, `hb-sk-cloud`. Does not `git` / `gh` — that is The Bard.
+Knows: does not write `{{surface tree}}`, `{{service tree}}`, tests, or [[INTERFACES]]. Skills `hb-sk-local-runtime`, `hb-sk-cloud`. May call The Owl for vendor docs. Does not `git` / `gh` — that is The Bard.
 
 ### The Inquisitor (`hb-ag-judge`)
 

@@ -13,10 +13,11 @@ stack-specific skill became an instantiation template.
 
 What ships inside:
 
-- **Agent roster** (`agents/`) — seven area owners with ownership boundaries,
-  a dispatch graph, and a definition contract: contracts, service, surface
-  (optional), ops, test, judge, git.
-- **Skills** (`skills/`) — eleven product-skill templates (`hb-sk-*`) plus
+- **Agent roster** (`agents/`) — thirteen stems with ownership boundaries,
+  a dispatch graph, and a definition contract: contracts, service, paladin,
+  surface (optional), ops, test, judge, adventurer, git, hunter, hawk, hound,
+  owl.
+- **Skills** (`skills/`) — fifteen product-skill templates (`hb-sk-*`) plus
   reusable harness skills (`kskill-*`): graph exploration, session stance,
   quick wins, reporting, diagrams.
 - **ADRs** (`adrs/`) — the doctrine set: ADR rules, nomenclature,

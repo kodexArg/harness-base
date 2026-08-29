@@ -7,7 +7,6 @@ Contract, both accepted line shapes and the rationale: [[GITHUB]].
 from __future__ import annotations
 
 import argparse
-import fnmatch
 import importlib.util
 import json
 import os
@@ -17,6 +16,11 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT / "scripts") not in sys.path:
+    sys.path.insert(0, str(ROOT / "scripts"))
+
+from guardian_watchlists import matching_guardians
+
 WATCHLISTS_MODULE = ROOT / "scripts" / "guardian_watchlists.py"
 
 # Each guardian name is a contiguous literal so tests/test_project_slug_hardcode.py
@@ -54,13 +58,7 @@ def load_watchlists() -> dict:
 
 def guardians_for(rel: str, watchlists: dict) -> list[str]:
     """fnmatch against each pattern AND against pattern.rstrip('*') + '*'."""
-    hits = []
-    for agent, patterns in watchlists.items():
-        for pattern in patterns:
-            if fnmatch.fnmatch(rel, pattern) or fnmatch.fnmatch(rel, pattern.rstrip("*") + "*"):
-                hits.append(agent)
-                break
-    return hits
+    return matching_guardians(rel, watchlists)
 
 
 def required_guardians(changed_files: list[str], watchlists: dict) -> dict[str, list[str]]:

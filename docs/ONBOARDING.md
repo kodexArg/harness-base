@@ -2,7 +2,7 @@
 title: Incoming-agent fill-in map for harness-base
 type: reference
 status: active
-version: v0.1.4
+version: v0.1.6
 tags: [harness, onboarding, instantiation, placeholders]
 description: "Playbook for another model entering this template: how to fill every slot without confusing AGENTS.md, plus the full placeholder inventory."
 applies_when:
@@ -225,7 +225,6 @@ Harness rows stay. The empty project table uses:
 | `{{REQ-DOMAIN-NN}}` | [[REQ]] | Optional tracking id |
 | `{{requirement summary}}` / `{{open issues}}` / `{{closed issues}}` | [[REQ]] | Snapshot cells |
 | `{{stage 1}}`, `{{stage 2}}`, `{{stage 3}}`, … | [[ROADMAP]] | Stage name + one-line exit; mark exactly one current |
-| `{{dev secret seed}}` | `.env.example` | Local **non-production** seed for `SECRET_KEY` — never a real secret. Declare the name in [[VARIABLES]] first |
 
 ## 5 · Headless products
 
@@ -254,8 +253,8 @@ Shared tokens appear in many files so the product name cannot drift. **Load** is
 | `{{number format}}` | `adrs/adr-01.b-localization.md` | Screen numbers |
 | `{{date format}}` | `adrs/adr-01.b-localization.md` | Screen dates |
 | `{{timezone}}` | `adrs/adr-01.b-localization.md` | Timezone |
-| `{{service tree}}` | `AGENTS.md`, `CLAUDE.md`, `docs/HARNESS.md`, `docs/GLOSSARY.md`, `docs/SERVICES.md`, `docs/ADND-AGENTS.md`, `docs/tdds/tdd-00-template.md`, `adrs/adr-07-git.md`, `agents/hb-ag-contracts.md`, `agents/hb-ag-git.md`, `agents/hb-ag-ops.md`, `agents/hb-ag-paladin.md`, `agents/hb-ag-service.md`, `agents/hb-ag-surface.md`, `agents/hb-ag-test.md`, `skills/hb-sk-abc/SKILL.md`, `skills/hb-sk-cloud/SKILL.md`, `skills/hb-sk-contracts/SKILL.md`, `skills/hb-sk-domain-framework/SKILL.md`, `skills/hb-sk-local-runtime/SKILL.md`, `skills/hb-sk-tdd/SKILL.md`, `skills/hb-sk-test-runner/SKILL.md` | Service root path |
-| `{{surface tree}}` | `AGENTS.md`, `CLAUDE.md`, `docs/HARNESS.md`, `docs/GLOSSARY.md`, `docs/ADND-AGENTS.md`, `adrs/adr-07-git.md`, `agents/hb-ag-contracts.md`, `agents/hb-ag-git.md`, `agents/hb-ag-ops.md`, `agents/hb-ag-service.md`, `agents/hb-ag-surface.md`, `agents/hb-ag-test.md`, `skills/hb-sk-abc/SKILL.md`, `skills/hb-sk-cloud/SKILL.md`, `skills/hb-sk-contracts/SKILL.md`, `skills/hb-sk-local-runtime/SKILL.md` | Surface root path |
+| `{{service tree}}` | `AGENTS.md`, `CLAUDE.md`, `docs/HARNESS.md`, `docs/GLOSSARY.md`, `docs/SERVICES.md`, `docs/ADND-AGENTS.md`, `docs/tdds/tdd-00-template.md`, `adrs/adr-07-git.md`, `agents/hb-ag-contracts.md`, `agents/hb-ag-git.md`, `agents/hb-ag-ops.md`, `agents/hb-ag-paladin.md`, `agents/hb-ag-service.md`, `agents/hb-ag-surface.md`, `agents/hb-ag-test.md`, `agents/hb-ag-owl.md`, `agents/hb-ag-hunter.md`, `scripts/ci_select.py`, `skills/hb-sk-abc/SKILL.md`, `skills/hb-sk-cloud/SKILL.md`, `skills/hb-sk-contracts/SKILL.md`, `skills/hb-sk-domain-framework/SKILL.md`, `skills/hb-sk-local-runtime/SKILL.md`, `skills/hb-sk-tdd/SKILL.md`, `skills/hb-sk-test-runner/SKILL.md` | Service root path |
+| `{{surface tree}}` | `AGENTS.md`, `CLAUDE.md`, `docs/HARNESS.md`, `docs/GLOSSARY.md`, `docs/ADND-AGENTS.md`, `adrs/adr-07-git.md`, `agents/hb-ag-contracts.md`, `agents/hb-ag-git.md`, `agents/hb-ag-ops.md`, `agents/hb-ag-service.md`, `agents/hb-ag-surface.md`, `agents/hb-ag-test.md`, `agents/hb-ag-owl.md`, `agents/hb-ag-hunter.md`, `scripts/ci_select.py`, `skills/hb-sk-abc/SKILL.md`, `skills/hb-sk-cloud/SKILL.md`, `skills/hb-sk-contracts/SKILL.md`, `skills/hb-sk-local-runtime/SKILL.md` | Surface root path |
 | `{{service toolchain}}` | `AGENTS.md`, `CLAUDE.md`, `docs/SERVICES.md`, `adrs/adr-02-stack.md`, `skills/hb-sk-domain-framework/SKILL.md` | Service toolchain |
 | `{{surface toolchain}}` | `AGENTS.md`, `CLAUDE.md`, `adrs/adr-02-stack.md`, `skills/hb-sk-surface-framework/SKILL.md` | Surface toolchain |
 | `{{local runtime}}` | `AGENTS.md`, `CLAUDE.md`, `docs/HARNESS.md`, `docs/INFRASTRUCTURE.md`, `adrs/adr-02-stack.md`, `skills/hb-sk-local-runtime/SKILL.md` | Orchestration file |
@@ -321,7 +320,6 @@ Shared tokens appear in many files so the product name cannot drift. **Load** is
 | `{{VARIABLE_NAME}}` / `{{PUBLIC_VARIABLE_NAME}}` / `{{scope}}` / `{{envs}}` / `{{source}}` / `{{description}}` / `{{yes/no}}` | `docs/VARIABLES.md` | Variable rows |
 | `{{REQ-DOMAIN-NN}}` / `{{requirement summary}}` / `{{open issues}}` / `{{closed issues}}` | `docs/REQ.md` | Optional REQ snapshot |
 | `{{ruleset id}}` | `scripts/apply_main_ruleset.py` | GitHub ruleset id |
-| `{{dev secret seed}}` | `.env.example` | Local secret seed (fake) |
 | `{{html fragment technology}}` | `adrs/adr-03.c-htmx.md` | HTMX, Hotwire, … — or **delete that sub** |
 | `{{boot sequence}}` | `adrs/adr-03.d-development.md` | Local service start chain |
 | `{{cache policy}}` | `adrs/adr-03.e-cache.md` | What cache exists / is refused |

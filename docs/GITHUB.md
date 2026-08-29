@@ -2,7 +2,7 @@
 title: GitHub repository conventions, branching, and issue workflows
 type: reference
 status: active
-version: v0.1.3
+version: v0.1.6
 tags: [harness, github, git, workflow, pr]
 description: "Establishes single-line main integration, branch naming, PR conventions, and GitHub CLI usage."
 applies_when:
@@ -266,7 +266,7 @@ Three states, and what each one means for whoever picks the change up:
 
 > The PR body must record a conformance pass for every guardian whose watchlist a changed file hits. `scripts/check_merge_gate.py` enforces this. The job does not delay an owner merge.
 
-The PR body must record a conformance pass for every guardian whose watchlist a changed file hits. Enforced by `scripts/check_merge_gate.py`. This job verifies a **recorded** pass. It does not delay an owner merge ([[adr-08-github]] rule 7).
+The PR body must record a conformance pass for every guardian whose watchlist a changed file hits. Enforced by `scripts/check_merge_gate.py`. `scripts/ci_select.py` turns this job on when a changed path hits those same watchlists, or when the gate scripts themselves change. This job verifies a **recorded** pass. It does not delay an owner merge ([[adr-08-github]] rule 7).
 
 ### Exact lines (machine-parsed)
 

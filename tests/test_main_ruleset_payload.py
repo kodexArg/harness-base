@@ -21,6 +21,10 @@ def main() -> int:
         if needed not in types:
             print(f"FAIL: payload dropped {needed}", file=sys.stderr)
             return 1
+    apply = (ROOT / "scripts" / "apply_main_ruleset.py").read_text(encoding="utf-8")
+    if 'if "{{" in API' not in apply:
+        print("FAIL: apply_main_ruleset.py must refuse unfilled slots", file=sys.stderr)
+        return 1
     actors = data.get("bypass_actors") or []
     if not any(
         a.get("actor_type") == "RepositoryRole" and a.get("bypass_mode") == "always"

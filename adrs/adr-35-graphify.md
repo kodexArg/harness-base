@@ -2,7 +2,7 @@
 title: adr-35-graphify
 type: adr
 status: active
-version: v0.1.0
+version: v0.1.1
 tags: [adr, harness, graphify, exploration, mcp]
 description: "Graphify MCP is the first exploration mechanism when the graph is present. Governs bidirectional navigation (downstream children and upstream parents), tool selection, transition to file reading, and cache tracking."
 applies_when:
@@ -24,4 +24,4 @@ Rules only; content lives in [[GRAPHIFY]].
    - `shortest_path(source=..., target=...)` to trace the dependency or call chain between two symbols.
 5. When the graph is absent, Grep, Glob, and Read are the path.
 6. Graphify does not replace [[CODEMAP]].
-7. `graph.json` and `manifest.json` are tracked. The generated cache under `graphify-out/` is never committed.
+7. `graph.json` and `manifest.json` are tracked. The generated cache under `graphify-out/cache/` is never committed.

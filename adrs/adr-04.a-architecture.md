@@ -2,7 +2,7 @@
 title: adr-04.a-architecture
 type: adr
 status: active
-version: v0.1.2
+version: v0.1.3
 tags: [architecture, surface]
 description: "Surface host runtime, layout wrapping, and the interactivity ladder."
 applies_when:
@@ -24,4 +24,4 @@ Instantiation: name the host and the ladder. Rewrite the rungs (static HTML / fr
 
 3. **Interactivity ladder.** `{{interactivity ladder}}` (example: 1 server HTML, 2 fragments per [[adr-03.c-htmx]], 3 `{{component framework}}` islands). Pick hydration only as high as the rung requires (`{{hydration default}}`).
 
-4. **Script placement.** Domain TypeScript/JS lives in the surface lib; host page scripts stay thin; component scripts own component state.
+4. **Script placement.** Domain scripts live in the surface lib; host page scripts stay thin; component scripts own component state. Languages and host are named in [[adr-02-stack]], not here.

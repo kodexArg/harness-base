@@ -67,6 +67,8 @@ def test_owl_frontmatter_and_tools() -> None:
     assert "Write" not in tools, "The Owl must not have the Write tool"
     assert "Edit" not in tools, "The Owl must not have the Edit tool"
     assert "You are **The Owl** (`hb-ag-owl`)" in body
+    assert "`{{service tree}}`" in body
+    assert "`{{surface tree}}`" in body
 
 
 def test_owl_skill_contract() -> None:

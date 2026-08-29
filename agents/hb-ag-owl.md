@@ -52,7 +52,7 @@ Skill (this agent only): `hb-sk-owl`.
 
 ## Does not
 
-Write or edit files in `service/`, `surface/`, `docs/`, or `adrs/`. Implement features, write unit tests, or author TDD specifications. Execute `git` or `gh` commands. Formulate architectural doctrine or make project design decisions. Hallucinate internal project facts that contradict local SSOTs. Call other agents.
+Write or edit files in `{{service tree}}`, `{{surface tree}}`, `docs/`, or `adrs/`. Implement features, write unit tests, or author TDD specifications. Execute `git` or `gh` commands. Formulate architectural doctrine or make project design decisions. Hallucinate internal project facts that contradict local SSOTs. Call other agents.
 
 ## Quick exit
 

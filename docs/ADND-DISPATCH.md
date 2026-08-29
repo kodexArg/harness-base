@@ -2,7 +2,7 @@
 title: Soft dispatch graphs — prompt class to hb-ag-* handoff
 type: reference
 status: active
-version: v0.1.4
+version: v0.1.6
 tags: [harness, agents, dispatch]
 description: "Soft, host-agnostic graphs: given a user prompt class, which hb-ag-* goes first and whom they call. Included from ADND-AGENTS."
 applies_when:
@@ -28,7 +28,7 @@ The development loop remains [[DEVELOPMENT-LOOP]]. These graphs name **which age
 ## Recursion (always)
 
 - **The Cleric** has `Agent` (Dwarf, Elf, Trickster). After the catalog hunk: call the next owner, or return the row / adaptation instruction.
-- **The Paladin** has `Agent` (Trickster only, after implementation). Never Cleric or Elf.
+- **The Paladin** has `Agent` (Trickster after implementation; Owl for vendor docs). Never Cleric or Elf.
 - **The Adventurer** has no `Agent`. The parent dispatches it; it finishes or returns `ADVENTURER STOP`.
 - **The Trickster** has no `Agent`. Returns the traps. Does not spawn Dwarf / Elf to "fix" a red.
 - **The Inquisitor** has no product `Write` and does not spawn builders to "fix" a finding. Returns the named rule. Not a merge gate.
@@ -43,7 +43,7 @@ The development loop remains [[DEVELOPMENT-LOOP]]. These graphs name **which age
 - **git / PR / merge → Bard.** No area owner may `git` or `gh`. The hunting party may `gh` issues only. Their Bash is not a loophole.
 - **Issue hunt → Hunter.** Area owners do not Agent the hunting party. The hunting party does not Agent area owners.
 - **Adventurer lane → parent only.** The Hunter records triage but does not call The Adventurer. No specialist calls The Adventurer, and The Adventurer calls nobody.
-- **Web search → Owl.** Any specialist or parent may call The Owl for external documentation and research.
+- **Web search → Owl.** Any Agent-bearing specialist except The Hunter, or any parent, may call The Owl for external documentation and research. The Hunter stays Hawk and Hound only.
 
 ## Prompt class → first agent
 

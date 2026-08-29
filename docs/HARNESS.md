@@ -2,7 +2,7 @@
 title: Harness inventory, vendored skills, and agent contracts
 type: reference
 status: active
-version: v0.1.4
+version: v0.1.6
 tags: [harness, skills, agents, ssot]
 description: "Complete inventory of vendored skills, kind prefixes, MCP policies, and agent definition contracts."
 applies_when:
@@ -212,11 +212,11 @@ Specialists own non-overlapping areas. The one exception is a parent-validated A
 
 | Stem | Title | Owns (may write) | Must not write | `Agent` tool |
 |---|---|---|---|---|
-| `hb-ag-contracts` | The Cleric ✝️ | `docs/INTERFACES.md`, `docs/contracts/` only | `{{surface tree}}`, `{{service tree}}`, tests, infra, git | **yes** → Dwarf, Elf, Trickster |
-| `hb-ag-service` | The Dwarf 🔨 | framework-bound `{{service tree}}` work | `INTERFACES.md`, pure Paladin logic, `{{surface tree}}`, `docs/tdds/`, tests, infra, git | **yes** → Cleric, Paladin, Trickster, Wizard; **never** Elf |
-| `hb-ag-paladin` | The Paladin 🛡️ | framework-neutral Python business logic and complex scripts | frameworks, interfaces, frontend, infra, tests, git | **yes** → Trickster after implementation only; never Cleric or Elf |
-| `hb-ag-surface` | The Elf 🧝 | `{{surface tree}}` except tests | `INTERFACES.md`, `contracts/`, `{{service tree}}`, tests, infra, git | **yes** → Cleric (Trickster for tests; Wizard for infra; **never** Dwarf) |
-| `hb-ag-ops` | The Wizard 🧙 | local runtime, cloud/CI/secrets named in [[INFRASTRUCTURE]] / [[VARIABLES]] | app trees, `INTERFACES.md`, tests, git | infra only (prefer parent) |
+| `hb-ag-contracts` | The Cleric ✝️ | `docs/INTERFACES.md`, `docs/contracts/` only | `{{surface tree}}`, `{{service tree}}`, tests, infra, git | **yes** → Dwarf, Elf, Trickster, Owl |
+| `hb-ag-service` | The Dwarf 🔨 | framework-bound `{{service tree}}` work | `INTERFACES.md`, pure Paladin logic, `{{surface tree}}`, `docs/tdds/`, tests, infra, git | **yes** → Cleric, Paladin, Trickster, Wizard, Owl; **never** Elf |
+| `hb-ag-paladin` | The Paladin 🛡️ | framework-neutral Python business logic and complex scripts | frameworks, interfaces, frontend, infra, tests, git | **yes** → Trickster after implementation; Owl for vendor docs; never Cleric or Elf |
+| `hb-ag-surface` | The Elf 🧝 | `{{surface tree}}` except tests | `INTERFACES.md`, `contracts/`, `{{service tree}}`, tests, infra, git | **yes** → Cleric, Trickster, Wizard, Owl; **never** Dwarf |
+| `hb-ag-ops` | The Wizard 🧙 | local runtime, cloud/CI/secrets named in [[INFRASTRUCTURE]] / [[VARIABLES]] | app trees, `INTERFACES.md`, tests, git | Owl for vendor docs; otherwise infra only (prefer parent) |
 | `hb-ag-judge` | The Inquisitor ⚖️ | **nothing**. Read-only. Reports only. | product trees, tests, git | **no** |
 | `hb-ag-test` | The Trickster 🃏 | dedicated `docs/tdds/`, service/surface/harness tests | product code, screen, `INTERFACES.md`, git | **no** — returns traps; Adventurer is the bounded write exception |
 | `hb-ag-adventurer` | The Adventurer 🧭 | one eligible low-score task plus its tests | interfaces/contracts, ADRs, Git/GitHub, secrets, deployment | **no** — complete or stop |
@@ -250,7 +250,7 @@ Each live definition opens with a one-line quote, then "You are **The X** (`hb-a
 
 **Standing decision: every agent under `agents/` is written to run as a dispatched subagent; no definition declares itself a teammate.**
 
-- **product specialists** — The Cleric holds `Agent` (Dwarf, Elf, Trickster) and is the sole surface↔service hop. The Dwarf may call The Paladin for a pure Python core, plus The Cleric, The Trickster, and The Wizard — never The Elf. The Paladin may call The Trickster after implementation only, never The Cleric or The Elf. The Elf retains its existing sealed path. Trickster, Inquisitor, and Bard do not spawn builders. Wizard Agent is infra-only; prefer the parent.
+- **product specialists** — The Cleric holds `Agent` (Dwarf, Elf, Trickster, Owl) and is the sole surface↔service hop. The Dwarf may call The Paladin for a pure Python core, plus The Cleric, The Trickster, The Wizard, and The Owl — never The Elf. The Paladin may call The Trickster after implementation and The Owl for vendor docs, never The Cleric or The Elf. The Elf retains its existing sealed path plus The Owl. Trickster, Inquisitor, and Bard do not spawn builders. Wizard Agent is Owl plus infra-only; prefer the parent.
 - **single-agent lane** — The Adventurer has no `Agent`. The parent dispatches it only for a complete [[ISSUE-TRIAGE]] card totaling less than 5 with no axis above 2 and no excluded boundary.
 - **hunting party** — The Hunter holds `Agent` (Hawk, Hound only). Hawk and Hound do not spawn. The party does not Agent area owners. Dispatch Hawk/Hound as `scout`.
 

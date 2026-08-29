@@ -8,6 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
+import check_merge_gate  # noqa: E402
 import ci_select  # noqa: E402
 
 
@@ -62,9 +63,9 @@ def test_tdds_force_full_service() -> None:
     sel = ci_select.classify(["docs/tdds/tdd-01-example.md"])
     if not sel.service or sel.service_args:
         fail("docs/tdds/ must force the full service suite")
-    if not sel.merge_gate:
-        fail("docs/tdds/ must run merge-gate")
-    ok("tdds force full service + merge-gate")
+    if sel.merge_gate:
+        fail("docs/tdds/ is not a guardian watchlist path")
+    ok("tdds force full service and skip merge-gate")
 
 
 def test_ci_yml_keeps_dot_github() -> None:
@@ -73,6 +74,8 @@ def test_ci_yml_keeps_dot_github() -> None:
         fail(f"ci.yml must map to its own guard, got {sel}")
     if "tests/test_every_test_file_runs.py" not in sel.harness_files:
         fail(f"ci.yml must map to the runner audit, got {sel}")
+    if not sel.merge_gate:
+        fail("ci.yml is on kbot-prd and kbot-adr watchlists")
     ok("ci.yml path is not stripped and maps to its guards")
 
 
@@ -82,6 +85,8 @@ def test_an_unmapped_workflow_runs_the_whole_harness() -> None:
         fail(f"an unmapped workflow must run the harness, got {sel}")
     if "tests/test_ci_select.py" not in sel.harness_files:
         fail(f"expected the full harness, got {sel.harness_files}")
+    if not sel.merge_gate:
+        fail("an unmapped workflow is still a .github/workflows hit")
     ok("an unmapped workflow falls back to the whole harness")
 
 
@@ -112,6 +117,8 @@ def test_agents_map_to_the_agent_guards() -> None:
     ):
         if expected not in sel.harness_files:
             fail(f"an agent change must select {expected}, got {sel.harness_files}")
+    if not sel.merge_gate:
+        fail("an agent file is on the kbot-adr watchlist")
     ok("agents map to the agent guards")
 
 
@@ -126,6 +133,39 @@ def test_adrs_map_to_the_adr_guards() -> None:
     if not sel.merge_gate:
         fail("an ADR change must run the merge gate")
     ok("adrs map to the adr guards + merge gate")
+
+
+def test_merge_gate_follows_watchlists() -> None:
+    watchlists = check_merge_gate.load_watchlists()
+    watched = [
+        "AGENTS.md",
+        "README.md",
+        "agents/hb-ag-service.md",
+        ".github/workflows/ci.yml",
+        "docs/PRD.md",
+        "docs/INTERFACES.md",
+        "docs/VARIABLES.md",
+        "docs/contracts/contract-billing.md",
+        "CHANGELOG.md",
+    ]
+    unwatched = [
+        "docs/tdds/tdd-01-example.md",
+        "surface/src/lib/foo.ts",
+        "service/billing/handlers.py",
+    ]
+    for path in watched:
+        if not check_merge_gate.guardians_for(path, watchlists):
+            fail(f"fixture {path} must hit a watchlist")
+        if not ci_select.classify([path]).merge_gate:
+            fail(f"watched path {path} must run merge-gate")
+    for path in unwatched:
+        if check_merge_gate.guardians_for(path, watchlists):
+            fail(f"fixture {path} must not hit a watchlist")
+        if ci_select.classify([path]).merge_gate:
+            fail(f"unwatched path {path} must not run merge-gate")
+    if not ci_select.classify(["scripts/guardian_watchlists.py"]).merge_gate:
+        fail("editing the watchlist module must run merge-gate")
+    ok("merge-gate job tracks guardian watchlists")
 
 
 def test_surface_test_file_selects_itself() -> None:
@@ -175,6 +215,7 @@ if __name__ == "__main__":
     test_graphify_skill_maps_to_its_guards()
     test_agents_map_to_the_agent_guards()
     test_adrs_map_to_the_adr_guards()
+    test_merge_gate_follows_watchlists()
     test_surface_test_file_selects_itself()
     test_unknown_surface_surface_runs_the_whole_suite()
     test_service_slice_never_matches_by_filename()

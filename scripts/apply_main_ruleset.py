@@ -22,6 +22,12 @@ API = "repos/{{owner}}/{{repo}}/rulesets/" + RULESET_ID
 
 
 def main() -> int:
+    if "{{" in API:
+        print(
+            "refusing to PUT: fill {{owner}}, {{repo}}, and {{ruleset id}} first ([[CLONE]])",
+            file=sys.stderr,
+        )
+        return 2
     payload = json.loads(PAYLOAD.read_text(encoding="utf-8"))
     if any(rule.get("type") == "required_status_checks" for rule in payload["rules"]):
         print("refusing to PUT a payload that still requires status checks", file=sys.stderr)

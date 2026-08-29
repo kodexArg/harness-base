@@ -94,10 +94,11 @@ def test_paladin_scope_and_test_after_handoff() -> None:
     ):
         assert forbidden_dependency in area
 
-    targets = re.findall(r"\*\*May Agent:\*\*\s*`([^`]+)`", area)
-    assert targets == ["hb-ag-test"], f"Paladin Agent targets changed: {targets}"
+    may_agent = next(line for line in area.splitlines() if "**May Agent:**" in line)
+    targets = re.findall(r"`(hb-ag-[a-z-]+)`", may_agent)
+    assert targets == ["hb-ag-test", "hb-ag-owl"], f"Paladin Agent targets changed: {targets}"
     assert "after implementation only" in area
-    assert "No other stem." in area
+    assert "No other product stem." in area
     assert "never Agent The Cleric or The Elf" in area
     assert "You do not write tests or `docs/tdds/`." in area
     assert "Implement first." in does
