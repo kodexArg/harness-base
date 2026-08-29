@@ -2,7 +2,7 @@
 title: Incoming-agent fill-in map for harness-base
 type: reference
 status: active
-version: v0.1.2
+version: v0.1.3
 tags: [harness, onboarding, instantiation, placeholders]
 description: "Playbook for another model entering this template: how to fill every slot without confusing AGENTS.md, plus the full placeholder inventory."
 applies_when:
@@ -124,7 +124,7 @@ Decide these **before** editing files. Copy the bound value into every path list
 | `{{domain framework}}` | Service domain framework | `Django`, `Ktor` |
 | `{{interface framework}}` | Service HTTP/API framework | `DRF`, `Ktor Routing` |
 | `{{surface framework}}` | Surface host | `Astro`, `Next.js` |
-| `{{component framework}}` | UI components | `Svelte`, `React` |
+| `{{component framework}}` | UI components | `Belt`, `Svelte`, `React` |
 | `{{service toolchain}}` | Service package/run tool — no substitutes later | `uv`, `gradle` |
 | `{{surface toolchain}}` | Surface package/run tool | `bun`, `pnpm` |
 | `{{test runner}}` | Service test runner | `pytest`, `JUnit` |
@@ -229,7 +229,7 @@ Harness rows stay. The empty project table uses:
 
 ## 5 · Headless products
 
-If there is no screen: delete in **one batch** The Warrior, `skills/hb-sk-surface-framework/`, `skills/hb-sk-component-framework/`, `.cursor/rules/section-articles.mdc`, the whole [[adr-04-frontend]] family, and every roster row that names the surface ([[CLONE]] §7). Do not leave `{{surface tree}}` pointing at a missing tree. Surface stack tokens in [[adr-02-stack]] go away with that section.
+If there is no screen: delete in **one batch** The Elf, `skills/hb-sk-surface-framework/`, `skills/hb-sk-component-framework/`, `.cursor/rules/section-articles.mdc`, the whole [[adr-04-frontend]] family, and every roster row that names the surface ([[CLONE]] §7). Do not leave `{{surface tree}}` pointing at a missing tree. Surface stack tokens in [[adr-02-stack]] go away with that section.
 
 ## 6 · What `AGENTS.md` still is after fill
 
@@ -264,7 +264,7 @@ Shared tokens appear in many files so the product name cannot drift. **Load** is
 | `{{repo}}` | `docs/GITHUB.md`, `adrs/adr-08-github.md`, `scripts/apply_main_ruleset.py`, `skills/hb-sk-git/SKILL.md` | GitHub repo |
 | `{{project slug}}` | `docs/GLOSSARY.md`, `docs/VARIABLES.md`, `.env.example` | Slug |
 | `{{prefix}}` | every `skills/hb-sk-*/SKILL.md` Instantiation section | New kind prefix with dash |
-| `{{technology}}` | stack-shaped `hb-sk-*` Instantiation sections (not abc/contracts/tdd/git which keep their stem) | Folder rename target |
+| `{{technology}}` | stack-shaped `hb-sk-*` Instantiation sections (not abc/contracts/tdd/git/hunter/hawk/hound which keep their stem) | Folder rename target |
 | `{{domain framework}}` | `docs/HARNESS.md`, `docs/SERVICES.md`, `adrs/adr-02-stack.md`, `skills/hb-sk-domain-framework/SKILL.md` | Domain framework |
 | `{{interface framework}}` | `docs/HARNESS.md`, `docs/SERVICES.md`, `adrs/adr-02-stack.md`, `skills/hb-sk-interface-framework/SKILL.md` | Interface framework |
 | `{{surface framework}}` | `docs/HARNESS.md`, `adrs/adr-02-stack.md`, `skills/hb-sk-surface-framework/SKILL.md` | Surface host |

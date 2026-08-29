@@ -85,7 +85,7 @@ Local orchestration is `{{local runtime}}`; its contract is the local-runtime se
 
 ### 4. Browser, cloud, and external systems
 
-Use declared MCP tools through the responsible agent. GitHub belongs to `hb-ag-git`; cloud and environment operations belong to `hb-ag-ops`. Browser smoke checks are interactive and operator-run only.
+Use declared MCP tools through the responsible agent. **The Three Feathers** (Las Tres Plumas) is the inn: issues, PRs, and the agents that work them ([[GLOSSARY]], [[GITHUB]]). Issue hunt, the notice-board bulletin, and a later Hunter's `goal` belong to `hb-ag-hunter`. Ship (`git`, PR, merge) belongs to `hb-ag-git`. Cloud and environment operations belong to `hb-ag-ops`. Browser smoke checks are interactive and operator-run only.
 
 Use external search after local context is insufficient. Prefer official vendor documentation for version-specific behavior.
 
@@ -99,21 +99,24 @@ Agents preserve ownership boundaries in a large harness. Dispatch the area owner
 
 - `hb-ag-contracts` — The Cleric ✝️ — owns `docs/INTERFACES.md` and interface contracts.
 - `hb-ag-service` — The Dwarf 🔨 — owns the service implementation.
-- `hb-ag-surface` — The Warrior 🗡️ — owns the surface implementation except tests. Optional: a headless project deletes it.
+- `hb-ag-surface` — The Elf 🧝 — owns the surface implementation except tests. Optional: a headless project deletes it.
 - `hb-ag-test` — The Trickster 🃏 — owns TDD records and all test writes.
 - `hb-ag-ops` — The Wizard 🧙 — owns the local runtime, CI, cloud, and secret surfaces.
 - `hb-ag-judge` — The Inquisitor ⚖️ — reviews project fit and logic; read-only.
-- `hb-ag-git` — The Bard 🎶 — owns Git and GitHub operations.
+- `hb-ag-git` — The Bard 🎶 — owns git and PR shipping onto `main`.
+- `hb-ag-hunter` — The Hunter 🏹 — El Cazador. Issue gateway at The Three Feathers; pins the bulletin for a later Hunter.
+- `hb-ag-hawk` — The Hawk 🦅 — El Halcón. Hunter-only historical-issue scout.
+- `hb-ag-hound` — The Hound 🐕 — El Sabueso. Hunter-only keyword codebase scout.
 
 Changes to `AGENTS.md` or the PRD engage `kbot-prd`; ADR and rule changes engage `kbot-adr`; interface and routed service surfaces engage `kbot-api`. Canonical watchlists are in `scripts/guardian_watchlists.py`.
 
-A dispatched agent does not inherit session context. It reads `docs/PRD.md`, then `docs/INTERFACES.md`, then its agent definition and only its permitted task-specific references and skills.
+A dispatched agent does not inherit session context. Tree-party agents read `docs/PRD.md`, then `docs/INTERFACES.md`, then their agent definition and only their permitted skills. Hawk and Hound are familiars: they work from The Hunter's brief and do not load PRD or INTERFACES.
 
 ## Change routing
 
 Route service needs through `docs/INTERFACES.md`. New service behavior follows interface declaration → TDD → implementation. Surface work reuses declared interfaces or asks the interface owner for content.
 
-Follow `docs/GITHUB.md` for issue, branch, PR, merge, and deployment rules. Use the Git agent for GitHub operations.
+Follow `docs/GITHUB.md` for issue, branch, PR, merge, and deployment rules. Issue hunt and the notice board are The Hunter at The Three Feathers. Ship through The Bard.
 
 Do not copy detailed procedures into this file. Update the owning SSOT and keep this file as an index.
 
