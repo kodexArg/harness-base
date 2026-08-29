@@ -15,6 +15,7 @@ fi
 mkdir -p "$OUT_DIR"
 if [[ ! -f "$GRAPH_JSON" ]]; then
   graphify extract . --out "$SKILL_DIR" --code-only
+  python3 "$REPO_ROOT/scripts/graphify_harness_docs.py"
 fi
 echo "cli: $(command -v graphify)"
 echo "graph: $GRAPH_JSON"

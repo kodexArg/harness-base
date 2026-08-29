@@ -17,5 +17,5 @@ Only use Read/Grep/Glob directly when:
 1. Graphify MCP tools have already oriented you and you need to inspect or edit specific lines
 2. `graphify-out/graph.json` does not exist yet (run `scripts/graphify-update` first; if it still cannot produce a graph, Grep is the fallback)
 
-- Refresh the AST graph after changes with `scripts/graphify-update` (`--code-only`). Rebuild the semantic graph with `scripts/graphify-extract` (needs an LLM key).
+- Refresh the AST graph after changes with `scripts/graphify-update` (`--code-only` plus harness-docs overlay). Rebuild the semantic graph with `scripts/graphify-extract` (needs an LLM key).
 - Do not run `npx skills add`, `graphify add <url>`, or `graphify claude|codex|opencode install`.
