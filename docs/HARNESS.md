@@ -124,6 +124,7 @@ This heading does not cover adding a rule or changing what a rule requires or fo
 | `hb-sk-hunter` | Issue hunt at The Three Feathers: noise-stripped `problem`, one imperative `goal` for a later Hunter, existing-test repro, bulletin comment. | The Hunter (`hb-ag-hunter`) only |
 | `hb-sk-hawk` | Historical-issue scout: Graphify first, then `gh`. | The Hawk (`hb-ag-hawk`) only — Hunter familiar |
 | `hb-sk-hound` | Keyword codebase scout: Graphify first, then Grep. | The Hound (`hb-ag-hound`) only — Hunter familiar |
+| `hb-sk-owl` | Web browsing, documentation search, and markdown findings report. | The Owl (`hb-ag-owl`) only — universal web scout |
 | `hb-sk-abc` | ABC checklist: PR vs [[PRD]], ADRs, [[INTERFACES]]. | **Parent fallback** — The Inquisitor does not load skills |
 | `kskill-graphify` | First exploration mechanism when the graph is present ([[adr-35-graphify]], [[GRAPHIFY]]). Query/path/explain; `bin/ensure` after clone; extract and update; MCP in `mcp/mcp.json`. | exploration, `/kskill-graphify` |
 | `kskill-mood` | Session stance (`/kdx-mood`). | main loop |
@@ -223,6 +224,7 @@ Specialists own non-overlapping areas. The one exception is a parent-validated A
 | `hb-ag-hunter` | The Hunter 🏹 | issue bulletin comment at The Three Feathers | product trees, tests, git, PR | **yes** → Hawk, Hound only |
 | `hb-ag-hawk` | The Hawk 🦅 | **nothing**. Historical-issue scout | product trees, tests, git, the bulletin | **no** |
 | `hb-ag-hound` | The Hound 🐕 | **nothing**. Keyword codebase scout | product trees, tests, `gh` | **no** |
+| `hb-ag-owl` | The Owl 🦉 | **nothing**. Universal web research scout | product trees, tests, git | **no** |
 
 Tool allowlists cannot path-filter `Write`. The **body** is the bound: specialists hold `Write`/`Edit` for their area, while The Adventurer holds it only for a validated task lease. Need a new row → dispatch `hb-ag-contracts`. Do not edit the catalog. Need a commit or PR → dispatch `hb-ag-git`. Issue hunt and the notice board → `hb-ag-hunter`. Product implementers do not `git` or `gh`. The hunting party may `gh` issues only.
 
@@ -236,12 +238,13 @@ Each live definition opens with a one-line quote, then "You are **The X** (`hb-a
 - **The Elf** 🧝 — the face the user meets (the screen in `{{interface language}}`). Works only on `{{surface tree}}` (not tests). Calls the Cleric for interfaces. Never Agents The Dwarf. Optional: a headless project deletes it.
 - **The Wizard** 🧙 — environment is the spell: the local runtime, [[INFRASTRUCTURE]], [[VARIABLES]], CI. Live; the parent may dispatch it. Does not write app code or `INTERFACES.md`.
 - **The Inquisitor** ⚖️ — interrogates this harness and logic already in code. Read-only; quick-exit. Loads **no** skill. Not a merge gate.
-- **The Trickster** 🃏 — dedicated test owner. Dwarf red-first; Paladin tests afterward. The Adventurer lane is the sole bounded exception. Returns the traps.
+- **The Trickster** 🃏 — El Pícaro. Dedicated test owner. Dwarf red-first; Paladin tests afterward. The Adventurer lane is the sole bounded exception. Returns the traps.
 - **The Adventurer** 🧭 — El Aventurero. One eligible task, implementation plus tests, broad context, default effort, no `Agent`; no governed-boundary bypass.
-- **The Bard** 🎶 — the only voice Git hears for shipping. `git` / PR / merge. Does not fix the song while singing it. Issue hunt is The Hunter.
+- **The Bard** 🎶 — El Bardo. Plays his violin and sings onto `main`. `git` / PR / merge. Does not fix the song while singing it. Issue hunt is The Hunter.
 - **The Hunter** 🏹 — El Cazador. Issue gateway at The Three Feathers. Pins a noise-stripped bulletin (`problem` + one `goal`) for a later Hunter.
 - **The Hawk** 🦅 — El Halcón. Cheap `scout`. Old issues, Graphify then `gh`. Hunter only.
 - **The Hound** 🐕 — El Sabueso. Cheap `scout`. Keywords in the tree. Hunter only.
+- **The Owl** 🦉 — El Búho. Cheap `scout`. Universal web research scout; only agent with external web access.
 
 ### Invocation shape — every agent is a subagent
 

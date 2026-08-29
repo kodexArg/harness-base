@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard: relationship docs list the live 12-agent party, no retired titles."""
+"""Guard: relationship docs list the live 13-agent party, no retired titles."""
 
 from __future__ import annotations
 
@@ -22,6 +22,7 @@ ROSTER = (
     ("hb-ag-hunter", "The Hunter"),
     ("hb-ag-hawk", "The Hawk"),
     ("hb-ag-hound", "The Hound"),
+    ("hb-ag-owl", "The Owl"),
 )
 
 DOC_PATHS = (

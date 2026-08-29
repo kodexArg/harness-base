@@ -21,9 +21,9 @@ related_adrs:
 
 **Soft:** a parent or subagent is expected to follow these graphs. It is not a hard `agentType` resolver. Do not hand-dispatch archived `kwf-*` nodes from here.
 
-**Host-agnostic:** the node labels are stems (`hb-ag-contracts`, `hb-ag-service`, `hb-ag-paladin`, `hb-ag-surface`, `hb-ag-ops`, `hb-ag-judge`, `hb-ag-test`, `hb-ag-adventurer`, `hb-ag-git`, `hb-ag-hunter`, `hb-ag-hawk`, `hb-ag-hound`). Where the host has no native type for a stem, the parent loads `agents/<stem>.md` and still obeys the graph.
+**Host-agnostic:** the node labels are stems (`hb-ag-contracts`, `hb-ag-service`, `hb-ag-paladin`, `hb-ag-surface`, `hb-ag-ops`, `hb-ag-judge`, `hb-ag-test`, `hb-ag-adventurer`, `hb-ag-git`, `hb-ag-hunter`, `hb-ag-hawk`, `hb-ag-hound`, `hb-ag-owl`). Where the host has no native type for a stem, the parent loads `agents/<stem>.md` and still obeys the graph.
 
-The development loop remains [[DEVELOPMENT-LOOP]]. These graphs name **which agent** walks each step, including the Paladin's implementation-first pure-Python path and the Adventurer's one-agent small-task lane.
+The development loop remains [[DEVELOPMENT-LOOP]]. These graphs name **which agent** walks each step, including the Paladin's implementation-first pure-Python path, the Adventurer's one-agent small-task lane, and The Owl's universal web research lane.
 
 ## Recursion (always)
 
@@ -35,6 +35,7 @@ The development loop remains [[DEVELOPMENT-LOOP]]. These graphs name **which age
 - **The Bard** has no `Agent`. Does not write app code while shipping. Does not spawn builders to "fix" a red on the way to `main`.
 - **The Hunter** has `Agent` (Hawk, Hound only). Does not Agent area owners. Does not spawn a builder to "fix" the issue.
 - **The Hawk** and **The Hound** have no `Agent`. They return a pack to The Hunter.
+- **The Owl** has no `Agent`. It returns a markdown findings report to the calling agent or parent.
 - Do not nest two Inquisitor calls.
 - **Elf never Agents Dwarf. Dwarf never Agents Elf.** Only The Cleric carries messages both ways. The Paladin is not a third hop.
 - **Dwarf may Agent Paladin** only for framework-neutral Python business logic or a complex script core, before the Dwarf's TDD path.
@@ -42,6 +43,7 @@ The development loop remains [[DEVELOPMENT-LOOP]]. These graphs name **which age
 - **git / PR / merge → Bard.** No area owner may `git` or `gh`. The hunting party may `gh` issues only. Their Bash is not a loophole.
 - **Issue hunt → Hunter.** Area owners do not Agent the hunting party. The hunting party does not Agent area owners.
 - **Adventurer lane → parent only.** The Hunter records triage but does not call The Adventurer. No specialist calls The Adventurer, and The Adventurer calls nobody.
+- **Web search → Owl.** Any specialist or parent may call The Owl for external documentation and research.
 
 ## Prompt class → first agent
 
@@ -63,6 +65,7 @@ Classify the **user's ask**, not the files you wish were in scope. First check w
 | Writing `adrs/` itself | guardian `kbot-adr` | Not The Inquisitor. Watchlist in [[AGENTS]] |
 | `git`, `gh`, commit, push, PR, merge | The Bard | Quick-exit. No area owner. Bard does not patch product trees while shipping. Issue hunt is not this row |
 | Lowest-numbered issue, issue triage, issue forensics, hunter bulletin | The Hunter | Parallel Hawk + Hound (`scout`). Immediate existing-test repro (quick-exit). Bulletin. **Never** an area owner |
+| External web documentation, vendor API lookup, package changelog, error search | The Owl | Return structured markdown findings report. Universal scout for all agents. No codebase writes |
 | Ambiguous (screen + new interface + infra) | Parent splits | Catalog first (Cleric), tests (Trickster), then Dwarf, then Elf; infra last (Wizard). Surface↔service only through Cleric. Ship via Bard. Inquisitor after the product hunk if ABC is in question |
 
 Undeclared route in code is a defect ([[INTERFACES]]). Inventing a path on the surface is the same defect.

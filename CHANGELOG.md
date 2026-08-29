@@ -3,6 +3,15 @@
 Every change landing on `main` records an entry here in the same batch
 ([[adr-05-after-versioning]]). Version format: `vA.B.C`.
 
+## v0.1.5 — 2026-08-29
+
+Add The Owl (`hb-ag-owl`) and `hb-sk-owl` as the universal web research
+scout: the only agent with external web access. Receives search inquiries,
+browses official documentation and external references, and returns a
+standardized markdown findings report. Universally callable by all agents;
+has no write or git tools. Clarify The Trickster as El Pícaro and The Bard
+playing his violin.
+
 ## v0.1.4 — 2026-08-29
 
 Add The Paladin for surgical, framework-neutral Python business logic
