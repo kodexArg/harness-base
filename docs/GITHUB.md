@@ -2,7 +2,7 @@
 title: GitHub repository conventions, branching, and issue workflows
 type: reference
 status: active
-version: v0.1.6
+version: v0.1.7
 tags: [harness, github, git, workflow, pr]
 description: "Establishes single-line main integration, branch naming, PR conventions, and GitHub CLI usage."
 applies_when:
@@ -140,6 +140,7 @@ For complex user-facing features, `.github/ISSUE_TEMPLATE/gh-issue-feature.md` p
 | **4** | **Release tags `v*` are mandatory for `vA.B` milestones and cut from `main` only** | [[adr-07-git]] rule 5, [[adr-05-after-versioning]] | Operator cadence. Granular `.C` iterations are optional. |
 | **5** | **Deploy trust is `refs/heads/main` only** | [[adr-08-github]] rule 5 | The deploy credential's trust policy ([[INFRASTRUCTURE]]). |
 | **6** | **No branch outlives the 14-day retention window unclaimed** | Stated in this table (no governing ADR) | Harness: `scripts/check_branch_retention.py` (+ `tests/test_check_branch_retention.py`), run by an operator. Nothing on GitHub enforces it. |
+| **7** | **Issue and PR labels are only the fixed set in this file** | [[adr-08-github]] rule 6 | Harness: `scripts/sync_gh_labels.py` (+ `tests/test_gh_labels.py`), run by an operator (`--apply` to mutate). Not a CI gate. |
 
 `check_branch_model.py` asserts; it does not prevent. What actually prevents a bad ref from reaching production is the `main` ruleset plus the deploy pipeline's own checks — not this script. Stating that limit is deliberate, not a formality.
 
@@ -176,6 +177,12 @@ git log --first-parent --format=%s <since>..main | grep -vcE '\(#[0-9]+\)$'   # 
 ## Labels (issues + PRs) — fixed set
 
 > Create only these labels; do not invent free-form ones. Scoring vocabulary: [[ISSUE-TRIAGE]].
+
+Report drift with `python3 scripts/sync_gh_labels.py`. Mutate with `--apply`
+(create missing, edit descriptions, delete unsanctioned). The script never
+runs in CI — label write needs a PAT, and a clone's first GitHub defaults
+must not fail an unrelated pull request. After `gh repo create`, run `--apply`
+once ([[CLONE]]).
 
 | Label | Use |
 |---|---|
