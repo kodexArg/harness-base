@@ -5,7 +5,7 @@ description: >
   quick-win (/qw), afk, cannabis, directive, or normal. A mood
   changes how you work, never what the work is. Triggers:
   /kdx-mood, mood, quick win, qw, scout, afk, stance.
-  Ruled by this procedure over [[HARNESS]]. Not a guardian.
+  Ruled by this procedure over [[HARNESS]]. Not a merge gate.
 ---
 
 # kskill-mood

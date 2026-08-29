@@ -38,7 +38,7 @@ Also hold, because they fail reviews that would otherwise look green:
 
 - Screen strings render in `{{interface language}}`; code and docs stay English ([[adr-01.b-localization]]).
 - Toolchains are the ones [[adr-02-stack]] sanctions for this project — no substitutes.
-- `prd-fail` / `adr-fail` / `api-fail` **report**. They do not block an owner merge. A `Guardian-Verdict:` line is not a review label.
+- `prd-fail` / `adr-fail` / `api-fail` **report**. They do not block an owner merge. A `Plan-Verdict:` line is not a review label.
 
 ## Do not
 

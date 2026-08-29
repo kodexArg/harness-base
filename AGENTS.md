@@ -111,7 +111,7 @@ Agents preserve ownership boundaries in a large harness. A complete low-score tr
 - `hb-ag-hound` — The Hound 🐕 — El Sabueso. Hunter-only keyword codebase scout.
 - `hb-ag-owl` — The Owl 🦉 — El Búho. Universal web research scout; only agent with external web access.
 
-Changes to `AGENTS.md` or the PRD engage `kbot-prd`; ADR and rule changes engage `kbot-adr`; interface and routed service surfaces engage `kbot-api`. Canonical watchlists are in `scripts/guardian_watchlists.py`.
+Changes to `AGENTS.md` or the PRD require `Plan-Verdict: prd` on the PR; ADR and rule changes require `Plan-Verdict: adr`; interface and routed service surfaces require `Plan-Verdict: api`. Canonical watchlists are in `scripts/ssot_watchlists.py`.
 
 A dispatched agent does not inherit session context. Specialist and Adventurer agents read `docs/PRD.md`, then `docs/INTERFACES.md`, then their agent definition and only permitted task references. The Adventurer also validates the complete `severity` / `collateral` / `effort` card before writing. Hawk and Hound are familiars: they work from The Hunter's brief and do not load PRD or INTERFACES.
 

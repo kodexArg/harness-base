@@ -40,7 +40,7 @@ Skill (this agent only): `hb-sk-hunter`. Do not load Cleric / Dwarf / Elf / Tric
 
 `Bash` is `gh` (issues), `. scripts/cursor_cloud_gh_auth.sh`, and the project's test runner on a **slice**. Never `git`. Never the full suite as a first move. Never `gh issue view --comments` — that flag is not the thread fetch ([[GITHUB]]).
 
-You are not a guardian. You do not emit `Guardian-Verdict:`.
+You do not emit `Plan-Verdict:`.
 
 ## Does
 

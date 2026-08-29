@@ -14,7 +14,7 @@ related_adrs:
 ---
 # HARNESS — the skills and agents this project requires
 
-**The harness is the support of the objective, not the objective** ([[PRD]] — that document's own words): the documentation system, the guardian and orchestrator agents, and the **skills** vendored into the repo. This file is the harness-base template's own inventory; a project instantiated from it ([[CLONE]]) keeps this file and re-points its product rows.
+**The harness is the support of the objective, not the objective** ([[PRD]] — that document's own words): the documentation system, the agents, and the **skills** vendored into the repo. This file is the harness-base template's own inventory; a project instantiated from it ([[CLONE]]) keeps this file and re-points its product rows.
 
 ## Vendoring rule
 
@@ -35,7 +35,6 @@ Every harness artifact name starts with its kind:
 | skill (reusable) | `kskill-` |
 | skill (this product) | `hb-sk-` |
 | hook | `khook-` |
-| agent (guardian/lobe) | `kbot-` |
 | agent (this product) | `hb-ag-` |
 | delivery-party node | `kwf-` |
 
@@ -156,7 +155,7 @@ This project vendors no MCP server. `mcp/mcp.json` (linked as `.mcp.json`) decla
 
 > The `hooks/` tree is empty. Cursor `sessionStart` loads SSOTs and bootstraps Graphify.
 
-The `hooks/` tree is empty (`.gitkeep` only) — no agent hooks, no git pre-push installer. Guardian watchlists live in `scripts/guardian_watchlists.py`.
+The `hooks/` tree is empty (`.gitkeep` only) — no agent hooks, no git pre-push installer. SSOT watchlists for `pr-merge-gate` live in `scripts/ssot_watchlists.py`.
 
 Cursor project hooks live in `.cursor/hooks.json`. `sessionStart` runs, in order:
 
@@ -172,9 +171,9 @@ The harness was written for the owner's workstation and adapts to a cloud sandbo
 - **No agent hooks.** `.claude/settings.json` carries no `hooks` key.
 - **No cloud credential and no `id-token: write` by default.** The harness reaches GitHub here and nothing else, unless the project's deploy workflow declares otherwise ([[adr-08-github]] rule 5).
 
-## Guardian & orchestrator agents
+## Agents
 
-> Agents are the other half of the harness. Guardians gate [[PRD]], the ADRs, and [[INTERFACES]]; `kbot-*` agents are the orchestrator fan-out and project-resident lobes; `kwf-*` are workflow nodes resolved by script.
+> Agents are the other half of the harness. Product specialists, the Adventurer lane, and the hunting party live under `agents/`; archived `kwf-*` names are workflow nodes resolved by script.
 
 Agents are the other half of the harness. Their SSOT is `agents/`, reached as `.claude/agents/` and `.agents/agents/`. Product specialists, the Adventurer lane, and the hunting party are the `hb-ag-*` family. Roster and graphs: [[ADND-AGENTS]], [[ADND-DISPATCH]]. Where a host runtime exposes a native subagent type for a stem, the definition file is the same; otherwise the **parent** loads `agents/<stem>.md` and still obeys the roster. The playbook is the markdown, not the host.
 
@@ -197,7 +196,7 @@ Every file under `agents/` declares the same closed set of frontmatter keys, in 
 
 | Role slug | Meaning | Typical cast |
 |---|---|---|
-| `thinker` | planner/thinker — judgment, planning, doctrine gates | guardians, the Inquisitor, plan-time judges |
+| `thinker` | planner/thinker — judgment, planning, doctrine gates | the Inquisitor, plan-time judges |
 | `builder` | builder — implementation, worktree diffs, publish | Paladin, Dwarf, Elf, Adventurer, Bard (`kwf-warrior` / `kwf-archer` / `kwf-bard` were the archived delivery-party builders) |
 | `scout` | fast/scout — cheap parallel reads, familiars, pattern scans | The Hawk, The Hound, read-only familiars and sweep nodes |
 
@@ -207,7 +206,7 @@ Admitting or retiring a role slug is an edit to this table, not to an ADR.
 
 ### The product `hb-ag-*` family
 
-Specialists own non-overlapping areas. The one exception is a parent-validated Adventurer lease: one eligible low-score task temporarily gives The Adventurer its bounded implementation and tests while specialists stay out. Interfaces/contracts, ADRs, Git/GitHub, secret values, and deployment never enter that lease. The filename stem is the harness name; the fantasy title is personality (opening quote + voice). `hb-ag-contracts` is the **writer** of the catalog, not a merge-verdict bot. Do not restore archived `kbot-*` builders.
+Specialists own non-overlapping areas. The one exception is a parent-validated Adventurer lease: one eligible low-score task temporarily gives The Adventurer its bounded implementation and tests while specialists stay out. Interfaces/contracts, ADRs, Git/GitHub, secret values, and deployment never enter that lease. The filename stem is the harness name; the fantasy title is personality (opening quote + voice). `hb-ag-contracts` is the **writer** of the catalog, not a merge-verdict bot.
 
 `hb-sk-*` consumers are named in the inventory; most skills have one owner. `hb-sk-surface-framework` is Elf-owned (Trickster may load for surface tests). `hb-sk-abc` is a parent fallback (Inquisitor loads none). `hb-sk-git` is Bard-only. `hb-sk-hunter` / `hb-sk-hawk` / `hb-sk-hound` are the hunting party at The Three Feathers.
 

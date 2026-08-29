@@ -35,17 +35,15 @@ into a single verdict, which is why the four stay separate labels, never folded 
 
 ## The four
 
-| Agent | Reads | Asks |
+| Reviewer | Reads | Asks |
 |---|---|---|
-| `kbot-prd` | [[PRD]] | does the change serve the objective, and does it stay inside the railguard? |
-| `kbot-adr` | `adrs/` | does it comply with every active ADR? |
-| `kbot-api` | [[INTERFACES]] | does it touch the route surface, and is every route declared? |
-| `kbot-cleancode` | the diff | comment necessity ([[CODE-COMMENTS]]), duplication, naming |
+| PRD pass | [[PRD]] | does the change serve the objective, and does it stay inside the railguard? |
+| ADR pass | `adrs/` | does it comply with every active ADR? |
+| INTERFACES pass | [[INTERFACES]] | does it touch the route surface, and is every route declared? |
+| comment-clean pass | the diff | comment necessity ([[CODE-COMMENTS]]), duplication, naming |
 
-The first three are the guardians. Being dispatched by this routine does not
-change what they are, but it does change what their answer *counts as* — see "A label is not a
-guardian verdict" below. The fourth is a worker, not a guardian: it owns no SSOT and gates nothing
-([[GLOSSARY]]: guardian).
+The first three read product SSOTs. Being dispatched by this routine does not
+change what they are, but it does change what their answer *counts as* — see "A label is not a merge-gate verdict" below. The fourth owns no SSOT and gates nothing.
 
 ## The pass, step by step
 
@@ -69,9 +67,9 @@ on every fire, and a PR that gets a new commit is re-reviewed on the next fire.
 
 Twelve labels, three per agent. The table lives in [[GITHUB]]; this is what each state is *saying*.
 
-**`-approved`** — that reviewer found nothing. For `kbot-api` this includes the common case of a
+**`-approved`** — that reviewer found nothing. For the INTERFACES pass this includes the common case of a
 diff that touches no interface at all; silence about the route surface and approval of it are the
-same label, deliberately, because a PR that changes no route has nothing for that guardian to
+same label, deliberately, because a PR that changes no route has nothing for that pass to
 object to.
 
 **`-observed`** — findings stand, but none of them is a breach. This is the most useful of the
@@ -80,7 +78,7 @@ three and the easiest to under-read. It means a human should look, not that anyt
 **`-fail`** — a breach: outside the railguard, against an active rule, or an undeclared route. It
 is a **report**, and it stops nothing. See below.
 
-**`clean-applied`** — `kbot-cleancode`'s third state is not a failure, because that agent acts
+**`clean-applied`** — the comment-clean pass's third state is not a failure, because that reviewer acts
 instead of objecting. It means comment removals were committed to the PR's branch, in a commit
 whose subject carries the literal token `[CLEANCODE]`. Its `clean-observed` means the opposite kind
 of thing from the other three agents': findings exist that were **not safe to apply automatically**
@@ -99,9 +97,9 @@ already enforced. If a verdict should one day block, that is a change to
 `scripts/check_merge_gate.py` and a deliberate rewrite of this file's own rule — never a
 quiet re-interpretation of what the label already meant.
 
-## A label is not a guardian verdict
+## A label is not a merge-gate verdict
 
-`pr-merge-gate` passes on the presence of a `Guardian-Verdict:` line in the PR body ([[GITHUB]]). The
+`pr-merge-gate` passes on the presence of a `Plan-Verdict:` line in the PR body ([[GITHUB]]). The
 routine is forbidden from writing that line, or any PR body, and the reason is worth stating
 without euphemism: **an unattended process that can write its own gate token can unblock its own
 merges.** On every fire, forever, with no human in the loop. The bar stated above — the routine may never write that line or any PR body — is the
@@ -109,10 +107,8 @@ containment that keeps the advisory channel advisory.
 
 So the two marks say different things, and the difference is who made the claim:
 
-- `prd-approved` (label, by the routine) — *this agent ran and found nothing.*
-- `Guardian-Verdict: kbot-prd: ok` (line, by the owner process) — *the owner dispatched this
-  guardian for this change and recorded its answer*, which is what a PR-time guardian dispatch
-  requires and what the merge gate is checking for.
+- `prd-approved` (label, by the routine) — *this pass ran and found nothing.*
+- `Plan-Verdict: prd: ok` (line, by the owner process) — *the owner recorded SSOT conformance for this change*, which is what the merge gate is checking for.
 
 The routine can produce the first. Only the owner process can produce the second.
 
@@ -135,7 +131,7 @@ four; the cost of the alternative is a fabricated record, which is worse and is 
 ## What it may never do
 
 Merge, approve, request changes, close a PR. Push to `main` or to any branch that is not the
-reviewed PR's own. Edit a PR body or title. Write `Guardian-Verdict:` or `Plan-Verdict:`. Create,
+reviewed PR's own. Edit a PR body or title. Write `Plan-Verdict:`. Create,
 rename or delete a label. Open or close an issue. Touch cloud infrastructure, secrets or `.env`. Run a smoke test —
 prohibited outside an interactive session by the owner directive in `AGENTS.md`. Act on a `-fail`:
 it reports what the agents found; it does not fix it.

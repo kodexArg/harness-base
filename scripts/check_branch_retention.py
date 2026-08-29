@@ -3,8 +3,8 @@
 
 Contract: [[GITHUB]] "Branch retention — 14 days, then promoted or deleted".
 
-A branch with no PR is unclaimed and uncounted: nothing lists it, no guardian
-sees it, and the only way to learn a fix already exists on it is to go looking.
+A branch with no PR is unclaimed and uncounted: nothing lists it, no merge
+gate sees it, and the only way to learn a fix already exists on it is to go looking.
 The 2026-08-15 audit (#597) found ten such branches and five of them were
 already dead — one superseded by a better refactor on main, so keeping it looked
 like pending work that did not exist.

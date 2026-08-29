@@ -44,7 +44,7 @@ First act of the owner agent: Graphify, then [[GITHUB]], then `git status` / `gi
 |---|---|
 | Commit | Only when parent/user said commit / push / merge / ship. Why, 1–2 sentences, HEREDOC. Subject: [[adr-07-git]]. Match `git log`. Never `.env` / secrets |
 | Branch | Cut from `main`, prefixes in [[GITHUB]]. Delete on merge. Retention window: [[GITHUB]] |
-| PR | Always. `gh pr create`. Base `main`. Do not invent `Guardian-Verdict:` — owner process |
+| PR | Always. `gh pr create`. Base `main`. Do not invent `Plan-Verdict:` — owner process |
 | Merge | `gh pr merge`. Owner order is immediate. `--admin` when checks would wait ([[adr-08-github]]). Never end on "pending CI" |
 | Auth | `. scripts/cursor_cloud_gh_auth.sh` when merge needs the operator PAT, not an app token |
 | Issues | Not this song. The Hunter at The Three Feathers |

@@ -26,7 +26,7 @@ checks postpone to PR time versus stay enforced on every branch.
 | PR as sole entry to main ([[adr-08-github]] rule 2) | Required, unchanged | Unchanged — still the only path to main |
 | ADR conformance | Owner process / PR | Owner process / PR |
 | Interface-row conformance | Owner process / PR | Owner process / PR |
-| Guardian dispatch | Owner process | Owner process |
+| `Plan-Verdict:` record | Owner process / PR | Owner process / PR |
 | PR-flow commit on main | GitHub branch protection | GitHub branch protection |
 | Push-to-main | GitHub branch protection | GitHub branch protection |
 | Tests / TDD flows | Enforced | Enforced, unchanged, no exception |
@@ -34,17 +34,16 @@ checks postpone to PR time versus stay enforced on every branch.
 
 ## Honesty note on how re-enforcement actually happens at PR time
 
-[[GITHUB]] requires guardian verdicts and test
+[[GITHUB]] requires `Plan-Verdict:` lines and test
 suites to be green before merge. How that re-enforcement happens:
 
 - **It is not a file-write hook.** There are no PostToolUse hooks.
-- **The actual re-enforcement is the guardian PASS**, run as an explicit
+- **The actual re-enforcement is the recorded `Plan-Verdict:`**, run as an explicit
   step of the merge procedure: before merging a PR into `main`, the
-  integrating agent dispatches the relevant guardians
-  (`kbot-prd`/`-adr`/`-api`) against the PR's
-  diff, and their verdicts gate the merge per [[GITHUB]].
+  integrating agent records a `Plan-Verdict:` for every SSOT whose watchlist
+  the diff hits, and `scripts/check_merge_gate.py` checks those lines per [[GITHUB]].
   This is a procedural discipline, not a hook-enforced mechanism.
-- If the agent returns to `main` and re-writes a watchlisted file there, re-enforcement is still the guardian PASS, not a hook.
+- If the agent returns to `main` and re-writes a watchlisted file there, re-enforcement is still the recorded `Plan-Verdict:`, not a hook.
 
 ## See also
 

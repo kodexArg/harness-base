@@ -52,7 +52,7 @@ Catalog craft: six-column row (Method, Path with trailing slash, Handler, Payloa
 
 ## Does not
 
-Walk `{{service tree}}` or `{{surface tree}}`. Write routes, handlers, payload shapes in code, TDD entries, or tests. Invent routing doctrine — this tree programs interfaces the way [[adr-02-stack]] records. Call yourself The Archer. Emit `Guardian-Verdict`. `git` / `gh`.
+Walk `{{service tree}}` or `{{surface tree}}`. Write routes, handlers, payload shapes in code, TDD entries, or tests. Invent routing doctrine — this tree programs interfaces the way [[adr-02-stack]] records. Call yourself The Archer. Emit `Plan-Verdict`. `git` / `gh`.
 
 ## Quick exit
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Merge-time conformance-verdict gate, CI job `pr-merge-gate`.
+"""Merge-time SSOT conformance gate, CI job `pr-merge-gate`.
 
-Contract, both accepted line shapes and the rationale: [[GITHUB]].
+Contract: [[GITHUB]]. The PR body records `Plan-Verdict:` lines.
 """
 
 from __future__ import annotations
@@ -19,54 +19,33 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT / "scripts") not in sys.path:
     sys.path.insert(0, str(ROOT / "scripts"))
 
-from guardian_watchlists import matching_guardians
+from ssot_watchlists import matching_ssots
 
-WATCHLISTS_MODULE = ROOT / "scripts" / "guardian_watchlists.py"
+WATCHLISTS_MODULE = ROOT / "scripts" / "ssot_watchlists.py"
 
-# Each guardian name is a contiguous literal so tests/test_project_slug_hardcode.py
-# rule (g) strips it before its slug scan. Vocabulary: [[GITHUB]].
-VERDICT_RE = re.compile(
-    r"^Guardian-Verdict:\s*(kbot-prd|kbot-adr|kbot-api):\s*"
-    r"(pass|clear|compliant|valid|ok|drift)\s*$",
-    re.IGNORECASE,
-)
-
-# The party's plan-time verdict: keyed by SSOT, because no guardian ran.
 PLAN_VERDICT_RE = re.compile(
     r"^Plan-Verdict:\s*(prd|adr|api):\s*"
     r"(pass|clear|compliant|valid|ok|drift)\s*$",
     re.IGNORECASE,
 )
 
-# Mirrors SSOT_GUARDIAN in both .claude/workflows/*triage-and-fix.js.
-SSOT_GUARDIAN = {
-    "prd": "kbot-prd",
-    "adr": "kbot-adr",
-    "api": "kbot-api",
-}
-
 
 def load_watchlists() -> dict:
-    """Imports scripts/guardian_watchlists.py WATCHLISTS — the one shared copy;
-    see scripts/guardian_watchlists.py's own docstring for the no-third-copy
-    discipline."""
-    spec = importlib.util.spec_from_file_location("guardian_watchlists", WATCHLISTS_MODULE)
+    spec = importlib.util.spec_from_file_location("ssot_watchlists", WATCHLISTS_MODULE)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module.WATCHLISTS
 
 
-def guardians_for(rel: str, watchlists: dict) -> list[str]:
-    """fnmatch against each pattern AND against pattern.rstrip('*') + '*'."""
-    return matching_guardians(rel, watchlists)
+def ssots_for(rel: str, watchlists: dict) -> list[str]:
+    return matching_ssots(rel, watchlists)
 
 
-def required_guardians(changed_files: list[str], watchlists: dict) -> dict[str, list[str]]:
-    """guardian name -> the changed files that triggered it."""
+def required_ssots(changed_files: list[str], watchlists: dict) -> dict[str, list[str]]:
     required: dict[str, list[str]] = {}
     for rel in changed_files:
-        for agent in guardians_for(rel, watchlists):
-            required.setdefault(agent, []).append(rel)
+        for ssot in ssots_for(rel, watchlists):
+            required.setdefault(ssot, []).append(rel)
     return required
 
 
@@ -82,21 +61,13 @@ def changed_files_from_git(base: str) -> list[str]:
 
 
 def recorded_verdicts(body: str | None) -> set[str]:
-    """Guardian names (lowercased) whose requirement the body satisfies —
-    by a `Guardian-Verdict:` line naming that guardian, or by a
-    `Plan-Verdict:` line for the SSOT it answers to."""
     if not body:
         return set()
     recorded = set()
     for raw in body.splitlines():
-        line = raw.strip()
-        match = VERDICT_RE.match(line)
+        match = PLAN_VERDICT_RE.match(raw.strip())
         if match:
             recorded.add(match.group(1).lower())
-            continue
-        match = PLAN_VERDICT_RE.match(line)
-        if match:
-            recorded.add(SSOT_GUARDIAN[match.group(1).lower()])
     return recorded
 
 
@@ -136,7 +107,7 @@ def main() -> int:
     changed = changed_files_from_git(base)
 
     watchlists = load_watchlists()
-    required = required_guardians(changed, watchlists)
+    required = required_ssots(changed, watchlists)
 
     if not required:
         print("merge-gate: no watched files changed — passing trivially")
@@ -149,26 +120,21 @@ def main() -> int:
 
     recorded = recorded_verdicts(body)
 
-    for agent, files in sorted(required.items()):
-        status = "recorded" if agent in recorded else "MISSING"
-        print(f"merge-gate: {agent} required by {files} -> {status}")
+    for ssot, files in sorted(required.items()):
+        status = "recorded" if ssot in recorded else "MISSING"
+        print(f"merge-gate: {ssot} required by {files} -> {status}")
 
     missing = sorted(set(required) - recorded)
     if missing:
         print(
-            "\nmerge-gate: FAIL — missing recorded verdict(s). Either dispatch "
-            "the guardian(s) below and record one line each, or record the "
-            "party's plan-time verdict for the same SSOT:",
+            "\nmerge-gate: FAIL — missing recorded verdict(s). Record one line per SSOT:",
             file=sys.stderr,
         )
-        ssot_of = {v: k for k, v in SSOT_GUARDIAN.items()}
-        for agent in missing:
-            print(f"  Guardian-Verdict: {agent}: pass", file=sys.stderr)
-            if agent in ssot_of:
-                print(f"    (or)  Plan-Verdict: {ssot_of[agent]}: pass", file=sys.stderr)
+        for ssot in missing:
+            print(f"  Plan-Verdict: {ssot}: pass", file=sys.stderr)
         return 1
 
-    print("\nmerge-gate: PASS — every required guardian has a recorded verdict")
+    print("\nmerge-gate: PASS — every required SSOT has a recorded Plan-Verdict")
     return 0
 
 

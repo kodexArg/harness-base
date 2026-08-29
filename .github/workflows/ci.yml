@@ -65,6 +65,6 @@ jobs:
       - id: sel
         run: python3 scripts/ci_select.py --job merge-gate --base "${{ github.event.pull_request.base.sha }}" --head "${{ github.sha }}" >> "$GITHUB_OUTPUT"
       - if: steps.sel.outputs.run != 'true'
-        run: echo "skip — diff hits no guardian watchlist surface"
+        run: echo "skip — diff hits no SSOT watchlist surface"
       - if: steps.sel.outputs.run == 'true'
         run: python3 scripts/check_merge_gate.py

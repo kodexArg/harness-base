@@ -18,7 +18,7 @@ are not in the catalog. Clone runs `--apply` after the first push.
 
 ## v0.1.6 — 2026-08-29
 
-Align `pr-merge-gate` selection with guardian watchlists so AGENTS.md,
+Align `pr-merge-gate` selection with SSOT watchlists so AGENTS.md,
 README, agents, and workflows require a recorded verdict. Drop undeclared
 `SECRET_KEY` / `DEBUG` from `.env.example`. Name The Owl on Agent-bearing
 specialists (Hunter stays Hawk/Hound). Restamp the live roster counts,

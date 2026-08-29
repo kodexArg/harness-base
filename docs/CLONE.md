@@ -80,8 +80,8 @@ development variant. Record the pins in [[REQUIREMENTS]].
 Create `{{service tree}}` and (unless headless) `{{surface tree}}`. Then:
 
 - Wire the trees into `scripts/ci_select.py` (`SERVICE_PREFIXES` /
-  `SURFACE_PREFIXES`) and `scripts/guardian_watchlists.py` (route-surface
-  globs for `kbot-api`).
+  `SURFACE_PREFIXES`) and `scripts/ssot_watchlists.py` (route-surface
+  globs for the `api` SSOT).
 - Fill [[SERVICES]], [[INFRASTRUCTURE]], [[DB]], [[AUTH]], [[VARIABLES]],
   [[REQUIREMENTS]], [[ROADMAP]] — they ship as placeholders that say what they
   must contain.
