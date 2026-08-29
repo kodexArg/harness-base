@@ -2,13 +2,13 @@
 title: adr-00.a-adr-frontmatter
 type: adr
 status: active
-version: v0.1.0
+version: v0.1.4
 tags: [frontmatter, schema]
-description: "Defines the mandatory harness-wide frontmatter contract, schema, and trigger metadata."
+description: "Defines the mandatory harness-wide frontmatter contract, with a distinct closed key set for agent definitions."
 applies_when:
   - When authoring YAML frontmatter for an ADR or harness document.
   - When validating YAML frontmatter schema compliance.
-  - When performing semantic triage across the frontmatter index.
+  - When choosing the docs/ADR key set versus the agent definition key set.
 ---
 
 # ADR-00.a — ADR frontmatter
@@ -17,11 +17,13 @@ applies_when:
 
 1. **Harness-level frontmatter doctrine.** Structured YAML frontmatter is the universal metadata contract across the entire harness, governing ADRs (`adrs/`), vault documentation (`docs/`), skills (`skills/`), and agent definitions (`agents/`).
 
-2. **Standard closed contract.** Every harness document declares the standardized closed key set: `title`, `type`, `status`, `version`, `tags`, `description`, and `applies_when`, plus optional relationship keys (`sub_adrs` on parent ADRs; `related_agents` on ADRs an `hb-ag-*` agent carries; `related_adrs` on docs, skills, and agents).
+2. **Standard closed contract.** Every ADR and vault document under `adrs/` and `docs/` declares the standardized closed key set: `title`, `type`, `status`, `version`, `tags`, `description`, and `applies_when`, plus optional relationship keys (`sub_adrs` on parent ADRs; `related_agents` on ADRs an `hb-ag-*` agent carries; `related_adrs` on docs and skills). Skills under `skills/` use that same docs key set plus `name` as the host skill identity when the skill file requires it.
+
+2a. **Agent definition contract.** Files under `agents/` do **not** use the docs/ADR key set. Their closed keys are exactly `name`, `description`, `model`, `color`, `tools`, and `related_adrs`, as recorded in [[HARNESS]]. Host runtimes dispatch on `name`/`description`/`model`/`tools`; stamping `title`/`type`/`status`/`version`/`applies_when` onto an agent file is a defect. `related_adrs` is required and may be `[]`.
 
 3. **Field definitions and semantics:**
-   - `title`: Exact filename stem (for ADRs) or concise English phrase (for docs/skills/agents).
-   - `type`: Document category (`adr`, `reference`, `index`, `guide`, `skill`, `agent`).
+   - `title`: Exact filename stem (for ADRs) or concise English phrase (for docs/skills). Not an agent-file key.
+   - `type`: Document category (`adr`, `reference`, `index`, `guide`, `skill`). Not an agent-file key.
    - `status`: Fixed value `active` for current rules and live docs.
    - `version`: Version identifier (`vX.Y.Z`) tracking [[CHANGELOG]] and git release tags.
    - `tags`: Canonical array of lowercase topic identifiers.
@@ -29,7 +31,7 @@ applies_when:
    - `applies_when`: A DRY, unique list of atomic situational triggers, decision forks (`X vs Y`), precedence questions (`A over B`), and operational entry points (`When entering...`).
    - `sub_adrs`: (Optional) Array of child sub-ADR stems declared on parent ADRs.
    - `related_agents`: (Optional, ADRs only) Array of `hb-ag-*` stems that carry this ADR. Pair with `related_adrs` on those agent files.
-   - `related_adrs`: (Optional) Array of governing ADR stems declared on docs, skills, or agents — not on ADRs.
+   - `related_adrs`: Array of governing ADR stems. Required on agent files (`[]` when none). Optional on docs and skills. Not on ADRs.
 
 4. **Centrality of description.** `description` serves as the primary declarative summary for automated indexing and agent triage. It carries critical importance: it must state the core assertion or scope in one definitive sentence so agents can evaluate relevance instantly without loading the document body.
 

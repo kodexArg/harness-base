@@ -3,6 +3,19 @@
 Every change landing on `main` records an entry here in the same batch
 ([[adr-05-after-versioning]]). Version format: `vA.B.C`.
 
+## v0.1.4 — 2026-08-29
+
+Add The Paladin for surgical, framework-neutral Python business logic
+and complex scripts: implementation first, then Trickster-owned tests.
+Add The Adventurer as the parent-dispatched single-agent lane for
+complete triage cards totaling below 5 with no axis above 2; it carries
+one bounded implementation plus tests with broad context, default
+effort, and no subagents. Agent files keep the HARNESS closed
+frontmatter set (`name`/`model`/`tools`), distinct from docs/ADRs.
+The Dwarf carries `adr-03.b-tdd`. Adventurer work may start from a
+Hunter bulletin or a parent card; the PR remains required, the issue
+does not.
+
 ## v0.1.3 — 2026-08-29
 
 Hunting party at **The Three Feathers** (Las Tres Plumas): The Hunter

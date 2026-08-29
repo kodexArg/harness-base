@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard: relationship docs list the live hb-ag-* party, no Archer or Warrior title."""
+"""Guard: relationship docs list the live 12-agent party, no retired titles."""
 
 from __future__ import annotations
 
@@ -12,10 +12,12 @@ ROOT = Path(__file__).resolve().parents[1]
 ROSTER = (
     ("hb-ag-contracts", "The Cleric"),
     ("hb-ag-service", "The Dwarf"),
+    ("hb-ag-paladin", "The Paladin"),
     ("hb-ag-surface", "The Elf"),
     ("hb-ag-ops", "The Wizard"),
     ("hb-ag-judge", "The Inquisitor"),
     ("hb-ag-test", "The Trickster"),
+    ("hb-ag-adventurer", "The Adventurer"),
     ("hb-ag-git", "The Bard"),
     ("hb-ag-hunter", "The Hunter"),
     ("hb-ag-hawk", "The Hawk"),
@@ -119,8 +121,8 @@ def main() -> int:
             fail(f"{rel} tools: must list Graphify four first, got {tools[:4]!r}")
 
     if not failures:
-        ok("roster docs list ten stems and titles; no live Archer or Warrior")
-        ok("ten agent files: inherit, You are The X, church headings, Graphify first")
+        ok("roster docs list twelve stems and titles; no live Archer or Warrior")
+        ok("twelve agent files: inherit, You are The X, church headings, Graphify first")
         print("\nall 2 test(s) passed")
         return 0
     print(f"\n{failures} test(s) failed", file=sys.stderr)

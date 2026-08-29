@@ -2,28 +2,30 @@
 title: Canonical development loop, workflows, and gate checkpoints
 type: reference
 status: active
-version: v0.1.0
+version: v0.1.4
 tags: [harness, workflow, development-loop, tdd, interfaces]
-description: "Step-by-step engineering workflows connecting ideas to interface declarations, TDD, and PR integration."
+description: "Engineering workflows for specialist delivery, Paladin test-after logic, Adventurer small tasks, and PR integration."
 applies_when:
   - When initiating feature development workflows.
   - When entering the service development zone through interface declaration.
   - When verifying the interface checkpoint before returning to surface implementation.
+  - When routing pure Python business logic or an eligible one-agent task.
 related_adrs:
   - adr-02-stack
   - adr-05-after-versioning
+  - adr-08-github
 ---
 Open this before starting any code. It assumes [[PRD]] and [[INTERFACES]] are already held in memory (the standing requirement in [[AGENTS]]) and that the ABC gate has cleared.
 
 ## The canonical workflows — the definition
 
-> A general definition, not a rigid script. The service zone is entered and exited only through [[INTERFACES]]; the checkpoint — "does [[INTERFACES]] solve the need?" — is what defines it.
+> A general definition, not a rigid script. Routed framework service enters through [[INTERFACES]]; pure Python business logic and eligible tiny tasks have explicit bounded paths.
 
 **The development loop:**
 
-`idea → user-facing? → … → needs the service? → enter through [[INTERFACES]]`
+`idea → Adventurer eligible? → one-agent lane | pure Python core? → Paladin | user-facing/service specialist path`
 
-The service zone is entered only through [[INTERFACES]]. The surface requests **interfaces as content** (fields, page, UI need) via The Cleric (`hb-ag-contracts`) — not framework, not paths. Tests are The Trickster (`hb-ag-test`). Ship (`git` / `gh`) is The Bard (`hb-ag-git`).
+The routed, framework-bound service zone is entered only through [[INTERFACES]]. The surface requests **interfaces as content** (fields, page, UI need) via The Cleric (`hb-ag-contracts`) — not framework, not paths. Framework-neutral Python business rules and complex script cores go directly to The Paladin and require no interface unless an adapter must change. Tests are The Trickster (`hb-ag-test`) on specialist paths; The Paladin calls it **after** implementation. The Adventurer writes both sides of its eligible task. Ship (`git` / `gh`) remains The Bard (`hb-ag-git`).
 
 1. Confirm the need cannot be met by the interfaces already declared in [[INTERFACES]].
 2. If it cannot: The Cleric adds the row to [[INTERFACES]].
@@ -36,12 +38,20 @@ The checkpoint is what defines the loop: the service zone is exited only when [[
 
 `plan → The Cleric ([[INTERFACES]]) → The Trickster ([[TDD]]) → The Dwarf (models → handlers)`
 
+**New framework-neutral Python business rule or complex script:**
+
+`plan → The Paladin (implementation) → The Trickster (tests afterward)`
+
+**Eligible small task:**
+
+`complete triage card → parent validates total < 5 and no axis > 2 → The Adventurer (implementation + tests)`
+
 **New user-facing feature:**
 
 `The Elf (surface) → interfaces content via The Cleric → The Trickster (tests)`
 `         → needs the service? → The Trickster then The Dwarf → …`
 
-Both are active: every gate binds now, wherever its subject exists. The sections below render each one step by step.
+All paths are active: every gate binds wherever its subject exists. The sections below render each one step by step.
 
 ## 0 · Boot — orientation before any code
 
@@ -59,19 +69,38 @@ flowchart TD
     ABC -->|fails| STOP(["Fix or stop — no code until ABC clears"])
 ```
 
-## 0.5 · The change wrapper — issue in, PR out
+## 0.25 · The Adventurer gate — one small task, one agent
 
-> Every use-case loop opens with a `gh` issue and closes with a PR into `main`. A direct commit to `main` is never valid; the worktree is optional, the issue and PR are not.
+> Coordination is removed only when the scored work is smaller than the coordination and no governed boundary needs a specialist.
 
-Every use-case loop below is wrapped by the mandatory shape: it opens with a `gh` issue and closes with a PR, never a direct commit to `main`. The worktree is optional; the issue and the PR are not.
+The parent checks a complete [[ISSUE-TRIAGE]] card before specialist dispatch. `severity + collateral + effort < 5`, with no axis above `2`, permits only `1/1/1` or a permutation of `2/1/1`. The task also needs one bounded goal and no unresolved decision.
 
 ```mermaid
 flowchart LR
-    ISS(["Open gh issue<br/>always, for every change"]) --> CLAIM["Claim it<br/>gh issue edit N --add-assignee @me"]
+    CARD["Complete triage card"] --> SCORE{"total < 5<br/>and no axis > 2?"}
+    SCORE -->|no| SPEC["Specialist dispatch"]
+    SCORE -->|yes| BOUND{"Needs INTERFACES/contracts,<br/>ADR, Git, secrets, or deploy?"}
+    BOUND -->|yes| SPEC
+    BOUND -->|no| ADV["The Adventurer<br/>implementation + tests<br/>no Agent"]
+    ADV --> VERIFY["Required checks"]
+    VERIFY --> TAIL["PR tail — The Bard"]
+```
+
+The Hunter may supply the card in its bulletin but never calls The Adventurer. A parent-scored direct request may dispatch the same lane without a GitHub issue; shipping is still a PR (an orphan PR is valid under [[adr-08-github]]). If investigation raises the true score or crosses an excluded boundary, The Adventurer stops and names the owner. It never recruits a second agent.
+
+## 0.5 · The change wrapper — PR out; issue preferred
+
+> Every use-case loop closes with a PR into `main`. A direct commit to `main` is never valid. A GitHub issue is the preferred claim and tracking wrapper; it is not a prerequisite for a PR ([[adr-08-github]]).
+
+The usual loop opens with a `gh` issue and closes with a PR. The worktree is optional. The PR is not. An orphan PR (no parent issue) remains a valid supervised merge when the operator orders ship. A complete Adventurer triage card is enough to start the one-agent lane; The Bard still lands the change through a PR.
+
+```mermaid
+flowchart LR
+    ISS(["Prefer gh issue<br/>orphan PR still valid"]) --> CLAIM["If an issue exists:<br/>claim it --add-assignee @me"]
     CLAIM --> WT{"Isolate?"}
     WT -->|optional| WK["git worktree<br/>keyed to the issue"]
     WT -->|plain| BR["feature branch"]
-    WK --> WORK["…run the use-case loop (§1–§3)…"]
+    WK --> WORK["…run the use-case loop (§1–§4)…"]
     BR --> WORK
     WORK --> PR["Open PR → main"]
     PR --> MERGE["Merge as the owner identity<br/>owner order is immediate"]
@@ -146,7 +175,27 @@ flowchart TD
 
 SSOTs per step: [[INTERFACES]] · [[TDD]] · [[SERVICES]] · [[VARIABLES]] · [[CODEMAP]] · guardians (`kbot-prd`/`-adr`/`-api`).
 
-## 3 · Use case — a docs / doctrine change
+## 3 · Use case — pure Python business logic or a complex script
+
+> The Paladin changes the portable rule first; The Trickster tests that implementation afterward.
+
+This path is only for framework-neutral Python. It may live as a pure module inside `{{service tree}}`, but it does not own models, migrations, persistence, handlers, permissions, routes, payloads, interfaces, frontend, infra, or deployment.
+
+```mermaid
+flowchart TD
+    N(["Python rule or complex script need"]) --> B{"Framework / ORM / HTTP / UI / cloud dependency?"}
+    B -->|yes| SPEC["Return to the applicable specialist path"]
+    B -->|no| PAL["The Paladin: state invariants<br/>implement surgical pure core"]
+    PAL --> CHECK["Static checks + existing test slice"]
+    CHECK --> TEST["The Trickster: focused tests afterward<br/>no TDD entry"]
+    TEST --> GREEN{"Tests expose a real defect?"}
+    GREEN -->|yes| PAL
+    GREEN -->|no| PR(["PR tail — The Bard"])
+```
+
+SSOTs per step: [[SERVICES]] · [[TDD]] · [[REQUIREMENTS]] · [[GLOSSARY]]. The Paladin may Agent The Trickster after implementation only. It never calls The Cleric or The Elf.
+
+## 4 · Use case — a docs / doctrine change
 
 > Docs are the product here. ADR rule changes run the supersession lifecycle; the matching guardian is engaged before the batch closes.
 
@@ -177,6 +226,8 @@ SSOTs per step: [[adr-00-adr-doctrine]] · guardians (`kbot-prd`/`-adr`/`-api`) 
 > Shorthand for the non-standard paths: surface-only, infra/cloud, smoke-test, and unattended runs.
 
 - **Surface-only** change → the `Needs the service? = no` branch of §1; [[INTERFACES]] is never entered. The build gate still runs headless before merge: this branch carries the fewest gates, so the bundle is where a broken import or render error surfaces.
+- **Eligible small task** → §0.25 replaces the specialist middle with The Adventurer; the Bard still owns the PR tail.
+- **Pure Python business logic / complex script** → §3; implementation first by The Paladin, focused tests afterward by The Trickster.
 - **Infra / cloud** change → The Wizard (`hb-ag-ops`, `hb-sk-cloud` / `hb-sk-local-runtime`) in place of [[INTERFACES]]/[[TDD]]; the resource lands in the project's infrastructure inventory ([[INFRASTRUCTURE]]). Ship via The Bard.
 - **Smoke tests** are operator-only and interactive; an agent routine that reaches a smoke step stops and defers ([[AGENTS]]).
 - **Automated** — the §0.5 wrapper walked by an unattended process instead of a person: issue in, PR out, never a merge.

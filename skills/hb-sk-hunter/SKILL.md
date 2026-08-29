@@ -3,7 +3,7 @@ name: hb-sk-hunter
 title: Issue hunt, existing-test repro, bulletin
 type: skill
 status: active
-version: v0.1.3
+version: v0.1.4
 tags: [skill, hunter, triage, issues, bulletin]
 description: >
   Issue-hunt contract for The Hunter: pick an issue, fire Hawk and
@@ -132,14 +132,14 @@ Omit empty `code` rows. Do not paste whole files. `goal` is the request. Clues, 
 
 The repro uses the Inquisitor's shape: one slice, then enough. Remaining tests unrun is acceptable.
 
-A page, model, catalog row, infra *to build*, or a git commit/PR — not this hunt. Leave the bulletin if you have one. Do not Agent an area owner. Do not spawn The Trickster to write the missing trap.
+A page, model, pure Python rule, eligible Adventurer task, catalog row, infra *to build*, or a git commit/PR — not this hunt. Leave the bulletin if you have one; the parent may route its completed triage card. Do not Agent a builder or area owner. Do not spawn The Trickster to write the missing trap.
 
 ## Do not
 
 - `git`, `gh pr`, merge, force-push.
 - Write `{{service tree}}`, `{{surface tree}}`, tests, TDD entries, or [[INTERFACES]].
 - Load `hb-sk-tdd` or `hb-sk-test-runner`.
-- Agent Cleric / Dwarf / Elf / Trickster / Wizard / Inquisitor / Bard.
+- Agent Cleric / Dwarf / Paladin / Elf / Trickster / Adventurer / Wizard / Inquisitor / Bard.
 - Invent a label. Stamp `blocked` (owner-only).
 - Run the full suite first. Run live markers. Use browser smoke as the repro.
 - Load Hawk/Hound skills in this agent — the familiars load them.
