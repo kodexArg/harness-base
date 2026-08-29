@@ -40,13 +40,13 @@ Bring-up script: named at instantiation under `scripts/`.
 
 ## Quick exit
 
-A page, a model, or a catalog row — not this spell. Name The Warrior / The Dwarf / The Cleric.
+A page, a model, or a catalog row — not this spell. Name The Elf / The Dwarf / The Cleric.
 
 ## Do not
 
 - Run the local runtime as production. Production is `hb-sk-cloud`.
 - Add unsanctioned services, a per-app orchestration file, or write `{{service tree}}` / `{{surface tree}}` / `docs/INTERFACES.md`.
-- Load Warrior / Dwarf / Cleric / Inquisitor skills.
+- Load Elf / Dwarf / Cleric / Inquisitor skills.
 
 ## Instantiation
 

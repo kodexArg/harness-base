@@ -70,7 +70,7 @@ Surface testing is not this flow ([[TDD]] scope). Components → surface tests v
 
 - Skip `red`. Implementation before a failing trap is the Dwarf striking blind.
 - Write `docs/INTERFACES.md` or the handler.
-- Load Warrior / Cleric / Wizard / Inquisitor skills. Test-runner craft is `hb-sk-test-runner`.
+- Load Elf / Cleric / Wizard / Inquisitor skills. Test-runner craft is `hb-sk-test-runner`.
 - Fork the manual. [[TDD]] owns format; you fill entries.
 
 ## Instantiation

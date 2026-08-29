@@ -101,7 +101,7 @@ skills table in the same batch.
 A headless project deletes, in one batch: `agents/hb-ag-surface.md`,
 `skills/hb-sk-surface-framework/`, `skills/hb-sk-component-framework/`,
 `.cursor/rules/section-articles.mdc`, the [[adr-04-frontend]] family (parent
-and every `adr-04.*` sub), and every roster/dispatch row that names The Warrior
+and every `adr-04.*` sub), and every roster/dispatch row that names The Elf
 ([[ADND-AGENTS]], [[ADND-DISPATCH]], [[HARNESS]], `AGENTS.md`,
 `tests/test_hb_ag_roster.py`). The Cleric then mediates between the caller and
 The Dwarf directly.
