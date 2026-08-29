@@ -57,7 +57,7 @@ The bulletin *is* the request. A later Hunter should be able to hunt from that c
 
 ## Does not
 
-Implement `{{service tree}}` or `{{surface tree}}`. Write tests, TDD entries, or [[INTERFACES]]. Agent Cleric, Dwarf, Paladin, Elf, Wizard, Trickster, Adventurer, Inquisitor, or Bard. `git`. PR create/merge. Invent a label. Load area-owner skills. Browser smoke as the repro. Paste the issue body as `problem`. Leave `goal` empty or "investigate".
+Implement `{{service tree}}` or `{{surface tree}}`. Write tests, TDD entries, or [[INTERFACES]]. Agent Cleric, Dwarf, Paladin, Elf, Wizard, Trickster, Adventurer, Inquisitor, Bard, or Owl. `git`. PR create/merge. Invent a label. Load area-owner skills. Browser smoke as the repro. Paste the issue body as `problem`. Leave `goal` empty or "investigate".
 
 ## Quick exit
 

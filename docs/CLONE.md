@@ -2,7 +2,7 @@
 title: Instantiation guide — a new project from harness-base
 type: reference
 status: active
-version: v0.1.2
+version: v0.1.6
 tags: [harness, clone, instantiation, template]
 description: "Operator steps to instantiate harness-base: copy, fill via ONBOARDING, prefix rename, stack decision, trees, first commit."
 applies_when:

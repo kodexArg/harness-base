@@ -3,6 +3,14 @@
 Every change landing on `main` records an entry here in the same batch
 ([[adr-05-after-versioning]]). Version format: `vA.B.C`.
 
+## v0.1.6 — 2026-08-29
+
+Align `pr-merge-gate` selection with guardian watchlists so AGENTS.md,
+README, agents, and workflows require a recorded verdict. Drop undeclared
+`SECRET_KEY` / `DEBUG` from `.env.example`. Name The Owl on Agent-bearing
+specialists (Hunter stays Hawk/Hound). Restamp the live roster counts,
+Paladin/Elf stack-agnostic wording, and Graphify cache tracking.
+
 ## v0.1.5 — 2026-08-29
 
 Add The Owl (`hb-ag-owl`) and `hb-sk-owl` as the universal web research

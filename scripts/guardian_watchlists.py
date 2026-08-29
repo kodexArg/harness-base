@@ -5,6 +5,10 @@ Instantiation ([[CLONE]]): add this project's route-surface globs to
 to `kbot-adr` (the package manifests the stack decision pins).
 """
 
+from __future__ import annotations
+
+import fnmatch
+
 WATCHLISTS = {
     "kbot-prd": (
         "docs/PRD.md",
@@ -29,3 +33,17 @@ WATCHLISTS = {
         "docs/contracts/*",
     ),
 }
+
+
+def matching_guardians(rel: str, watchlists: dict | None = None) -> list[str]:
+    """Return guardian names whose watchlist glob hits `rel`."""
+    lists = WATCHLISTS if watchlists is None else watchlists
+    hits: list[str] = []
+    for agent, patterns in lists.items():
+        for pattern in patterns:
+            if fnmatch.fnmatch(rel, pattern) or fnmatch.fnmatch(
+                rel, pattern.rstrip("*") + "*"
+            ):
+                hits.append(agent)
+                break
+    return hits

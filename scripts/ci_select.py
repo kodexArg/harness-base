@@ -19,9 +19,16 @@ from functools import lru_cache
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+_SCRIPTS = str(ROOT / "scripts")
+if _SCRIPTS not in sys.path:
+    sys.path.insert(0, _SCRIPTS)
+
+from guardian_watchlists import matching_guardians
+
 HARNESS_DIR = ROOT / "tests"
 
-# Instantiation: the project's real trees ([[CLONE]] §5).
+# Instantiation: the project's real trees ([[CLONE]] §5). Point these
+# prefixes at {{service tree}} / {{surface tree}} in the same fill batch.
 SERVICE_PREFIXES = ("service/",)
 SURFACE_PREFIXES = ("surface/",)
 
@@ -36,15 +43,13 @@ SERVICE_FORCE_PREFIX = ("docs/tdds/",)
 # instantiation names them once the surface has contract tests.
 SURFACE_CONTRACT_TESTS: tuple[str, ...] = ()
 
-MERGE_GATE_PATHS = frozenset(
+# Gate scripts are not on a watchlist; changing them still runs the job.
+MERGE_GATE_SELF = frozenset(
     {
-        "docs/PRD.md",
-        "docs/INTERFACES.md",
-        "docs/VARIABLES.md",
         "scripts/check_merge_gate.py",
+        "scripts/guardian_watchlists.py",
     }
 )
-MERGE_GATE_PREFIX = ("adrs/", "docs/tdds/")
 
 # Harness tests that must never run in CI (need live credentials). Empty in
 # the template; a project that adds live-credential guards lists them here.
@@ -255,7 +260,12 @@ def _harness(files: list[str]) -> tuple[bool, list[str]]:
 
 
 def _merge_gate(files: list[str]) -> bool:
-    return any(p in MERGE_GATE_PATHS or p.startswith(MERGE_GATE_PREFIX) for p in files)
+    return any(
+        matching_guardians(p)
+        or p in MERGE_GATE_SELF
+        or p.startswith("scripts/check_merge_gate")
+        for p in files
+    )
 
 
 def git_paths(base: str, head: str) -> list[str]:
