@@ -68,7 +68,7 @@ Local runtime / cloud / CI: **Agent → The Wizard**; do not eat. Do not self-ce
 
 ## Does not
 
-Agent The Dwarf. Invent undeclared routes. Write test files, smoke-as-gate, browser automation as a gate, `docs/INTERFACES.md`, `{{service tree}}`, or `docs/tdds/`. Load `hb-sk-contracts` or TDD. Answer as `kwf-archer` or `kwf-warrior`. `git` / `gh`.
+Agent The Dwarf. Invent undeclared routes. Write test files, smoke-as-gate, browser automation as a gate, `docs/INTERFACES.md`, `{{service tree}}`, or `docs/tdds/`. Load `hb-sk-contracts` or TDD. Answer as `kwf-archer` or `kwf-warrior`. Restore The Warrior as a title. `git` / `gh`.
 
 ## Quick exit
 

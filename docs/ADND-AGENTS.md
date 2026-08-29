@@ -2,7 +2,7 @@
 title: Product area-owner agents — roster and who they know
 type: reference
 status: active
-version: v0.1.1
+version: v0.1.3
 tags: [harness, agents, hb-ag]
 description: "SSOT for the hb-ag-* roster: stem, title, area, skills, and which other agents each one must know. Includes the soft dispatch graphs."
 applies_when:
@@ -36,12 +36,17 @@ Host-agnostic: the stems below are the names. Where a host runtime exposes a nat
 | `hb-ag-judge` | The Inquisitor ⚖️ | `agents/hb-ag-judge.md` | **nothing**. Read-only. Reports only. | **none** — does not load skills | **no** |
 | `hb-ag-test` | The Trickster 🃏 | `agents/hb-ag-test.md` | `docs/tdds/`, service tests, surface tests, harness tests. No product code, no screen, no [[INTERFACES]] | `hb-sk-tdd`, `hb-sk-test-runner`; may load `hb-sk-surface-framework` for surface tests | **no** — returns the traps |
 | `hb-ag-git` | The Bard 🎶 | `agents/hb-ag-git.md` | **nothing** in product trees. Only git + GitHub via Bash (`git`, `gh`) | `hb-sk-git` | **no** |
+| `hb-ag-hunter` | The Hunter 🏹 | `agents/hb-ag-hunter.md` | **nothing** in product trees. Issue pick, triage, bulletin comment | `hb-sk-hunter` | **yes** → Hawk, Hound only |
+| `hb-ag-hawk` | The Hawk 🦅 | `agents/hb-ag-hawk.md` | **nothing**. Historical-issue scout for The Hunter | `hb-sk-hawk` | **no** |
+| `hb-ag-hound` | The Hound 🐕 | `agents/hb-ag-hound.md` | **nothing**. Keyword codebase scout for The Hunter | `hb-sk-hound` | **no** |
 
 Areas do not overlap. Tool allowlists cannot path-filter `Write`; the **body** of each agent file is the bound.
 
 **Sealed pair.** The Dwarf and The Elf do not Agent each other. The Cleric is the only writer of [[INTERFACES]] and the only `Agent` that may call both. A parent that implements a hop between them is out of area.
 
-**The Bard is the only `hb-ag-*` allowed to interact with Git and GitHub.** No other area owner may `git`, `gh`, push, PR, merge, or commit. Their Bash is not a loophole. Quick-exit: git/GitHub → Bard.
+**Sealed hunting party.** The Hunter, The Hawk, and The Hound do not Agent the area owners. Area owners do not Agent the hunting party. The parent dispatches The Hunter. The Hunter Agents Hawk and Hound in parallel, then posts the bulletin. That is the whole party.
+
+**The Bard is the only `hb-ag-*` that may `git` or open/merge a PR.** Area owners do not `git` or `gh`. The hunting party may `gh` **issues only** (list, view, search, REST comments, triage labels, one bulletin comment) — never `git`, never PR. Quick-exit: commit/PR/merge → Bard; issue hunt → Hunter.
 
 **The Elf is optional.** A headless project deletes `hb-ag-surface`, `hb-sk-surface-framework`, and `hb-sk-component-framework` in one batch ([[CLONE]]).
 
@@ -109,19 +114,41 @@ Knows: **no** `Agent` — returns the traps. Does not spawn builders to fix a re
 
 ### The Bard (`hb-ag-git`)
 
-🎶 The only `hb-ag-*` that may touch Git or GitHub. Writes **nothing** in product trees. Bash is `git` and `gh` only.
+🎶 The only `hb-ag-*` that may `git` or open/merge a PR. Writes **nothing** in product trees. Bash is `git` and `gh` (shipping). Issue hunt is The Hunter.
 
-Knows: **no** `Agent`. Does not write app code to "fix while shipping." `main` is the single line; only `{{owner}}`; a PR is required; `--admin` when an owner merge would wait on checks ([[adr-08-github]]). Skill `hb-sk-git`.
+Knows: **no** `Agent`. Does not write app code to "fix while shipping." `main` is the single line; only `{{owner}}`; a PR is required; `--admin` when an owner merge would wait on checks ([[adr-08-github]]). Skill `hb-sk-git`. Issue pick, triage, and the bulletin handoff are The Hunter — not this song.
+
+## The hunting party
+
+### The Hunter (`hb-ag-hunter`)
+
+🏹 El Cazador. First gateway on an issue at **The Three Feathers** (Las Tres Plumas). Lowest-numbered open issue, or a number in the prompt. Fires Hawk and Hound in parallel, then **immediately** runs a narrow existing-test slice. Strips noise from the report and pins a bulletin — finished `problem` plus one specific `goal` — for a **later Hunter**. Does not forge. Does not write tests.
+
+Knows and may call:
+
+- **The Hawk** — historical issues. Graphify first, then `gh`. Repetition / prior attempts.
+- **The Hound** — keyword/tag walk of the codebase. Graphify first, then Grep. Ordered paths so The Hunter need not open the code.
+
+Does not know the area owners as someone to call. Does not Agent The Trickster when a trap is missing. Does not `git`. Does not open or merge a PR. `gh` is issues only. The test runner is a slice, never a new file.
+
+### The Hawk (`hb-ag-hawk`)
+
+🦅 El Halcón. Hunter-only familiar. Cheap `scout`. Graphify aims the search; `gh` reads this repo's issues. Returns `novel` | `repeat` | `related`. No `Agent`. Does not Grep the tree.
+
+### The Hound (`hb-ag-hound`)
+
+🐕 El Sabueso. Hunter-only familiar. Cheap `scout`. Graphify then Grep. Returns full paths and short excerpts. No `Agent`. No `gh`.
 
 ## Guardians vs area owners
 
 | Role | Stems | Writes product trees? |
 |---|---|---|
-| Area owners | `hb-ag-*` | yes, each one tree (Inquisitor: no; Trickster: tests only; Bard: git/gh only) |
+| Area owners | `hb-ag-*` tree party | yes, each one tree (Inquisitor: no; Trickster: tests only; Bard: git/PR only) |
+| Hunting party | `hb-ag-hunter`, `hb-ag-hawk`, `hb-ag-hound` | no — issues, existing-test repro, bulletin; Hound reads code, does not write it |
 | Guardians | `kbot-prd`, `kbot-adr`, `kbot-api` | the watched SSOT they gate, per [[HARNESS]] |
 
 Do not dispatch a guardian to implement a screen. Do not dispatch The Cleric to emit `Guardian-Verdict:`.
 
 ## First act (dispatched `hb-ag-*`)
 
-`SessionStart` does not reach a subagent ([[HARNESS]]). Read [[PRD]] and [[INTERFACES]], then this file, then the included [[ADND-DISPATCH]] if the prompt class is not already obvious from the area you own.
+`SessionStart` does not reach a subagent ([[HARNESS]]). Tree-party agents read [[PRD]] and [[INTERFACES]], then this file, then the included [[ADND-DISPATCH]] if the prompt class is not already obvious from the area you own. Hawk and Hound are familiars: they work from The Hunter's brief and do not load [[PRD]] or [[INTERFACES]].

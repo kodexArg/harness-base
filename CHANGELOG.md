@@ -3,6 +3,14 @@
 Every change landing on `main` records an entry here in the same batch
 ([[adr-05-after-versioning]]). Version format: `vA.B.C`.
 
+## v0.1.3 — 2026-08-29
+
+Hunting party at **The Three Feathers** (Las Tres Plumas): The Hunter
+pins a noise-stripped issue bulletin (`problem` + one imperative `goal`)
+for a later Hunter. Hawk and Hound scout in parallel; The Hunter
+reproduces against existing tests (quick-exit). Issue `gh` is the
+hunting party; The Bard still ships git/PR.
+
 ## v0.1.2 — 2026-08-28
 
 Restore the backend (`adr-03` + subs) and frontend (`adr-04` + subs) ADR

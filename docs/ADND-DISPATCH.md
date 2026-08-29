@@ -2,7 +2,7 @@
 title: Soft dispatch graphs — prompt class to hb-ag-* handoff
 type: reference
 status: active
-version: v0.1.1
+version: v0.1.3
 tags: [harness, agents, dispatch]
 description: "Soft, host-agnostic graphs: given a user prompt class, which hb-ag-* goes first and whom they call. Included from ADND-AGENTS."
 applies_when:
@@ -21,7 +21,7 @@ related_adrs:
 
 **Soft:** a parent or subagent is expected to follow these graphs. It is not a hard `agentType` resolver. Do not hand-dispatch archived `kwf-*` nodes from here.
 
-**Host-agnostic:** the node labels are stems (`hb-ag-contracts`, `hb-ag-service`, `hb-ag-surface`, `hb-ag-ops`, `hb-ag-judge`, `hb-ag-test`, `hb-ag-git`). Where the host has no native type for a stem, the parent loads `agents/<stem>.md` and still obeys the graph.
+**Host-agnostic:** the node labels are stems (`hb-ag-contracts`, `hb-ag-service`, `hb-ag-surface`, `hb-ag-ops`, `hb-ag-judge`, `hb-ag-test`, `hb-ag-git`, `hb-ag-hunter`, `hb-ag-hawk`, `hb-ag-hound`). Where the host has no native type for a stem, the parent loads `agents/<stem>.md` and still obeys the graph.
 
 The development loop (idea → [[INTERFACES]] → TDD → screen) remains [[DEVELOPMENT-LOOP]]. These graphs name **which agent** walks each step.
 
@@ -31,10 +31,13 @@ The development loop (idea → [[INTERFACES]] → TDD → screen) remains [[DEVE
 - **The Trickster** has no `Agent`. Returns the traps. Does not spawn Dwarf / Elf to "fix" a red.
 - **The Inquisitor** has no product `Write` and does not spawn builders to "fix" a finding. Returns the named rule. Not a merge gate.
 - **The Bard** has no `Agent`. Does not write app code while shipping. Does not spawn builders to "fix" a red on the way to `main`.
+- **The Hunter** has `Agent` (Hawk, Hound only). Does not Agent area owners. Does not spawn a builder to "fix" the issue.
+- **The Hawk** and **The Hound** have no `Agent`. They return a pack to The Hunter.
 - Do not nest two Inquisitor calls.
 - **Elf never Agents Dwarf. Dwarf never Agents Elf.** Only The Cleric carries messages both ways.
 - One missing-row trip to The Cleric per need. Do not edit [[INTERFACES]] from Dwarf, Elf, or Trickster.
-- **git / GitHub → Bard.** No other `hb-ag-*` may `git`, `gh`, push, PR, merge, or commit. Their Bash is not a loophole.
+- **git / PR / merge → Bard.** No area owner may `git` or `gh`. The hunting party may `gh` issues only. Their Bash is not a loophole.
+- **Issue hunt → Hunter.** Area owners do not Agent the hunting party. The hunting party does not Agent area owners.
 
 ## Prompt class → first agent
 
@@ -52,7 +55,8 @@ Classify the **user's ask**, not the files you wish were in scope. Then follow t
 | "Does this PR / plan / diff comply with PRD, ADRs, or INTERFACES?" | The Inquisitor | Quick-exit report. Do not author a fix. Parent may load `hb-sk-abc`; Inquisitor does not |
 | "Does this comply with adr-NN?" / about to assert ADR compliance | The Inquisitor | Area owner must **call**. Do not self-certify |
 | Writing `adrs/` itself | guardian `kbot-adr` | Not The Inquisitor. Watchlist in [[AGENTS]] |
-| `git`, `gh`, commit, push, PR, merge | The Bard | Quick-exit. No other `hb-ag-*`. Bard does not patch product trees while shipping |
+| `git`, `gh`, commit, push, PR, merge | The Bard | Quick-exit. No area owner. Bard does not patch product trees while shipping. Issue hunt is not this row |
+| Lowest-numbered issue, issue triage, issue forensics, hunter bulletin | The Hunter | Parallel Hawk + Hound (`scout`). Immediate existing-test repro (quick-exit). Bulletin. **Never** an area owner |
 | Ambiguous (screen + new interface + infra) | Parent splits | Catalog first (Cleric), tests (Trickster), then Dwarf, then Elf; infra last (Wizard). Surface↔service only through Cleric. Ship via Bard. Inquisitor after the product hunk if ABC is in question |
 
 Undeclared route in code is a defect ([[INTERFACES]]). Inventing a path on the surface is the same defect.
@@ -177,7 +181,29 @@ flowchart TD
   b --> ship["git / gh only — no product-tree Write"]
 ```
 
-`main` is the single line; `{{owner}}`; a PR is required; `--admin` when an owner merge would wait on checks ([[adr-08-github]]). The Bard does not write app code to "fix while shipping." Any other `hb-ag-*` that hits git **returns**; the parent loads The Bard.
+`main` is the single line; `{{owner}}`; a PR is required; `--admin` when an owner merge would wait on checks ([[adr-08-github]]). The Bard does not write app code to "fix while shipping." Any area owner that hits git **returns**; the parent loads The Bard. Issue pick and triage are The Hunter.
+
+## Graph — Hunter (issue hunt)
+
+```mermaid
+flowchart TD
+  p[Prompt: issue N or lowest open]
+  h[The Hunter]
+  k[The Hawk]
+  d[The Hound]
+  r[Existing-test slice]
+  b[Bulletin]
+  p --> h
+  h -->|"brief, parallel scout"| k
+  h -->|"clues, parallel scout"| d
+  h -->|"immediately, do not wait"| r
+  k -->|HAWK pack| h
+  d -->|HOUND catalog| h
+  r -->|reproduced or quick-exit| h
+  h --> b
+```
+
+The Hunter fires Hawk and Hound, then **immediately** runs one existing-test slice to reproduce. It strips noise from the report and pins a bulletin at **The Three Feathers** — finished `problem` plus one specific `goal` — for a later Hunter. Quick-exit on the repro is enough. It does not write tests and does not Agent The Trickster. Scout packs fold into the bulletin when they land. Hawk: Graphify first, then `gh`. Hound: Graphify first, then Grep. Neither familiar loads [[PRD]]. The party does not Agent area owners.
 
 ## Parent session (any host)
 

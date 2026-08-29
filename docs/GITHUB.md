@@ -2,7 +2,7 @@
 title: GitHub repository conventions, branching, and issue workflows
 type: reference
 status: active
-version: v0.1.2
+version: v0.1.3
 tags: [harness, github, git, workflow, pr]
 description: "Establishes single-line main integration, branch naming, PR conventions, and GitHub CLI usage."
 applies_when:
@@ -78,6 +78,12 @@ A dashboard secret named `GH_TOKEN` collides with that injection. This repo's op
 3. Agents open branches / PRs; they do not force-push `main` as another identity.
 4. Base of every PR: **`main`**. There is no promote PR and no release head.
 5. **Scoped commit formatting:** Commits follow `type(scope): concise imperative subject [trailer]` per [[adr-07-git]]. Mandatory scopes: `harness` (skills, hooks, agents, MCP, automation), `adrs` (ADR updates), `service` / `<domain>` (the service tree), `surface` / `<surface>` (the surface tree), and `infra` (cloud, local runtime). Subject in English imperative present tense.
+
+### The Three Feathers (Las Tres Plumas)
+
+**The Three Feathers** is the inn: this repo's issues, pull requests, and the agents that work them ([[GLOSSARY]]). It is an arbitrary grouping for those harness elements, not a second GitHub.
+
+The notice board is an issue comment. The Hunter (`hb-ag-hunter`) pins a **bulletin** there (`cursor-issue-triage`): noise stripped, a finished interpretation of the real problem, and one specific imperative `goal` for a **later Hunter**. Shape: `hb-sk-hunter`. Do not invent a second board.
 
 ### PR Merge Authorization Model
 

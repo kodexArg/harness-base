@@ -17,6 +17,9 @@ ROSTER = (
     ("hb-ag-judge", "The Inquisitor"),
     ("hb-ag-test", "The Trickster"),
     ("hb-ag-git", "The Bard"),
+    ("hb-ag-hunter", "The Hunter"),
+    ("hb-ag-hawk", "The Hawk"),
+    ("hb-ag-hound", "The Hound"),
 )
 
 DOC_PATHS = (
@@ -116,8 +119,8 @@ def main() -> int:
             fail(f"{rel} tools: must list Graphify four first, got {tools[:4]!r}")
 
     if not failures:
-        ok("roster docs list seven stems and titles; no live Archer or Warrior")
-        ok("seven agent files: inherit, You are The X, church headings, Graphify first")
+        ok("roster docs list ten stems and titles; no live Archer or Warrior")
+        ok("ten agent files: inherit, You are The X, church headings, Graphify first")
         print("\nall 2 test(s) passed")
         return 0
     print(f"\n{failures} test(s) failed", file=sys.stderr)

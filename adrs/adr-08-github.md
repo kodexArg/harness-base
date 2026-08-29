@@ -2,7 +2,7 @@
 title: adr-08-github
 type: adr
 status: active
-version: v0.1.0
+version: v0.1.3
 tags: [adr, github, issues, pr, actions, labels]
 description: "Governs GitHub collaboration, PR merge authorization (triaged autonomous vs untriaged/orphan supervised), Actions CI/CD, and deploy trust confinement."
 applies_when:
@@ -10,6 +10,8 @@ applies_when:
   - When configuring GitHub Actions workflows, deploy trust, or applying PR labels.
 related_agents:
   - hb-ag-git
+  - hb-ag-hunter
+  - hb-ag-hawk
 ---
 
 # ADR-08 — GitHub
