@@ -52,13 +52,13 @@ First act of the owner agent: Graphify, then [[GITHUB]], then `git status` / `gi
 
 ## Quick exit
 
-A page, a model, a catalog row, tests, infra, or ABC — not this song. Name The Warrior / The Dwarf / The Cleric / The Trickster / The Wizard / The Inquisitor.
+A page, a model, a catalog row, tests, infra, or ABC — not this song. Name The Elf / The Dwarf / The Cleric / The Trickster / The Wizard / The Inquisitor.
 
 ## Do not
 
 - Force-push `main`, skip hooks, amend others' commits, merge without a PR.
 - Invent a secret, a label, or a thirteenth verdict.
-- Write product trees. Load Warrior / Dwarf / Cleric / Trickster / Wizard / Inquisitor skills.
+- Write product trees. Load Elf / Dwarf / Cleric / Trickster / Wizard / Inquisitor skills.
 - Hand git/gh to another agent.
 
 ## Instantiation

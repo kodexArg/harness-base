@@ -39,7 +39,7 @@ You **may write** the local orchestration file, cloud service and compute defini
 
 Skills (this agent only): `hb-sk-local-runtime`, `hb-sk-cloud`. Do not load domain-framework, component, surface, interface-framework, contracts, tdd, test-runner, abc, or git skills.
 
-**May Agent:** infra fan-out only. Prefer the parent. Do not call The Dwarf, The Warrior, or The Cleric to "fix" app code.
+**May Agent:** infra fan-out only. Prefer the parent. Do not call The Dwarf, The Elf, or The Cleric to "fix" app code.
 
 `Bash` is the local runtime / cloud CLI diagnostics. Never `git` / `gh`. No secret values in the transcript.
 
@@ -57,4 +57,4 @@ Write app trees, `INTERFACES.md`, tests, or TDD. Eat a page, a model, or a catal
 
 ## Quick exit
 
-A page, a model, or a catalog row — name The Warrior / The Dwarf / The Cleric and stop. Tests → Trickster. ABC/ADR claim → Inquisitor. git / GitHub → Bard (`hb-ag-git`). Do not commit.
+A page, a model, or a catalog row — name The Elf / The Dwarf / The Cleric and stop. Tests → Trickster. ABC/ADR claim → Inquisitor. git / GitHub → Bard (`hb-ag-git`). Do not commit.

@@ -124,7 +124,7 @@ Decide these **before** editing files. Copy the bound value into every path list
 | `{{domain framework}}` | Service domain framework | `Django`, `Ktor` |
 | `{{interface framework}}` | Service HTTP/API framework | `DRF`, `Ktor Routing` |
 | `{{surface framework}}` | Surface host | `Astro`, `Next.js` |
-| `{{component framework}}` | UI components | `Svelte`, `React` |
+| `{{component framework}}` | UI components | `Belt`, `Svelte`, `React` |
 | `{{service toolchain}}` | Service package/run tool — no substitutes later | `uv`, `gradle` |
 | `{{surface toolchain}}` | Surface package/run tool | `bun`, `pnpm` |
 | `{{test runner}}` | Service test runner | `pytest`, `JUnit` |
@@ -229,7 +229,7 @@ Harness rows stay. The empty project table uses:
 
 ## 5 · Headless products
 
-If there is no screen: delete in **one batch** The Warrior, `skills/hb-sk-surface-framework/`, `skills/hb-sk-component-framework/`, `.cursor/rules/section-articles.mdc`, the whole [[adr-04-frontend]] family, and every roster row that names the surface ([[CLONE]] §7). Do not leave `{{surface tree}}` pointing at a missing tree. Surface stack tokens in [[adr-02-stack]] go away with that section.
+If there is no screen: delete in **one batch** The Elf, `skills/hb-sk-surface-framework/`, `skills/hb-sk-component-framework/`, `.cursor/rules/section-articles.mdc`, the whole [[adr-04-frontend]] family, and every roster row that names the surface ([[CLONE]] §7). Do not leave `{{surface tree}}` pointing at a missing tree. Surface stack tokens in [[adr-02-stack]] go away with that section.
 
 ## 6 · What `AGENTS.md` still is after fill
 

@@ -46,7 +46,7 @@ permission-class pattern, never an ad-hoc check; open access only where
 - Add routing conveniences the project has not sanctioned.
 - Put business logic in the payload layer — that is the domain services' home (`hb-sk-domain-framework`).
 - Write `docs/INTERFACES.md`, `docs/contracts/`, `docs/tdds/`, or tests.
-- Load Warrior / Cleric / Trickster / Wizard / Inquisitor skills.
+- Load Elf / Cleric / Trickster / Wizard / Inquisitor skills.
 
 ## Instantiation
 

@@ -2,12 +2,12 @@
 title: Soft dispatch graphs — prompt class to hb-ag-* handoff
 type: reference
 status: active
-version: v0.1.0
+version: v0.1.1
 tags: [harness, agents, dispatch]
 description: "Soft, host-agnostic graphs: given a user prompt class, which hb-ag-* goes first and whom they call. Included from ADND-AGENTS."
 applies_when:
   - When a user prompt could belong to more than one area owner.
-  - When deciding the next Agent call among Cleric, Dwarf, Warrior, Wizard, Inquisitor, Trickster, Bard.
+  - When deciding the next Agent call among Cleric, Dwarf, Elf, Wizard, Inquisitor, Trickster, Bard.
 related_adrs:
   - adr-01-nomenclature
   - adr-02-stack
@@ -27,13 +27,13 @@ The development loop (idea → [[INTERFACES]] → TDD → screen) remains [[DEVE
 
 ## Recursion (always)
 
-- **The Cleric** has `Agent` (Dwarf, Warrior, Trickster). After the catalog hunk: call the next owner, or return the row / adaptation instruction.
-- **The Trickster** has no `Agent`. Returns the traps. Does not spawn Dwarf / Warrior to "fix" a red.
+- **The Cleric** has `Agent` (Dwarf, Elf, Trickster). After the catalog hunk: call the next owner, or return the row / adaptation instruction.
+- **The Trickster** has no `Agent`. Returns the traps. Does not spawn Dwarf / Elf to "fix" a red.
 - **The Inquisitor** has no product `Write` and does not spawn builders to "fix" a finding. Returns the named rule. Not a merge gate.
 - **The Bard** has no `Agent`. Does not write app code while shipping. Does not spawn builders to "fix" a red on the way to `main`.
 - Do not nest two Inquisitor calls.
-- **Warrior never Agents Dwarf. Dwarf never Agents Warrior.** Only The Cleric carries messages both ways.
-- One missing-row trip to The Cleric per need. Do not edit [[INTERFACES]] from Dwarf, Warrior, or Trickster.
+- **Elf never Agents Dwarf. Dwarf never Agents Elf.** Only The Cleric carries messages both ways.
+- One missing-row trip to The Cleric per need. Do not edit [[INTERFACES]] from Dwarf, Elf, or Trickster.
 - **git / GitHub → Bard.** No other `hb-ag-*` may `git`, `gh`, push, PR, merge, or commit. Their Bash is not a loophole.
 
 ## Prompt class → first agent
@@ -42,18 +42,18 @@ Classify the **user's ask**, not the files you wish were in scope. Then follow t
 
 | Prompt class | First agent | Then if |
 |---|---|---|
-| New/changed page, component, tokens, surface UI | The Warrior | Interface content needed → Cleric (not framework, not paths). Tests → Trickster. **Never** Dwarf. ABC/ADR claim → Inquisitor |
-| New/changed model, handler, permission, domain service | The Dwarf | Row missing → Cleric. Tests / `docs/tdds/` → Trickster. **Never** Warrior. ABC/ADR claim → Inquisitor |
-| Add/change/retire an interface **row** or `docs/contracts/` | The Cleric | Translate to a six-column row and/or request Dwarf; return the contract or "adapt" to Warrior |
-| Warrior asks for **interfaces** (fields, page, UI need) | The Cleric | If already computable from served data: tell Warrior to adapt (no row). If new: row, then Trickster (TDD) then Dwarf |
-| `docs/tdds/`, service tests, surface tests, harness tests | The Trickster | Write the traps; return. Parent (or Cleric) sends Dwarf / Warrior to implement. Trickster does not spawn them |
+| New/changed page, component, tokens, surface UI | The Elf | Interface content needed → Cleric (not framework, not paths). Tests → Trickster. **Never** Dwarf. ABC/ADR claim → Inquisitor |
+| New/changed model, handler, permission, domain service | The Dwarf | Row missing → Cleric. Tests / `docs/tdds/` → Trickster. **Never** Elf. ABC/ADR claim → Inquisitor |
+| Add/change/retire an interface **row** or `docs/contracts/` | The Cleric | Translate to a six-column row and/or request Dwarf; return the contract or "adapt" to Elf |
+| Elf asks for **interfaces** (fields, page, UI need) | The Cleric | If already computable from served data: tell Elf to adapt (no row). If new: row, then Trickster (TDD) then Dwarf |
+| `docs/tdds/`, service tests, surface tests, harness tests | The Trickster | Write the traps; return. Parent (or Cleric) sends Dwarf / Elf to implement. Trickster does not spawn them |
 | Local orchestration file, profiles, bind-mounts, ports | The Wizard | Dispatch. Not The Dwarf |
 | Cloud services, load balancing, secret-store names | The Wizard | Dispatch. Not The Dwarf. Do not invent infrastructure the layout lacks |
 | "Does this PR / plan / diff comply with PRD, ADRs, or INTERFACES?" | The Inquisitor | Quick-exit report. Do not author a fix. Parent may load `hb-sk-abc`; Inquisitor does not |
 | "Does this comply with adr-NN?" / about to assert ADR compliance | The Inquisitor | Area owner must **call**. Do not self-certify |
 | Writing `adrs/` itself | guardian `kbot-adr` | Not The Inquisitor. Watchlist in [[AGENTS]] |
 | `git`, `gh`, commit, push, PR, merge | The Bard | Quick-exit. No other `hb-ag-*`. Bard does not patch product trees while shipping |
-| Ambiguous (screen + new interface + infra) | Parent splits | Catalog first (Cleric), tests (Trickster), then Dwarf, then Warrior; infra last (Wizard). Surface↔service only through Cleric. Ship via Bard. Inquisitor after the product hunk if ABC is in question |
+| Ambiguous (screen + new interface + infra) | Parent splits | Catalog first (Cleric), tests (Trickster), then Dwarf, then Elf; infra last (Wizard). Surface↔service only through Cleric. Ship via Bard. Inquisitor after the product hunk if ABC is in question |
 
 Undeclared route in code is a defect ([[INTERFACES]]). Inventing a path on the surface is the same defect.
 
@@ -62,34 +62,34 @@ Undeclared route in code is a defect ([[INTERFACES]]). Inventing a path on the s
 ```mermaid
 flowchart TD
   p[Prompt: page or component]
-  w[The Warrior]
+  e[The Elf]
   c[The Cleric]
   t[The Trickster]
   j[The Inquisitor]
-  p --> w
-  w -->|"interfaces: content needed"| c
-  c -->|contract or adapt| w
-  w -->|"screen built, need tests"| t
-  t -->|traps returned| w
-  w -->|"ABC or ADR claim"| j
-  j -->|finding, not a merge gate| w
+  p --> e
+  e -->|"interfaces: content needed"| c
+  c -->|contract or adapt| e
+  e -->|"screen built, need tests"| t
+  t -->|traps returned| e
+  e -->|"ABC or ADR claim"| j
+  j -->|finding, not a merge gate| e
 ```
 
-A page binds to a **declared** row in [[INTERFACES]]. The surface toolchain only. Screen copy in `{{interface language}}` ([[adr-01.b-localization]]). The Warrior does not Agent The Dwarf.
+A page binds to a **declared** row in [[INTERFACES]]. The surface toolchain only. Screen copy in `{{interface language}}` ([[adr-01.b-localization]]). The Elf does not Agent The Dwarf.
 
-## Graph — interface request (Warrior → Cleric → Dwarf)
+## Graph — interface request (Elf → Cleric → Dwarf)
 
 ```mermaid
 flowchart TD
-  w[The Warrior]
+  e[The Elf]
   c[The Cleric]
   d[The Dwarf]
-  w -->|"interfaces as CONTENT NEEDED<br/>fields, page, UI need — not framework, not paths"| c
-  c -->|"already computable from served data"| adapt[tell Warrior to adapt — no new row]
+  e -->|"interfaces as CONTENT NEEDED<br/>fields, page, UI need — not framework, not paths"| c
+  c -->|"already computable from served data"| adapt[tell Elf to adapt — no new row]
   c -->|"has logic, domain+model, not already served"| row[six-column INTERFACES.md row]
   row --> d
   d -->|forge the service tree| done[implemented]
-  adapt --> w
+  adapt --> e
 ```
 
 The Cleric is the sole write on [[INTERFACES]]. The Dwarf waits for the row, then forges. If the need is already computable: no new row.
@@ -107,7 +107,7 @@ flowchart TD
   t -->|greens / adds more| done[green]
 ```
 
-The Dwarf never writes tests or TDD entries. Other agents are forbidden from writing tests. The Trickster cannot give face (no UI, not the product). Surface tests: after The Warrior builds, The Trickster may use `hb-sk-surface-framework`.
+The Dwarf never writes tests or TDD entries. Other agents are forbidden from writing tests. The Trickster cannot give face (no UI, not the product). Surface tests: after The Elf builds, The Trickster may use `hb-sk-surface-framework`.
 
 ## Graph — catalog only
 
@@ -115,7 +115,7 @@ The Dwarf never writes tests or TDD entries. Other agents are forbidden from wri
 flowchart TD
   p[Prompt: interface row or contract]
   c[The Cleric]
-  next[Dwarf and/or Warrior and/or Trickster]
+  next[Dwarf and/or Elf and/or Trickster]
   p --> c
   c -->|six-column row, then Agent or return| next
 ```

@@ -63,7 +63,7 @@ Do not call live external services from the default slice. A bare test run must 
 
 ## Do not
 
-- Implement the model / the handler (Dwarf) or the component (Warrior).
+- Implement the model / the handler (Dwarf) or the component (Elf).
 - Write [[INTERFACES]] or screen copy in the interface language.
 - Run the live markers in the default slice, or treat browser smoke as CI.
 - Load Cleric / Dwarf / Wizard / Inquisitor / Bard skills. TDD entries are `hb-sk-tdd`. `hb-sk-surface-framework` is allowed for surface tests.

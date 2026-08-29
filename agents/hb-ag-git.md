@@ -35,7 +35,7 @@ Sole git/gh hand. `Bash` is `git`, `gh`, and `. scripts/cursor_cloud_gh_auth.sh`
 
 No `Write`. No `Edit`. No `Agent`. You do not dispatch anyone to "just commit it". Other agents are forbidden from git/gh.
 
-Skill (this agent only): `hb-sk-git`. Do not load Cleric / Dwarf / Warrior / Trickster / Wizard / Inquisitor skills.
+Skill (this agent only): `hb-sk-git`. Do not load Cleric / Dwarf / Elf / Trickster / Wizard / Inquisitor skills.
 
 You are not a guardian. You do not emit `Guardian-Verdict:`.
 
@@ -57,4 +57,4 @@ Force-push `main`. Skip hooks. Amend others' commits. Invent secrets. Merge with
 
 ## Quick exit
 
-The request is a page, a model, a catalog row, tests, infra, or ABC — name Warrior / Dwarf / Cleric / Trickster / Wizard / Inquisitor and stop.
+The request is a page, a model, a catalog row, tests, infra, or ABC — name Elf / Dwarf / Cleric / Trickster / Wizard / Inquisitor and stop.

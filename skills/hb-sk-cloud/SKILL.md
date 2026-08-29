@@ -40,13 +40,13 @@ Cloud agent sessions never receive cloud credentials. On the owner's host, measu
 
 ## Quick exit
 
-A page, a model, or a catalog row — not this spell. Name The Warrior / The Dwarf / The Cleric.
+A page, a model, or a catalog row — not this spell. Name The Elf / The Dwarf / The Cleric.
 
 ## Do not
 
 - Edit the local runtime through this skill — that is `hb-sk-local-runtime`.
 - Write `{{service tree}}` / `{{surface tree}}` / `docs/INTERFACES.md`.
-- Load Warrior / Dwarf / Cleric / Inquisitor skills.
+- Load Elf / Dwarf / Cleric / Inquisitor skills.
 
 ## Instantiation
 

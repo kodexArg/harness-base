@@ -3,14 +3,14 @@ name: hb-sk-component-framework
 title: Component framework in the surface host — knowledge contract
 type: skill
 status: active
-version: v0.1.0
-tags: [skill, component-framework, warrior]
+version: v0.1.1
+tags: [skill, component-framework, elf]
 description: >
   The component framework contract for the component files this
   project's surface host renders or hydrates. Load when authoring or
   editing a component, choosing reactive state primitives, or
   hydrating an interactive component — even if the skill is not named.
-  Owner: The Warrior (hb-ag-surface). The Warrior does not write tests.
+  Owner: The Elf (hb-ag-surface). The Elf does not write tests.
   Interface gaps go to The Cleric as content-needed. Not the catalog
   (hb-sk-contracts).
 applies_when:
@@ -22,7 +22,7 @@ related_adrs:
 
 # hb-sk-component-framework
 
-Knowledge contract for **The Warrior**. Teach {{component framework}} in this host, then stop.
+Knowledge contract for **The Elf**. Teach {{component framework}} in this host, then stop.
 
 ## Load
 
@@ -41,11 +41,14 @@ this repo programs them are recorded here at instantiation:
 - Composition idiom: `{{component composition idiom}}`
 - Hydration is the host's decision; a component with no hydration directive renders as static markup.
 
+When [[adr-02-stack]] names Belt, that is the component and style hand: tokens, rhythm, reusable chrome. Follow the pins. Do not paste vendor manuals into this skill. Visual decisions are tokens ([[adr-04.b-design-system]]), not one-off literals.
+
 ## Do not
 
-- Invent HTTP paths. The Warrior requests interfaces from The Cleric (`hb-ag-contracts`) as content-needed (fields, page, UI need) — never a path invented here, never edit [[INTERFACES]].
-- Author tests. The Warrior does not write tests; The Trickster (`hb-ag-test`) plants traps.
+- Invent HTTP paths. The Elf requests interfaces from The Cleric (`hb-ag-contracts`) as content-needed (fields, page, UI need) — never a path invented here, never edit [[INTERFACES]].
+- Author tests. The Elf does not write tests; The Trickster (`hb-ag-test`) plants traps.
 - Load the interface-framework, domain-framework, contracts, local-runtime, cloud, or abc skills.
+- Agent The Dwarf.
 
 ## Instantiation
 
